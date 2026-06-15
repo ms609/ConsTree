@@ -170,7 +170,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-
 // cpp_transfer_consensus
 List cpp_transfer_consensus(const List& splits_list, const int n_tip, const bool scale, const bool greedy_best_flag, const bool init_majority, const int n_threads);
 RcppExport SEXP _ConsTree_cpp_transfer_consensus(SEXP splits_listSEXP, SEXP n_tipSEXP, SEXP scaleSEXP, SEXP greedy_best_flagSEXP, SEXP init_majoritySEXP, SEXP n_threadsSEXP) {
