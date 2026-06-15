@@ -100,6 +100,13 @@ inline int quartet_state_from_sides(bool si, bool sj, bool sk, bool sl) {
 }
 
 
+// All types and helpers below are private to this translation unit; see the
+// matching note in transfer_consensus.cpp. The anonymous namespace gives them
+// internal linkage so the identically-named PooledSplits/SplitHash/SplitEqual
+// in transfer_consensus.cpp are not ODR-folded across translation units (a
+// layout mismatch there caused an AddressSanitizer stack-buffer-overflow).
+namespace {
+
 // ============================================================================
 // Pooled split representation
 // ============================================================================
@@ -373,7 +380,7 @@ static std::vector<uint8_t> compat_mat(const PooledSplits& pool) {
   const unsigned char last_mask =
     static_cast<unsigned char>((1U << used_bits) - 1U);
 
-  std::vector<uint8_t> compat(M * M, 1);
+  std::vector<uint8_t> compat(static_cast<std::size_t>(M) * M, 1);
 
   for (int i = 0; i < M; ++i) {
     const unsigned char* a = pool.split(i);
@@ -391,8 +398,8 @@ static std::vector<uint8_t> compat_mat(const PooledSplits& pool) {
         if (ab && anb && nab && nanb) break;
       }
       bool comp = !ab || !anb || !nab || !nanb;
-      compat[i * M + j] = comp ? 1 : 0;
-      compat[j * M + i] = comp ? 1 : 0;
+      compat[static_cast<std::size_t>(i) * M + j] = comp ? 1 : 0;
+      compat[static_cast<std::size_t>(j) * M + i] = comp ? 1 : 0;
     }
   }
   return compat;
@@ -591,7 +598,7 @@ struct QCGreedyState {
 
     // Update n_incompat
     for (int j = 0; j < M; ++j) {
-      if (!compat[j * M + c]) n_incompat[j]++;
+      if (!compat[static_cast<std::size_t>(j) * M + c]) n_incompat[j]++;
     }
 
     // Update quartet states
@@ -661,7 +668,7 @@ struct QCGreedyState {
 
     // Update n_incompat
     for (int j = 0; j < M; ++j) {
-      if (!compat[j * M + c]) n_incompat[j]--;
+      if (!compat[static_cast<std::size_t>(j) * M + c]) n_incompat[j]--;
     }
 
     const unsigned char* sp = pool.split(c);
@@ -795,6 +802,8 @@ static void greedy_first(QCGreedyState& st,
     }
   }
 }
+
+}  // anonymous namespace
 
 
 // ============================================================================

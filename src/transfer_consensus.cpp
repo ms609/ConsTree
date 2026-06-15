@@ -36,6 +36,16 @@ using TreeTools::SplitList;
 using int16 = int_fast16_t;
 using int32 = int_fast32_t;
 
+// All types and helpers below are private to this translation unit. They live
+// in an anonymous namespace so their implicit special members (e.g. the default
+// constructor) get internal linkage and are NOT folded across translation units
+// with the identically-named PooledSplits/SplitHash/SplitEqual in Quartet.cpp.
+// Without this, the linker merges the COMDAT ctors by mangled type name (which
+// ignores layout); Quartet's larger 136-byte PooledSplits ctor would then be
+// used to construct transfer's 120-byte `pool`, writing one vector slot past
+// the end -- a stack-buffer-overflow caught by AddressSanitizer.
+namespace {
+
 // ============================================================================
 // Pooled split representation
 // ============================================================================
@@ -686,6 +696,8 @@ static void init_matches(
     }
   }
 }
+
+}  // anonymous namespace
 
 
 // ============================================================================
