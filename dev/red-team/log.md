@@ -105,10 +105,91 @@ R + test work done by the orchestrator. Verified against an **installed** build
   canonical consensus.
 - **TC-007 (LOW)** — false comment at `R/transfer.R:71` corrected.
 
-Empirical drivers kept: `reviews/transfer/verify-fixes.R`. Fixes **not yet
-committed** at time of writing. Area 9 seam: the structural finds are now closed;
-a future revisit should target the greedy heuristic's optimality (untested) — may
-warrant escalation past sonnet.
+Empirical drivers kept: `reviews/transfer/verify-fixes.R`. Fixes committed
+e4e0aa9 (code) + d4e9e52 (records). Area 9 seam: the structural finds are now
+closed; a future revisit should target the greedy heuristic's optimality
+(untested) — may warrant escalation past sonnet.
+
+---
+
+## 2026-06-15 — Round 3: ASAN-driven (areas 9/10), cross-TU ODR fix
+
+Triggered by a red gcc-AddressSanitizer CI job (run 27196858592, "AddressSanitizer
+tests"): **stack-buffer-overflow** constructing `PooledSplits` in the Transfer
+path. Diagnosed by the orchestrator (opus); fix verified locally; advisor-reviewed
+before editing.
+
+- **TC-009 (HIGH, REAL — ASAN-confirmed)** — **cross-TU ODR violation.**
+  `PooledSplits`, `SplitHash`, `SplitEqual` were each defined at *namespace scope*
+  with **different layouts** in both `src/transfer_consensus.cpp` (120-byte
+  `PooledSplits`) and `src/Quartet.cpp` (136-byte, extra `tips_on_side1`). Their
+  implicit special members are COMDAT/weak symbols mangled by type name only, so
+  the linker folded them: Quartet's 136-byte ctor was used to construct transfer's
+  120-byte `pool`, writing `tree_members` one slot (offset 120) past the end —
+  the exact ASAN report. UB / memory corruption; a **CRAN ASAN/UBSAN blocker.**
+- **Fix:** wrapped each file's TU-private types + helpers in an anonymous
+  namespace (`namespace { … }`), the pattern already used by
+  `cons_adams/greedy/loose/majorityplus/frequency.cpp`. Exported `[[Rcpp::export]]`
+  functions left outside. Minimal, no logic change.
+- **TC-008 re-diagnosed → FIXED.** The earlier `load_all` "segfault on the happy
+  path" was NOT a TreeTools header skew / dev-infra artifact. It was the same ODR
+  memory corruption (different link order under `load_all`). The Round-1/2 caveat
+  ("installed package is fine, test via installed build") was luck, not safety.
+- **Cross-TU sweep (area-10 work):** grepped every `src/*.cpp` for namespace-scope
+  type names defined in >1 TU. Only other hit was `Tree` (bhv.cpp `namespace bhv`
+  vs cons_frequency.cpp anonymous namespace) — **safe, distinct mangled names.**
+  No other collisions among struct/class names.
+- **Verification (Windows, R-devel):** `pkgload::load_all` — which *previously
+  segfaulted* on this path — now runs `Transfer()` (NSplits 3) and `Quartet()`
+  (NSplits 3) cleanly; transfer + Quartet test suites pass (1 on-CRAN skip).
+  Drivers: `reviews/transfer/test-odr-fix.R`, `run-tests.R`. **Real ASAN-green
+  needs a push** (CI) — pending user authorisation.
+
+A `red-team-finder` @ **sonnet** was launched for the rest of area 10 (FACT
+primitive `src/fact_tree.cpp/.h` + cross-cutting bounds + OpenMP races; confirm/
+refute carried C-001..C-007). Its findings are recorded in Round 4 below.
+
+---
+
+## 2026-06-15 — Round 4: Area 10 (FACT primitive & C++ memory safety), sonnet
+
+Finder: `red-team-finder` @ **sonnet** (launched during Round 3's ASAN fix).
+Reviewed `fact_tree.{cpp,h}` + all 12 consensus kernels for OOB / overflow /
+aliasing, OpenMP races, and a fresh cross-TU ODR sweep. Orchestrator (opus)
+verified the HIGH finding by reading the code directly.
+
+- **Finder yield: 1 new confirmed HIGH (fixed), 1 new LOW (open); 4 carried
+  confirmed; 2 carried refuted.**
+- **MEM-001 (HIGH, REAL) — FIXED this round.** `src/Quartet.cpp` computed the
+  `compat` matrix size and indices with plain `int*int` (`M*M` alloc L383;
+  `i*M+j`/`j*M+c` at L401/402/601/671) → overflow UB for M>46340 unique splits.
+  The Quartet twin of TC-004, missed when transfer was fixed. Fixed with
+  `static_cast<std::size_t>` at all 5 sites; compiles clean, Quartet+transfer
+  suites pass. **CRAN ASAN/UBSan blocker.**
+- **MEM-002 (LOW, open)** — `reinterpret_cast<bool*>(char*)` strict-aliasing UB
+  in `cons_frequency.cpp:1342-1348`; never misfires (`sizeof(bool)==1`), portable
+  fix is `uint8_t`.
+- **C-001 REFUTED** — `anc[-1]` in `contract()` unreachable (root always hashed
+  into `H[1]`; `good[1]` never cleared). Latent: dependency unasserted.
+- **C-004 REFUTED** — Quartet `pool.data` pointer stability OK (`total_splits`
+  is `size_t`; `reserve` before pointer-keyed inserts).
+- **C-002 / C-003 / C-006 / C-007 CONFIRMED but latent/degenerate-only** — all
+  require malformed/disconnected input unreachable through the R API
+  (`ape::Preorder` → connected, well-formed). C-006 (dropped `assert(num==N)`)
+  is the one worth a cheap `Rcpp::stop` guard for defence-in-depth.
+- **ODR sweep CLEAN** beyond TC-009 (`quartet_index`/`quartet_state_from_sides`
+  are `inline` in Quartet only; `Tree` distinct via `bhv::`/anon ns; all else
+  `static`/anon/named). **OpenMP regions race-free** (per-element ownership; no
+  R/Rcpp in parallel).
+- **Seam status: still yielding** (MEM-001 was a live HIGH) → area 10 stays
+  **sonnet** on revisit. Next angle: a deterministic large-M regression test for
+  MEM-001, and the C-002/3/6/7 defensive guards if hardening for CRAN UBSan.
+
+Full record: `reviews/area10-memory-safety/review.md`. Filed: MEM-001 (fixed),
+MEM-002; updated C-001/C-004 → refuted, C-002/3/6/7 → confirmed.
+
+last_tier(area 10): sonnet
+yield(area 10): 1 confirmed HIGH (fixed) + 1 LOW; 4 carried confirmed, 2 refuted
 
 ---
 
@@ -138,5 +219,5 @@ a full `review.md` under `reviews/<dir>/`. Listed newest-first by review date.
 
 ---
 
-last_focus: 9
-last_focus_set: 2026-06-15 (area 9 Transfer reviewed at sonnet, yielded — next bare /red-team picks area 10 FACT/memory-safety; area 9 seam still yielding, stays sonnet on revisit)
+last_focus: 10
+last_focus_set: 2026-06-15 (area 10 FACT/memory-safety reviewed at sonnet, yielded MEM-001 HIGH — next bare /red-team picks area 11 R wrappers & package infrastructure; area 10 seam still yielding, stays sonnet on revisit)

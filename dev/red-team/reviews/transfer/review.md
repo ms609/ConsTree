@@ -6,10 +6,18 @@
 - **Oracle:** upstream TreeDist at `C:\Users\pjjg18\GitHub\TreeDist` (installed; `TransferConsensus` works on the test inputs below)
 - **Verdict:** CONDITIONAL — one confirmed correctness bug (TC-002), one real regression (TC-001),
   one latent overflow shared with the oracle (TC-004), three test-quality gaps (TC-005/6/7).
-  No shipping crash. Seam still yielding → re-visit area 9 at sonnet.
+  ~~No shipping crash.~~ **Corrected Round 3: there WAS a shipping crash** (TC-009, below).
 - **RESOLUTION (2026-06-15 fix pass):** TC-001/002/004/005/006/007 all **FIXED** and verified
   against an installed build (full `test-transfer.R`: 150 pass / 0 fail). See `verify-fixes.R`
-  and the log.md "Round 2" entry. TC-008 remains a dev-infra caveat (not a package bug).
+  and the log.md "Round 2" entry.
+- **RESOLUTION 2 (2026-06-15 Round 3, ASAN-driven):** A gcc-AddressSanitizer CI run caught a
+  stack-buffer-overflow in `PooledSplits`'s ctor. Root cause **TC-009**: `PooledSplits`/
+  `SplitHash`/`SplitEqual` were defined at namespace scope with different layouts in BOTH
+  `transfer_consensus.cpp` and `Quartet.cpp` → COMDAT special-member folding linked Quartet's
+  136-byte ctor over transfer's 120-byte `pool`. **FIXED** via anonymous namespaces in both
+  files. This was also the true cause of the "TC-008 load_all segfault" (NOT a header skew).
+  `load_all` now runs Transfer+Quartet cleanly; suites pass. See `test-odr-fix.R`, `run-tests.R`
+  and the log.md "Round 3" entry. ASAN-green confirmation pending a push.
 
 ## Confirmed findings
 
@@ -40,16 +48,24 @@ TC-003  dup label 'a'      -> EXIT=0  "labels a repeated"         (errors — no
 Drivers: `repro-tip-validation.R`, `repro-segfault-isolate.R` (these use `pkgload::load_all`
 and must be adapted to an installed lib — see caveat).
 
-## IMPORTANT caveat — `load_all` is broken for the Transfer path (dev-infra, NOT a shipping bug)
+## ~~CAVEAT — `load_all` is broken~~ — RETRACTED Round 3: it was the TC-009 ODR bug
 
-`pkgload::load_all(".")` builds ConsTree's transfer code against a TreeTools `SplitList.h`
-header that is inconsistent with the installed TreeTools providing `as.Splits` at runtime;
-the raw-split byte width mismatches and `cpp_transfer_consensus` reads out of bounds →
-**segfault on the happy path** under `load_all`, even single-threaded. The **installed**
-package (`R CMD INSTALL`) works correctly — verified `Transfer` returns NSplits=2 on the
-6-tip sanity case, and the TreeDist oracle agrees. This is why the finder reported "R
-segfaults on startup" and why the first repro run crashed before testing TC-002.
-**Consequence:** test/repro work on `Transfer()` must use an installed build, not `load_all`.
+**This earlier hypothesis was WRONG.** Rounds 1–2 attributed the `load_all` "segfault on
+the happy path" to a TreeTools `SplitList.h` byte-width skew (a supposed dev-infra artifact),
+and concluded the installed package was safe. Round 3 disproved both:
+
+- The real cause is the **cross-TU ODR violation TC-009** (duplicated `PooledSplits`/
+  `SplitHash`/`SplitEqual` at namespace scope in `transfer_consensus.cpp` + `Quartet.cpp`).
+  Under `load_all`'s link order the folded COMDAT ctor corrupted the stack → segfault; a
+  gcc-ASAN install caught the same corruption deterministically as a stack-buffer-overflow.
+- "Installed package works / returns NSplits=2" was **luck**, not safety — the same UB, with
+  a link order whose overwrite happened to land on benign padding. Not something to rely on.
+- After fixing TC-009 (anonymous namespaces), **`load_all` runs `Transfer()` and `Quartet()`
+  cleanly** (NSplits 3 each on `as.phylo(0:9, nTip=8)`); transfer+Quartet suites pass.
+
+**Consequence (updated):** `load_all` is now the correct, working dev loop for this path.
+Drivers: `test-odr-fix.R` (happy-path under load_all), `run-tests.R` (suites). The old
+"use an installed build" workaround is no longer needed.
 
 ## Ruled out (no issue)
 - OpenMP data races in all three parallel regions (`transfer_dist_mat`, `compute_td`,
