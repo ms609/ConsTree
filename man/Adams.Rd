@@ -30,7 +30,8 @@ use this method.
 # Two rooted trees that disagree only on the position of one leaf
 trees <- c(ape::read.tree(text = "(((a, b), c), d);"),
            ape::read.tree(text = "(((a, b), d), c);"))
-Adams(trees) # keeps the clade (a, b); leaves c, d unresolved at the root
+# keeps the clade (a, b); leaves c, d unresolved at the root
+ape::write.tree(Adams(trees))
 
 }
 \references{
