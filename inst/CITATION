@@ -1,0 +1,19 @@
+mrs <- person(c("Martin", "R."), "Smith", email = "martin.smith@durham.ac.uk")
+vers <- paste("R package version", meta$Version)
+
+bibentry(
+  bibtype = "Manual",
+  key = "Smith2026",
+  title = "ConsTree: fast algorithms for phylogenetic consensus trees",
+  author = mrs,
+  note = vers,
+  year = 2026,
+  doi = "10.32614/CRAN.package.ConsTree",
+  organization = "Comprehensive R Archive Network",
+  address = "Vienna",
+  textVersion = paste0(
+    "Smith (2026). ConsTree: fast algorithms for phylogenetic consensus trees. ",
+    "Comprehensive R Archive Network, Vienna. doi: 10.32614/CRAN.package.ConsTree"
+  ),
+  mfooter = "Citations for individual methods are provided on their manual pages, which can be viewed by typing help(\"FunctionName\").",
+)
