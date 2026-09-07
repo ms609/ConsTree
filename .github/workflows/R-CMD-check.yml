@@ -159,10 +159,7 @@ jobs:
                 q(status = 1)
               })
               library(ConsTree)
-              testthat::test_file(
-                Sys.getenv("TEST_FILE"),
-                reporter = "verbose"
-              )
+              testthat::test_file(Sys.getenv("TEST_FILE"))
             '
             status=$?
             echo "::endgroup::"
