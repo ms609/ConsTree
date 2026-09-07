@@ -148,6 +148,7 @@ jobs:
         if: matrix.config.os == 'ubuntu-24.04-arm'
         continue-on-error: true
         run: |
+          mkdir -p arm-test-lib
           R CMD INSTALL --library=arm-test-lib .
           for test_file in tests/testthat/test-*.R; do
             echo "::group::${test_file}"
