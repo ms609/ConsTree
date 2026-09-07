@@ -15,12 +15,13 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
 ```
 
 'ConsTree' condenses a collection of phylogenetic trees -- a bootstrap or
-Bayesian posterior sample, say -- into a single summary tree.  The methods fall
-into two families: those that select groupings (splits or clusters) by some
-voting rule, and those that summarize the trees through a distance or
-treespace criterion.
+Bayesian posterior sample, perhaps -- into a single summary tree.
+It implements two categories of method: (i) those that retain groupings based on
+a voting rule; and (ii) summary trees selected based on their distance from
+other trees in the sample.
 
 ```{r load, message = FALSE}
+# Load packages with:
 library("ConsTree")
 library("TreeTools", quietly = TRUE)
 ```
@@ -42,10 +43,9 @@ trees <- ape::read.tree(text = c(
   "((((t1,((t2,t3),(t5,t6))),t4),(t8,t9)),t7);"))
 ```
 
-A consistent colour marks each leaf, so the eye can follow a leaf from one tree
-to the next.
 
 ```{r palette}
+# Colour leaf labels consistently
 nTip <- 9
 leafCol <- setNames(hcl.colors(nTip + 1), TipLabels(nTip + 1))
 plotCons <- function(tree, main = "") {
@@ -62,13 +62,6 @@ par(oldPar)
 
 Each method retains a superset of the groupings kept by the one before it:
 
-```{r resolution}
-data.frame(
-  method  = c("Strict", "Majority", "Frequency", "Greedy"),
-  splits  = c(NSplits(Strict(trees)),    NSplits(Majority(trees)),
-              NSplits(Frequency(trees)),  NSplits(Greedy(trees)))
-)
-```
 
 ```{r plot-gradient, fig.height = 5}
 oldPar <- par(mfrow = c(2, 2), mar = c(0.5, 0.5, 1.5, 0.5))
@@ -79,24 +72,30 @@ plotCons(Greedy(trees),    "Greedy (extended majority)")
 par(oldPar)
 ```
 
-`Strict()` keeps only the two groupings present in every tree; `Majority()` adds
-those in more than half; `Frequency()` keeps a grouping that beats every
-grouping it conflicts with; and `Greedy()` adds compatible groupings most
-frequent first, giving the most resolved summary.
+```{r resolution}
+data.frame(
+  method  = c("Strict", "Majority", "Frequency", "Greedy"),
+  splits  = c(NSplits(Strict(trees)),    NSplits(Majority(trees)),
+              NSplits(Frequency(trees)),  NSplits(Greedy(trees)))
+)
+```
 
-Two further rules apply different conflict criteria rather than a frequency
-threshold.  `Loose()` (the semi-strict, or combinable-component, consensus)
-keeps every grouping that *no* tree contradicts, and `MajorityPlus()` keeps a
-grouping displayed by more trees than contradict it.  Because the default
-`Majority()` threshold (`p = 0.5`) admits a grouping seen in exactly half the
-trees, even when the other half contradict it, `Majority()` is *not* always a
-subset of `MajorityPlus()`.
+`Strict()` keeps only the two groupings that occur in every tree;
+`Majority()` adds those that occur in more than half;
+`Frequency()` keeps any grouping that beats every grouping it conflicts with;
+and `Greedy()` adds compatible groupings, most frequent first, giving the most resolved summary.
+
+Simply counting splits overlooks the possibility that some splits are more 
+heavily contradicted by other trees.
+`Loose()` (the semi-strict, or combinable-component, consensus)
+keeps every grouping that no tree contradicts, whereas `MajorityPlus()` keeps
+any grouping that is displayed by more trees than contradict it.
 
 ## Rooted methods
 
 `Adams()`, `RStar()` and `Local()` treat the input as **rooted** and reason
-about clusters and rooted triplets rather than unrooted splits.  They can
-therefore recover structure that the unrooted strict consensus collapses:
+about clusters and rooted triplets rather than unrooted splits.  They may
+therefore recover structure that an unrooted strict consensus would collapse:
 
 ```{r rooted}
 rTrees <- ape::read.tree(text = c(
@@ -114,14 +113,6 @@ for (i in seq_along(rTrees)) plotCons(rTrees[[i]], main = paste("Tree", i))
 par(oldPar)
 ```
 
-```{r rooted-splits}
-data.frame(
-  method = c("Strict", "Adams", "RStar", "Local"),
-  splits = c(NSplits(Strict(rTrees)), NSplits(Adams(rTrees)),
-             NSplits(RStar(rTrees)),  NSplits(Local(rTrees)))
-)
-```
-
 The unrooted strict consensus keeps a single grouping, but the rooted methods
 recover more:
 
@@ -134,42 +125,44 @@ plotCons(Local(rTrees),  "Local")
 par(oldPar)
 ```
 
-`Adams()` may introduce groupings present in no input tree; `RStar()` keeps each
-rooted triplet that wins a plurality over both alternatives; and `Local()`
-returns the minimum local consensus of the shared triplets (limited to 20
-leaves, and best suited to congruent samples).
+```{r rooted-splits}
+data.frame(
+  method = c("Strict", "Adams", "RStar", "Local"),
+  splits = c(NSplits(Strict(rTrees)), NSplits(Adams(rTrees)),
+             NSplits(RStar(rTrees)),  NSplits(Local(rTrees)))
+)
+```
+
+An `Adams()` consensus may display groupings that no input tree contains.
+`RStar()` keeps each rooted triplet that wins a plurality over both alternatives; `Local()` returns the minimum local consensus of the shared triplets (limited to 20 leaves, and best suited to congruent samples).
 
 ## Distance and branch-length summaries
 
-A second family ignores grouping frequencies and instead seeks a tree close to
-the sample under a chosen criterion.
+Maximizing the counts of individual groupings is equivalent to finding the
+tree with the minimum total Robinson--Foulds distance to all input trees.
+As the Robinson--Foulds distance exhibits shortcomings [@Smith2020], other
+distance measures potentially provide more instructive summary trees.
 
-The majority-rule tree has a tidy optimality property: it is the *median* tree
-under the Robinson–Foulds metric -- the tree whose total RF distance to the
-sample is smallest.  `Quartet()` is the quartet-distance analogue, seeking (an
-approximation to) the tree that minimizes the total quartet distance to the
-inputs instead [@Takazawa2026].
-Because the quartet distance gives extra weight to deep
-branches, the result is often *more* resolved than the majority-rule tree:
+`Quartet()` is the quartet-distance analogue, seeking (an approximation to) the tree that minimizes the total quartet distance to the inputs instead [@Takazawa2026].
+Because the quartet distance gives extra weight to deep branches, the result is
+often more resolved than the majority-rule tree:
 
 ```{r quartet}
 c(majority = NSplits(Majority(trees)),
   quartet  = NSplits(Quartet(trees)))
 ```
 
-When the trees carry **branch lengths**, two further summaries become available.
+`median.multiPhylo()` in the
+['TreeDist'](https://ms609.github.io/TreeDist/) package allows such a median
+to be selected from within a sample of trees under any metric; unlike the
+previous approaches, this is restricted to tree topologies within the sample.
+
+When the trees carry edge lengths, two further summaries become available.
 `Average()` returns the tree whose path-length (patristic) distances best match
 the average of the input distance matrices, while `BHVMean()` computes the
 Fréchet mean in Billera–Holmes–Vogtmann treespace, with branch lengths;
 `BHVDistance()`, `BHVPairwiseDistances()` and `BHVVariance()` provide the
 underlying geodesic distances and dispersion.
-
-The Fréchet mean only resolves a grouping that the geodesics actually support.
-Given a sample of mutually near-random trees, every internal branch of the mean
-is dragged to (almost) zero length: the result is formally resolved but plots as
-a star, which is useless to look at.  To show the method's behaviour we instead
-need trees that share a backbone.  Here four of five trees agree on the
-topology, differing only in branch length, while the fifth rearranges one clade:
 
 ```{r branch-length, fig.height = 4.6}
 blTrees <- ape::read.tree(text = c(
@@ -189,23 +182,21 @@ par(oldPar)
 BHVVariance(blTrees, mean = meanTree)
 ```
 
-The mean recovers the shared topology, but its internal branches are not simple
-arithmetic averages.  The two groupings that every tree displays keep their full
-length, whereas the two that the fifth tree contradicts are pulled noticeably
-shorter -- the geodesic to a tree that lacks a branch shrinks that branch on the
-way, so disagreement is expressed as shortening rather than collapse.
+The mean recovers the shared topology.
+The two groupings that every tree displays keep their full length;
+the two that the fifth tree contradicts exhibit shorter branches.
 
-## Choosing a method
 
-As a rule of thumb: `Strict()` and `Loose()` when you want only well-supported
-groupings; `Majority()` for the familiar bootstrap summary; `Frequency()`,
-`Greedy()` or `Quartet()` for a more resolved picture; the rooted methods when a
-root is meaningful; and `Average()` or `BHVMean()` when branch lengths matter.
+# Method selection
 
-Where no constructed consensus is wanted, the
-['TreeDist'](https://ms609.github.io/TreeDist/) package offers a complementary
-approach: it can return the sampled tree with the lowest median
-clustering-information distance to the rest -- a single *representative* of the
-sample rather than a summary built from its parts.  And the
-['Rogue'](https://ms609.github.io/Rogue/) package can first strip unstable
-('rogue') leaves [@Smith2022r], often sharpening any of the consensus trees above.
+The most appropriate method in a particular circumstance depends on the value
+of precision versus accuracy; trees that resolve more groupings are
+progressively less likely to be accurate [@Smith2019].
+
+By omitting unstable leaves from the input trees, perhaps via the
+['Rogue'](https://ms609.github.io/Rogue/) package, it is possible to improve
+the resolution of consensus trees by reconciling groupings that only differ in
+the position of rogue taxa [@Smith2022r].
+
+
+# References
