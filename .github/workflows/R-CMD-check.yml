@@ -148,26 +148,22 @@ jobs:
         if: matrix.config.os == 'ubuntu-24.04-arm'
         continue-on-error: true
         run: |
-          mkdir -p arm-test-lib
-          R CMD INSTALL --library=arm-test-lib .
-          for test_file in tests/testthat/test-*.R; do
-            echo "::group::${test_file}"
-            TEST_FILE="${test_file}" Rscript --vanilla -e '
-              .libPaths(c("arm-test-lib", .libPaths()))
-              options(error = function() {
-                traceback(2)
-                q(status = 1)
-              })
-              library(ConsTree)
-              testthat::test_file(Sys.getenv("TEST_FILE"))
-            '
-            status=$?
-            echo "::endgroup::"
-            if [ "${status}" -ne 0 ]; then
-              echo "::error file=${test_file}::ARM test failed with status ${status}"
-              exit "${status}"
-            fi
-          done
+          arm_test_lib="${RUNNER_TEMP}/arm-test-lib"
+          mkdir -p "${arm_test_lib}"
+          R CMD INSTALL --library="${arm_test_lib}" .
+          ARM_TEST_LIB="${arm_test_lib}" Rscript --vanilla -e '
+            .libPaths(c(Sys.getenv("ARM_TEST_LIB"), .libPaths()))
+            options(error = function() {
+              traceback(2)
+              q(status = 1)
+            })
+            library(ConsTree)
+            for (test_file in Sys.glob("tests/testthat/test-*.R")) {
+              cat(sprintf("\nSTART %s\n", test_file))
+              flush.console()
+              testthat::test_file(test_file)
+            }
+          '
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
