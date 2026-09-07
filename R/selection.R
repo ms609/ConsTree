@@ -163,11 +163,8 @@ Greedy <- function(trees) {
 #' Majority-rule (+) consensus tree
 #'
 #' `MajorityPlus()` computes the majority-rule (+) consensus
-#' \insertCite{JanssonShenSung2016}{ConsTree}: a clade is retained when it
-#' occurs in more input trees than contradict it -- i.e. when the number of
-#' trees displaying the clade exceeds the number of trees incompatible with it.
-#' A tree that is compatible with a clade without displaying it counts neither
-#' for nor against.
+#' \insertCite{JanssonShenSung2016}{ConsTree}, which displays each clade that
+#' occurs in more input trees than contradict it.
 #'
 #' Every majority-rule split is retained (a split in more than half the trees is
 #' contradicted by fewer than half), so `MajorityPlus()` contains the
