@@ -161,7 +161,7 @@ jobs:
               library(ConsTree)
               testthat::test_file(
                 Sys.getenv("TEST_FILE"),
-                reporter = testthat::VerboseReporter$new()
+                reporter = "verbose"
               )
             '
             status=$?
