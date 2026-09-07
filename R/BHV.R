@@ -123,10 +123,11 @@ NULL
 #'     with rows corresponding to `tree1` and columns to `tree2`.
 #' }
 #'
-# TODO Update to `lengths = runif` once TreeTools > 2.3.0 is required
 #' @examples
 #' set.seed(2)
-#' trees <- lapply(1:4, function(i) TreeTools::RandomTree(8, root = TRUE, lengths = runif(14)))
+#' trees <- lapply(1:4, function(i) 
+#'   TreeTools::RandomTree(8, root = TRUE, lengths = runif)
+#' )
 #' t1 <- trees[[1]]; t2 <- trees[[2]]
 #'
 #' BHVDistance(t1, t2)                  # scalar
