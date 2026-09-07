@@ -11,29 +11,20 @@ Greedy(trees)
 share the same leaf labels.}
 }
 \value{
-\code{Greedy()} returns the consensus tree, an object of class \code{phylo},
+\code{Greedy()} returns an object of class \code{phylo} denoting the consensus,
 rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{Greedy()} returns the greedy consensus, also termed the extended
+\code{Greedy()} computes the greedy consensus, also termed the extended
 majority-rule consensus \insertCite{Bryant2003}{ConsTree}.  Distinct splits
-are considered in decreasing order of their frequency across the input trees;
-each is added to the growing consensus if it is compatible with every split
-already accepted.  The result is typically more resolved than the
-majority-rule consensus (\code{\link[=Majority]{Majority()}}), and contains it.
+are considered in decreasing order of their frequency across the input trees,
+breaking ties arbitrarily; each is added to the growing consensus if it is
+compatible with every split already accepted.
 }
 \details{
-Splits that occur equally often are considered in a fixed, reproducible order,
-so the result is deterministic.  Where several mutually incompatible splits
-are equally frequent, a different (but equally valid) greedy resolution may be
-returned by other software.
-
-This implementation ports the asymptotically efficient \code{greedyConsensusFast}
-algorithm of \insertCite{JanssonShenSung2016}{ConsTree} from their FACT
-toolkit (used with permission): the distinct clusters are extracted in a
-single post-order sweep of each tree and added in decreasing order of
-frequency whenever compatible with the tree built so far, avoiding the
-explicit pairwise compatibility matrix used previously.
+The implementation builds upon the \code{greedyConsensusFast} algorithm of
+\insertCite{JanssonShenSung2016}{ConsTree}; please cite that paper when
+using this method.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)

@@ -11,29 +11,21 @@ Frequency(trees)
 share the same leaf labels.}
 }
 \value{
-\code{Frequency()} returns the consensus tree, an object of class \code{phylo},
-rooted as in the first entry of \code{trees}.
+\code{Frequency()} returns an object of class \code{phylo} denoting the
+frequency consensus, rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{Frequency()} returns the frequency-difference consensus: a split is retained
-when it occurs strictly more often than every split that conflicts with it.
-Equivalently, among each set of mutually incompatible splits, the consensus
-keeps a split only if it is strictly more frequent than all its rivals.
+\code{Frequency()} computes the frequency-difference consensus, which retains
+each split that occurs more often than every split that conflicts with it.
 }
 \details{
 The frequency-difference consensus is at least as resolved as the
-majority-rule consensus (\code{\link[=Majority]{Majority()}}) -- a split in more than half the
-trees is necessarily more frequent than any conflicting split -- and is
-contained within the greedy consensus (\code{\link[=Greedy]{Greedy()}}).  The retained splits
-are mutually compatible, so they define a valid tree.
+majority-rule consensus (\code{\link[=Majority]{Majority()}}), and is contained within the greedy
+consensus (\code{\link[=Greedy]{Greedy()}}).
 
-This implementation ports the near-linear \eqn{O(kn \log n)} algorithm of
-\insertCite{Jansson2024;textual}{ConsTree} from their FDCT reference C++ (used
-with permission): cluster frequencies are computed by a divide-and-conquer
-labelling with radix sort, and conflicting lower-frequency clusters are
-filtered out using centroid-path decomposition, lowest-common-ancestor and
-range-minimum queries, and tree contraction, avoiding the explicit
-\eqn{O(s^2)} pairwise compatibility matrix used previously.
+This implementation builds on the FDCT algorithm of
+\insertCite{Jansson2024;textual}{ConsTree}; please cite that paper when
+using this method.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)
