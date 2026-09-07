@@ -1,63 +1,24 @@
 #' R* consensus tree
 #'
-#' `RStar()` returns the R* consensus \insertCite{Degnan2009}{ConsTree} of a set
-#' of rooted trees.
+#' `RStar()` returns the R\* consensus \insertCite{Degnan2009}{ConsTree} of a
+#' set of rooted trees.
 #'
-#' The R* consensus is a rooted-triplet method.  For every set of three leaves it
+#' The R\* consensus is a rooted-triplet method.  For every set of three leaves it
 #' tallies, across the input trees, the three possible resolved rooted triplets
 #' (`ab|c`, `ac|b`, `bc|a`) and keeps whichever appears most frequently.
 #' Ties are not kept.
 #' The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.
-#' The R* tree is the tree whose clades are exactly the strong clusters of
-#' \eqn{R_{maj}} \insertCite{Degnan2009,Jansson2016a}{ConsTree}:
-#' a leaf set `A` is a clade if and only if, for every pair of leaves in `A`
-#' and every leaf `x` outside `A`, the triplet grouping that pair against `x`
-#' has been kept.
-#' Equivalently, R* is the most resolved tree that displays no resolved triplet
+#' Then R\* is the most resolved tree that displays no resolved triplet
 #' outside \eqn{R_{maj}}.
 #'
-#' R* is always a *refinement* of the majority-rule consensus
-#' (every majority clade also appears in `RStar()`) and is a statistically
-#' consistent estimator of a species tree from gene trees.  Unlike [`Local()`]
-#' it is **polynomial** and imposes no hard leaf-count limit: it stores no dense
-#' \eqn{n^3} structure (memory is \eqn{O(kn^2)} for `k` input trees), so the
-#' practical bound is running time (the tally is \eqn{O(kn^3)}), not a memory
-#' wall -- quite unlike `Local()`'s exact-exponential 20-leaf bound.
-#'
-#' Like [`Adams()`], R* is a rooted method: triplet states depend on the
-#' rooting, so input trees are treated as rooted on their current root.  Root the
-#' trees as you intend before calling `RStar()`.
-#'
-#' @section Construction and conventions:
-#' \itemize{
-#'   \item *Fans.*  When a non-binary input tree leaves three leaves unresolved
-#'     (a fan), that tree does not count toward any resolution of that triplet;
-#'     fans have no impact on \eqn{R_{maj}}
-#'     \insertCite{Jansson2016a}{ConsTree}.
-#'   \item *Ties.*  If no resolution of a triple is uniquely favoured, that
-#'     triple contributes nothing, leaving the affected taxa unresolved.
-#'   \item *Existence and uniqueness.*  The strong-cluster construction always
-#'     yields a single, well-defined tree (Lemma 1.1 of
-#'     \insertCite{Jansson2016a}{ConsTree}); there is no incompatibility or
-#'     "build-failure" case to resolve.
-#'   \item *Algorithm.*  Following \insertCite{Jansson2016a}{ConsTree}, the tree
-#'     is built from a leaf-pair similarity -- for each pair `a`, `b`, the number
-#'     of leaves `x` for which `ab|x` lies in \eqn{R_{maj}} -- whose single-linkage
-#'     (Apresjan) clusters form a laminar superset of the strong clusters; those
-#'     are then filtered exactly and assembled.  The tally runs in \eqn{O(kn^3)}
-#'     time using per-tree constant-time LCA queries and stores no \eqn{n^3}
-#'     tensor (memory \eqn{O(kn^2)}); the assembly is about \eqn{O(n^3)}.  The
-#'     asymptotically sub-cubic bounds of
-#'     \insertCite{Jansson2013a,Jansson2016a}{ConsTree} rely on
-#'     fast-matrix-multiplication and dynamic-connectivity machinery that does
-#'     more work than this for every practical leaf count, so they are not used.
-#' }
+#' R\* is always a refinement of the majority-rule consensus:
+#' every majority clade also appears in `RStar()`.
 #'
 #' @inheritParams Strict
 #'
 #' @return `RStar()` returns the consensus tree, an object of class `phylo`.
-#' It is rooted by construction, but when the resolved triplets leave the deepest
-#' divergence unresolved the root is a polytomy.
+#' It is rooted by construction, but when the resolved triplets leave the
+#' deepest divergence unresolved the root is a polytomy.
 #'
 #' @examples
 #' # Five trees whose majority signal recovers the species tree (((a,b),c),d):
