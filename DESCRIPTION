@@ -13,13 +13,11 @@ Authors@R: c(
          comment = "Consensus algorithms (FACT, FACT2, FDCT)")
   )
 License: GPL (>= 3)
-Copyright: Incorporates C++ code from 'FACT' (GPL-3, doi:10.1145/2925985) and,
-  with permission, from 'FACT2' and 'FDCT' by Jesper Jansson and colleagues.
-Description: Efficient construction of phylogenetic consensus trees from a set
-  of input trees.  Methods include strict, majority-rule, majority-rule (+),
-  loose (combinable component / semi-strict), greedy, Adams, frequency
-  difference, R*, and local consensus, computed using asymptotically efficient
-  algorithms.  Builds on 'TreeTools' for the manipulation of trees and splits.
+Copyright: Incorporates C++ code from 'FACT' (GPL-3, doi:10.1145/2925985),
+  'FACT2' and 'FDCT', by kind permission of Jesper Jansson and colleagues.
+Description: Efficient construction of phylogenetic consensus trees.  Methods
+  include strict, majority-rule, majority-rule (+), loose (combinable component
+  / semi-strict), greedy, Adams, frequency difference, R*, and local consensus.
 URL: https://constree.github.io/
 BugReports: https://github.com/ms609/ConsTree/issues/
 Depends:
