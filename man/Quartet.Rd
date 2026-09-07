@@ -2,32 +2,30 @@
 % Please edit documentation in R/Quartet.R
 \name{Quartet}
 \alias{Quartet}
-\title{Consensus tree minimizing quartet distance}
+\title{Consensus tree that minimizes quartet distance}
 \usage{
 Quartet(
   trees,
-  init = c("majority", "empty", "extended"),
+  init = c("majority", "star", "extended"),
   greedy = c("best", "first")
 )
 }
 \arguments{
 \item{trees}{Object of class \code{multiPhylo} specifying the input trees.
-All trees must share the same tip labels.
-Trees may be non-binary (polytomies are handled correctly).}
+All trees must share the same tip labels.}
 
 \item{init}{Character string specifying the initial tree:
 \itemize{
-\item \code{"majority"} (default): start from the majority-rule consensus.
-\item \code{"empty"}: start from a star tree (purely additive).
-\item \code{"extended"}: start from the extended (greedy) majority-rule consensus.
+\item \code{"majority"}: the majority-rule consensus.
+\item \code{"star"}: a fully unresolved star tree.
+\item \code{"extended"}: the extended (greedy) majority-rule consensus.
 }}
 
 \item{greedy}{Character string specifying the greedy strategy:
 \itemize{
-\item \code{"best"} (default): evaluate all candidates and pick the single
-highest-benefit action at each step.
-\item \code{"first"}: pick the first improving action encountered (faster but
-may give a slightly worse result).
+\item \code{"best"}: evaluate all candidates and pick the best action at each step.
+\item \code{"first"}: pick the first improving action encountered (faster; may give
+a slightly worse result).
 }}
 }
 \value{
@@ -35,33 +33,25 @@ may give a slightly worse result).
 unrooted.
 }
 \description{
-Construct a consensus tree that minimizes the sum of symmetric quartet
-distances to a set of input trees, using a greedy add-and-prune heuristic.
+\code{Quartet()} constructs a consensus tree that minimizes the sum of symmetric
+quartet distances to a set of input trees, using a greedy add-and-prune
+heuristic.
 }
 \details{
-The majority-rule consensus minimizes the sum of Robinson-Foulds distances
-to the input trees.  Analogously, \code{Quartet()} finds an approximate
-median tree under the symmetric quartet distance
-\insertCite{Takazawa2026}{ConsTree}, which counts
-both false-positive and false-negative resolved quartets equally.
+Where the majority-rule consensus minimizes the sum of Robinson-Foulds
+distances to the input trees, \code{Quartet()} finds an approximate median tree
+under the symmetric quartet distance \insertCite{Takazawa2026}{ConsTree},
+which counts both false-positive and false-negative resolved quartets
+equally.
 
 Because the quartet distance gives greater weight to deep branches (which
 resolve more quartets), quartet consensus trees tend to be more resolved
 than majority-rule trees, especially when phylogenetic signal is low.
 
-The algorithm pools all splits observed across input trees and maintains
-a quartet profile: for each of the \eqn{\binom{n}{4}}{C(n,4)} quartets,
-a count of how many input trees resolve it as each of the three possible
-topologies.  Splits are greedily added to (or removed from) the consensus
-when doing so reduces the total symmetric quartet distance to the input
-trees.  Candidate splits must be compatible with all currently included
-splits.
-
-The function supports trees with up to 100 tips.  For larger trees,
-the explicit quartet enumeration becomes prohibitively expensive.
+The function supports trees with up to 100 tips.
 }
 \examples{
-library(TreeTools)
+library("TreeTools", quietly = TRUE)
 
 # Generate bootstrap-like trees
 trees <- as.phylo(1:30, nTip = 8)
