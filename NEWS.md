@@ -1,7 +1,6 @@
-# ConsTree 0.0.0.9008 (development)
+# ConsTree 1.0.0 (2026-09-07)
 
-First public release: a consensus-tree toolkit built on
-[TreeTools](https://ms609.github.io/TreeTools/).
+First public release.
 
 Split-based consensus methods:
 
