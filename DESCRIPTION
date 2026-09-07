@@ -31,7 +31,7 @@ Imports:
   TreeTools (>= 2.1.0),
 LinkingTo:
   Rcpp,
-  TreeTools (>= 2.1.0)
+  TreeTools (>= 2.1.0),
 SystemRequirements: C++17
 Suggests:
   knitr,
