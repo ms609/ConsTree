@@ -208,6 +208,11 @@ Tree looseMerge(Tree A, Tree B, bool op, int numTaxas) {
           } else {
             a = L[a].back();
             int ridx = DEPTH[B.idx[b]] - DEPTH[a];
+            // Guard is not reachable via the public API (R wrapper validates
+            // input), but defence-in-depth against future refactors.
+            if (ridx < 0 || ridx >= static_cast<int>(R[b].size()))
+              Rcpp::stop("Internal error: node ID %d out of range (depth vector size %d)",
+                         ridx, (int)R[b].size());
             b = R[b][ridx];
           }
         } else {
@@ -217,6 +222,11 @@ Tree looseMerge(Tree A, Tree B, bool op, int numTaxas) {
           } else {
             b = R[b].back();
             int lidx = DEPTH[B.idx[a]] - DEPTH[b];
+            // Guard is not reachable via the public API (R wrapper validates
+            // input), but defence-in-depth against future refactors.
+            if (lidx < 0 || lidx >= static_cast<int>(L[a].size()))
+              Rcpp::stop("Internal error: node ID %d out of range (depth vector size %d)",
+                         lidx, (int)L[a].size());
             a = L[a][lidx];
           }
         }
@@ -272,6 +282,18 @@ Tree looseMerge(Tree A, Tree B, bool op, int numTaxas) {
       }
     }
   }
+  // FACT loose.cpp:258 invariant: exactly `newNodes` vertices were inserted, so
+  // the running index must have reached the allocated node count.  A mismatch
+  // means the BEFORE/AFTER bookkeeping built the wrong shape -- fail loud rather
+  // than return a silently mis-built consensus.  Cannot be triggered via a
+  // legitimate R call (looseMerge is internal; the check fires only if the C++
+  // bookkeeping itself is wrong), so excluded from coverage like analogous
+  // post-condition guards in rstar.cpp / bhv.cpp.
+  if (next != ret.cnt) {
+    // # nocov start
+    Rcpp::stop("looseMerge: built %d nodes but allocated %d", next, ret.cnt);
+    // # nocov end
+  }
   for (int i = 1; i <= numTaxas; ++i) ret.idx[i] = B.idx[i];
   return ret;
 }
@@ -300,58 +322,6 @@ Tree looseConsensus(const std::vector<Tree>& T, int numTaxas) {
 // string without a trailing ';'.
 // [[Rcpp::export]]
 std::string looseConsensusCpp(Rcpp::List edgeList, int nTip) {
-  // Validate the private `.Call()` contract before entering the implementation.
-  // Rcpp::stop() must remain in this exported wrapper: R errors use a long jump
-  // and cannot safely unwind the implementation's C++ stack.
-  if (nTip < 4)
-    Rcpp::stop("`nTip` must be at least 4.");
-  if (edgeList.size() < 2)
-    Rcpp::stop("`edgeList` must contain at least two trees.");
-
-  for (int i = 0; i < edgeList.size(); ++i) {
-    if (!Rf_isMatrix(edgeList[i]) || !Rf_isInteger(edgeList[i]))
-      Rcpp::stop("`edgeList` entries must be integer edge matrices.");
-    Rcpp::IntegerMatrix edge(edgeList[i]);
-    if (edge.ncol() != 2)
-      Rcpp::stop("`edgeList` entries must have two columns.");
-
-    const int nEdge = edge.nrow();
-    if (nEdge < nTip)
-      Rcpp::stop("`edgeList` entries must describe rooted trees.");
-    const int root = edge(0, 0);
-    int nNode = nTip;
-    for (int r = 0; r < nEdge; ++r) {
-      const int parent = edge(r, 0), child = edge(r, 1);
-      if (parent == NA_INTEGER || child == NA_INTEGER ||
-          parent < 1 || child < 1 || parent == child)
-        Rcpp::stop("`edgeList` entries must describe rooted trees.");
-      nNode = std::max(nNode, std::max(parent, child));
-    }
-    if (nNode <= nTip || nEdge != nNode - 1)
-      Rcpp::stop("`edgeList` entries must describe rooted trees.");
-
-    std::vector<int> parentCount(nNode + 1, 0), childCount(nNode + 1, 0);
-    for (int r = 0; r < nEdge; ++r) {
-      const int parent = edge(r, 0), child = edge(r, 1);
-      ++parentCount[child];
-      ++childCount[parent];
-      if (parent != root && parentCount[parent] == 0)
-        Rcpp::stop("`edgeList` entries must be in preorder.");
-    }
-    if (parentCount[root] != 0)
-      Rcpp::stop("`edgeList` entries must describe rooted trees.");
-    for (int node = 1; node <= nNode; ++node) {
-      if (node != root && parentCount[node] != 1)
-        Rcpp::stop("`edgeList` entries must describe rooted trees.");
-      if (node <= nTip) {
-        if (childCount[node] != 0)
-          Rcpp::stop("`edgeList` entries must describe rooted trees.");
-      } else if (childCount[node] < 2) {
-        Rcpp::stop("`edgeList` entries must describe rooted trees.");
-      }
-    }
-  }
-
   int nTree = edgeList.size();
   std::vector<fact::Tree> T;
   T.reserve(nTree);

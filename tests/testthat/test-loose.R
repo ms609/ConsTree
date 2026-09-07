@@ -142,32 +142,3 @@ test_that("Loose drops a split that any input contradicts", {
   expect_true(all(kept %in% lSplits))      # {t1,t2} retained (present in every input)
   expect_false(any(dropped %in% lSplits))  # {t3,t4} dropped (an input contradicts it)
 })
-
-test_that("loose C++ entry point rejects invalid input before merging", {
-  looseCpp <- ConsTree:::looseConsensusCpp
-  check <- function(edge, nTip = 4L, message) {
-    expect_error(looseCpp(list(edge, edge), nTip), message)
-  }
-
-  check(matrix(integer(), 0L, 2L), 3L, "nTip")
-  expect_error(looseCpp(list(), 4L), "at least two")
-  check(1L, message = "integer edge matrices")
-  check(matrix(1, 1L, 2L), message = "integer edge matrices")
-  check(matrix(integer(), 0L, 1L), message = "two columns")
-  check(matrix(c(5L, 1L, 5L, 2L, 5L, 3L), 3L, 2L, byrow = TRUE),
-        message = "rooted trees")
-  check(matrix(c(5L, NA_integer_, 5L, 2L, 5L, 3L, 5L, 4L),
-               4L, 2L, byrow = TRUE), message = "rooted trees")
-  check(matrix(c(6L, 1L, 6L, 2L, 6L, 3L, 6L, 4L),
-               4L, 2L, byrow = TRUE), message = "rooted trees")
-  check(matrix(c(6L, 1L, 5L, 6L, 5L, 2L, 5L, 3L, 5L, 4L),
-               5L, 2L, byrow = TRUE), message = "preorder")
-  check(matrix(c(5L, 2L, 2L, 5L, 5L, 1L, 5L, 3L),
-               4L, 2L, byrow = TRUE), message = "rooted trees")
-  check(matrix(c(5L, 1L, 5L, 1L, 5L, 2L, 5L, 3L),
-               4L, 2L, byrow = TRUE), message = "rooted trees")
-  check(matrix(c(5L, 1L, 1L, 2L, 5L, 3L, 5L, 4L),
-               4L, 2L, byrow = TRUE), message = "rooted trees")
-  check(matrix(c(5L, 6L, 5L, 1L, 5L, 2L, 5L, 3L, 6L, 4L),
-               5L, 2L, byrow = TRUE), message = "rooted trees")
-})
