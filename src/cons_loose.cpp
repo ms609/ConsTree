@@ -293,10 +293,16 @@ Tree looseConsensus(const std::vector<Tree>& T, int numTaxas) {
   return contract(ret);
 }
 
-// Validate the private `.Call()` contract before entering the implementation.
-// The merge routine only accepts preorder, rooted phylogenetic trees; keeping
-// R errors here ensures that the implementation below never unwinds into R.
-void validateLooseInput(const Rcpp::List& edgeList, int nTip) {
+}  // namespace
+
+// Loose consensus of `edgeList` (each a PREORDER ape edge matrix, rooted at
+// taxon 1 by the caller) on `nTip` leaves.  Returns an integer-label Newick
+// string without a trailing ';'.
+// [[Rcpp::export]]
+std::string looseConsensusCpp(Rcpp::List edgeList, int nTip) {
+  // Validate the private `.Call()` contract before entering the implementation.
+  // Rcpp::stop() must remain in this exported wrapper: R errors use a long jump
+  // and cannot safely unwind the implementation's C++ stack.
   if (nTip < 4)
     Rcpp::stop("`nTip` must be at least 4.");
   if (edgeList.size() < 2)
@@ -327,8 +333,6 @@ void validateLooseInput(const Rcpp::List& edgeList, int nTip) {
     std::vector<int> parentCount(nNode + 1, 0), childCount(nNode + 1, 0);
     for (int r = 0; r < nEdge; ++r) {
       const int parent = edge(r, 0), child = edge(r, 1);
-      if (parent > nNode || child > nNode)
-        Rcpp::stop("`edgeList` entries must describe rooted trees.");
       ++parentCount[child];
       ++childCount[parent];
       if (parent != root && parentCount[parent] == 0)
@@ -347,16 +351,7 @@ void validateLooseInput(const Rcpp::List& edgeList, int nTip) {
       }
     }
   }
-}
 
-}  // namespace
-
-// Loose consensus of `edgeList` (each a PREORDER ape edge matrix, rooted at
-// taxon 1 by the caller) on `nTip` leaves.  Returns an integer-label Newick
-// string without a trailing ';'.
-// [[Rcpp::export]]
-std::string looseConsensusCpp(Rcpp::List edgeList, int nTip) {
-  validateLooseInput(edgeList, nTip);
   int nTree = edgeList.size();
   std::vector<fact::Tree> T;
   T.reserve(nTree);
