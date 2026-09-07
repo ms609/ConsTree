@@ -185,7 +185,17 @@ class Tree {
   void fix_tree(Node* root = NULL) {
     if (root == NULL) root = get_root();
     nodes.clear();
-    fix_tree_supp(root);
+    std::vector<Node*> stack;
+    stack.push_back(root);
+    while (!stack.empty()) {
+      Node* curr = stack.back();
+      stack.pop_back();
+      curr->id = static_cast<int>(nodes.size());
+      nodes.push_back(curr);
+      curr->fix_children();
+      for (size_t i = curr->children.size(); i > 0; --i)
+        stack.push_back(curr->children[i - 1]);
+    }
     nodes[0]->leaf_size = 0;
     nodes[0]->node_size = 0;
     nodes[0]->depth = 0;
@@ -222,12 +232,6 @@ class Tree {
   size_t leaves_num;
   std::unordered_map<int, Node*> taxa_to_leaf_map;
 
-  void fix_tree_supp(Node* curr) {
-    curr->id = static_cast<int>(nodes.size());
-    nodes.push_back(curr);
-    curr->fix_children();
-    for (Node* child : curr->children) fix_tree_supp(child);
-  }
 };
 
 // ===========================================================================
@@ -246,24 +250,28 @@ struct taxas_ranges_t {
       : taxas_num(0), taxas(taxas_num_), intervals(nodes_num) {}
 };
 
-inline void build_taxas_ranges_supp(Tree::Node* node, taxas_ranges_t* tr) {
-  if (node->is_leaf()) {
-    tr->taxas[tr->taxas_num] = node->taxa;
-    tr->intervals[node->id].start = tr->intervals[node->id].end =
-        static_cast<int>(tr->taxas_num);
-    tr->taxas_num++;
-    return;
-  }
-  for (Tree::Node* child : node->children) build_taxas_ranges_supp(child, tr);
-  tr->intervals[node->id].start = tr->intervals[node->children[0]->id].start;
-  tr->intervals[node->id].end =
-      tr->intervals[node->children[node->get_children_num() - 1]->id].end;
-}
-
 inline taxas_ranges_t* build_taxas_ranges(Tree* tree) {
   taxas_ranges_t* tr =
       new taxas_ranges_t(tree->get_leaves_num(), tree->get_nodes_num());
-  build_taxas_ranges_supp(tree->get_root(), tr);
+  std::vector<std::pair<Tree::Node*, size_t> > stack;
+  stack.push_back(std::make_pair(tree->get_root(), 0));
+  while (!stack.empty()) {
+    Tree::Node* node = stack.back().first;
+    size_t& child = stack.back().second;
+    if (node->is_leaf()) {
+      tr->taxas[tr->taxas_num] = node->taxa;
+      tr->intervals[node->id].start = tr->intervals[node->id].end =
+          static_cast<int>(tr->taxas_num++);
+      stack.pop_back();
+    } else if (child < node->children.size()) {
+      stack.push_back(std::make_pair(node->children[child++], 0));
+    } else {
+      tr->intervals[node->id].start = tr->intervals[node->children[0]->id].start;
+      tr->intervals[node->id].end = tr->intervals[
+          node->children[node->get_children_num() - 1]->id].end;
+      stack.pop_back();
+    }
+  }
   return tr;
 }
 
@@ -421,22 +429,37 @@ inline int lca(lca_t* lca_prep, int u, int v) {
   }
 }
 
-inline void eulerian_walk(Tree::Node* node, std::vector<int>& E, std::vector<int>& L,
-                          std::vector<int>& R, int depth) {
-  E.push_back(node->id);
-  L.push_back(depth);
-  if (R[node->id] == -1) R[node->id] = static_cast<int>(E.size()) - 1;
-  for (Tree::Node* child : node->children) {
-    eulerian_walk(child, E, L, R, depth + 1);
-    E.push_back(node->id);
-    L.push_back(depth);
-  }
-}
-
 inline lca_t* lca_preprocess(Tree* t) {
   lca_t* lca_prep = new lca_t;
   lca_prep->R.resize(t->get_nodes_num(), -1);
-  eulerian_walk(t->get_root(), lca_prep->E, lca_prep->rmq_prep->v, lca_prep->R, 0);
+  struct EulerFrame {
+    Tree::Node* node;
+    size_t child;
+    int depth;
+  };
+  std::vector<EulerFrame> stack;
+  stack.push_back({t->get_root(), 0, 0});
+  lca_prep->E.push_back(t->get_root()->id);
+  lca_prep->rmq_prep->v.push_back(0);
+  lca_prep->R[t->get_root()->id] = 0;
+  while (!stack.empty()) {
+    EulerFrame& frame = stack.back();
+    if (frame.child == frame.node->children.size()) {
+      stack.pop_back();
+      if (!stack.empty()) {
+        lca_prep->E.push_back(stack.back().node->id);
+        lca_prep->rmq_prep->v.push_back(stack.back().depth);
+      }
+    } else {
+      Tree::Node* child = frame.node->children[frame.child++];
+      const int depth = frame.depth + 1;
+      lca_prep->E.push_back(child->id);
+      lca_prep->rmq_prep->v.push_back(depth);
+      if (lca_prep->R[child->id] == -1)
+        lca_prep->R[child->id] = static_cast<int>(lca_prep->E.size()) - 1;
+      stack.push_back({child, 0, depth});
+    }
+  }
   resize_to_logmul(lca_prep->E);
   resize_to_logmul(lca_prep->rmq_prep->v);
   rmq_preprocess(lca_prep->rmq_prep.get(), lca_prep->rmq_prep->v);
@@ -922,12 +945,23 @@ class FreqDiff {
   }
 
   void compute_m(Tree::Node* node) {
-    if (node->is_leaf()) m[node->id] = e[node->taxa];
-    for (Tree::Node* child : node->children) {
-      compute_m(child);
-      if (m[node->id] > m[child->id]) m[node->id] = m[child->id];
+    std::vector<std::pair<Tree::Node*, bool> > stack;
+    stack.push_back(std::make_pair(node, false));
+    while (!stack.empty()) {
+      Tree::Node* curr = stack.back().first;
+      const bool visited = stack.back().second;
+      stack.pop_back();
+      if (!visited) {
+        stack.push_back(std::make_pair(curr, true));
+        for (size_t i = curr->children.size(); i > 0; --i)
+          stack.push_back(std::make_pair(curr->children[i - 1], false));
+      } else {
+        if (curr->is_leaf()) m[curr->id] = e[curr->taxa];
+        for (Tree::Node* child : curr->children)
+          if (m[curr->id] > m[child->id]) m[curr->id] = m[child->id];
+        if (!curr->is_root()) rsort_lists[m[curr->id]].push_back(curr);
+      }
     }
-    if (!node->is_root()) rsort_lists[m[node->id]].push_back(node);
   }
 
   Tree* contract_tree_fast(Tree* tree, lca_t* lcas, std::vector<int>& marked,
@@ -1397,18 +1431,28 @@ Tree* buildFdctTreeFromEdge(const Rcpp::IntegerMatrix& edge, int nTip) {
 }
 
 // Integer-label Newick (no trailing ';'), taxa emitted 1-indexed to match the R
-// decode labels[as.integer(tip.label)].
-void newickInto(Tree::Node* node, std::string& out) {
-  if (node->is_leaf()) {
-    out += std::to_string(node->taxa + 1);
-    return;
+// decode labels[as.integer(tip.label)].  Explicit frames avoid exhausting the
+// native stack on deeply nested (e.g. caterpillar) trees.
+void newickInto(Tree::Node* root, std::string& out) {
+  std::vector<std::pair<Tree::Node*, size_t> > stack;
+  stack.push_back(std::make_pair(root, 0));
+  while (!stack.empty()) {
+    Tree::Node* node = stack.back().first;
+    size_t& child = stack.back().second;
+    if (node->is_leaf()) {
+      out += std::to_string(node->taxa + 1);
+      stack.pop_back();
+    } else if (child == 0) {
+      out += '(';
+      stack.push_back(std::make_pair(node->children[child++], 0));
+    } else if (child < node->children.size()) {
+      out += ',';
+      stack.push_back(std::make_pair(node->children[child++], 0));
+    } else {
+      out += ')';
+      stack.pop_back();
+    }
   }
-  out += '(';
-  for (size_t i = 0; i < node->get_children_num(); i++) {
-    if (i > 0) out += ',';
-    newickInto(node->children[i], out);
-  }
-  out += ')';
 }
 
 }  // namespace
