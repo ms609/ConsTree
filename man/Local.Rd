@@ -15,42 +15,25 @@ consensus (\code{"rooted"}, the default; MinRLC) or the minimum induced local
 consensus (\code{"induced"}; MinILC).}
 }
 \value{
-\code{Local()} returns the consensus tree, an object of class \code{phylo},
-rooted by construction.
+\code{Local()} returns an object of class \code{phylo} denoting the local
+consensus tree. When there is no valid consensus (as no common triplets
+separate any pair of trees), a star tree is returned.
 }
 \description{
 \code{Local()} returns the local consensus
-\insertCite{JanssonRajabySung2018}{ConsTree} of a set of \strong{rooted} trees.
+\insertCite{JanssonRajabySung2018}{ConsTree} of a set of rooted trees.
+The local consensus is the most conservative tree consistent with the rooted
+triplets shared by every input tree.  The minimum rooted local consensus
+(MinRLC, \code{type = "rooted"}) and the minimum induced local consensus (MinILC,
+\code{type = "induced"}) differ in how the resolution of the result is scored.
 }
 \details{
-The local consensus is the most conservative tree consistent with the rooted
-triplets shared by \emph{every} input tree.  Two variants are offered: the minimum
-rooted local consensus (MinRLC, \code{type = "rooted"}) and the minimum induced
-local consensus (MinILC, \code{type = "induced"}), which differ in how the
-resolution of the result is scored.  The tree is assembled from the Aho-graph
-decomposition of the common-triplet set by dynamic programming over the
-subsets of leaves.
+The implementation builds on the algorithms of
+\insertCite{JanssonRajabySung2018}{ConsTree}; please cite that paper when
+using this method.
 
-The MinRLC and MinILC variants, and the exact exponential-time algorithm used
-here to construct them, are due to \insertCite{JanssonRajabySung2018}{ConsTree};
-this is a direct port of the reference C++ from their \code{FDCT_new} toolkit, used
-with permission.
-
-\strong{Complexity note:} the algorithm is exponential, so \code{Local()} is limited to
-\code{n <= 20} leaves.  Running time depends not only on \code{n} but on how \emph{congruent}
-the input trees are: when few rooted triplets are shared (highly incongruent
-trees, particularly with \code{type = "induced"}), the dynamic programming can
-become intractable even within the 20-leaf limit.  A long-running call can be
-interrupted (e.g. with Ctrl-C).
-
-\strong{No-valid-consensus:} when the entire leaf set forms a single inseparable
-Aho-graph component (no common triplets separate any pair), the algorithm has
-no valid consensus; \code{Local()} then returns a star tree (all leaves attached
-directly to the root, fully unresolved).  The reference binary reports
-"No valid consensus found." for this case.
-
-Input trees are treated as rooted on their current root; root the trees as
-you intend before calling \code{Local()}.
+Because the algorithm is exponential, \code{Local()} is limited to \code{n <= 20}
+leaves.  Running time is faster when input trees are more congruent.
 }
 \examples{
 # Two trees that agree on one cherry but disagree on overall topology

@@ -1,45 +1,27 @@
 #' Local consensus tree
 #'
 #' `Local()` returns the local consensus
-#' \insertCite{JanssonRajabySung2018}{ConsTree} of a set of **rooted** trees.
-#'
+#' \insertCite{JanssonRajabySung2018}{ConsTree} of a set of rooted trees.
 #' The local consensus is the most conservative tree consistent with the rooted
-#' triplets shared by *every* input tree.  Two variants are offered: the minimum
-#' rooted local consensus (MinRLC, `type = "rooted"`) and the minimum induced
-#' local consensus (MinILC, `type = "induced"`), which differ in how the
-#' resolution of the result is scored.  The tree is assembled from the Aho-graph
-#' decomposition of the common-triplet set by dynamic programming over the
-#' subsets of leaves.
+#' triplets shared by every input tree.  The minimum rooted local consensus
+#' (MinRLC, `type = "rooted"`) and the minimum induced local consensus (MinILC,
+#' `type = "induced"`) differ in how the resolution of the result is scored.
+#' 
+#' The implementation builds on the algorithms of
+#' \insertCite{JanssonRajabySung2018}{ConsTree}; please cite that paper when
+#' using this method.
 #'
-#' @details
-#' The MinRLC and MinILC variants, and the exact exponential-time algorithm used
-#' here to construct them, are due to \insertCite{JanssonRajabySung2018}{ConsTree};
-#' this is a direct port of the reference C++ from their `FDCT_new` toolkit, used
-#' with permission.
-#'
-#' **Complexity note:** the algorithm is exponential, so `Local()` is limited to
-#' `n <= 20` leaves.  Running time depends not only on `n` but on how *congruent*
-#' the input trees are: when few rooted triplets are shared (highly incongruent
-#' trees, particularly with `type = "induced"`), the dynamic programming can
-#' become intractable even within the 20-leaf limit.  A long-running call can be
-#' interrupted (e.g. with Ctrl-C).
-#'
-#' **No-valid-consensus:** when the entire leaf set forms a single inseparable
-#' Aho-graph component (no common triplets separate any pair), the algorithm has
-#' no valid consensus; `Local()` then returns a star tree (all leaves attached
-#' directly to the root, fully unresolved).  The reference binary reports
-#' "No valid consensus found." for this case.
-#'
-#' Input trees are treated as rooted on their current root; root the trees as
-#' you intend before calling `Local()`.
+#' Because the algorithm is exponential, `Local()` is limited to `n <= 20`
+#' leaves.  Running time is faster when input trees are more congruent.
 #'
 #' @inheritParams Strict
 #' @param type Character specifying whether to compute the minimum rooted local
 #'   consensus (`"rooted"`, the default; MinRLC) or the minimum induced local
 #'   consensus (`"induced"`; MinILC).
 #'
-#' @return `Local()` returns the consensus tree, an object of class `phylo`,
-#'   rooted by construction.
+#' @return `Local()` returns an object of class `phylo` denoting the local
+#' consensus tree. When there is no valid consensus (as no common triplets
+#' separate any pair of trees), a star tree is returned.
 #'
 #' @examples
 #' # Two trees that agree on one cherry but disagree on overall topology
