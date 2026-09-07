@@ -7,7 +7,7 @@
 Strict(trees)
 }
 \arguments{
-\item{trees}{A list of trees, or a \code{multiPhylo} object; all entries must
+\item{trees}{A list of trees, or a \code{multiPhylo} object. All entries must
 share the same leaf labels.}
 }
 \value{
@@ -16,13 +16,11 @@ rooted as in the first entry of \code{trees}.
 }
 \description{
 \code{Strict()} returns the strict consensus of a set of trees: the tree that
-contains exactly those splits (clades) present in \emph{every} input tree
+contains exactly those splits (clades) present in every input tree
 \insertCite{Day1985}{ConsTree}.
 }
 \details{
-This is a thin wrapper around \code{\link[TreeTools:Consensus]{TreeTools::Consensus()}} with \code{p = 1},
-provided so that every consensus method in this package is reachable through
-a common, consistently named interface.
+This is an alias of \code{\link[TreeTools:Consensus]{TreeTools::Consensus()}} with \code{p = 1}.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)
@@ -45,6 +43,7 @@ Other consensus methods:
 \code{\link[=Majority]{Majority()}},
 \code{\link[=MajorityPlus]{MajorityPlus()}},
 \code{\link[=Quartet]{Quartet()}},
-\code{\link[=RStar]{RStar()}}
+\code{\link[=RStar]{RStar()}},
+\code{\link[=Transfer]{Transfer()}}
 }
 \concept{consensus methods}

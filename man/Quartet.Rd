@@ -92,6 +92,7 @@ Other consensus methods:
 \code{\link[=Majority]{Majority()}},
 \code{\link[=MajorityPlus]{MajorityPlus()}},
 \code{\link[=RStar]{RStar()}},
-\code{\link[=Strict]{Strict()}}
+\code{\link[=Strict]{Strict()}},
+\code{\link[=Transfer]{Transfer()}}
 }
 \concept{consensus methods}

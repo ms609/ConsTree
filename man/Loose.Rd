@@ -7,7 +7,7 @@
 Loose(trees)
 }
 \arguments{
-\item{trees}{A list of trees, or a \code{multiPhylo} object; all entries must
+\item{trees}{A list of trees, or a \code{multiPhylo} object. All entries must
 share the same leaf labels.}
 }
 \value{
@@ -57,6 +57,7 @@ Other consensus methods:
 \code{\link[=MajorityPlus]{MajorityPlus()}},
 \code{\link[=Quartet]{Quartet()}},
 \code{\link[=RStar]{RStar()}},
-\code{\link[=Strict]{Strict()}}
+\code{\link[=Strict]{Strict()}},
+\code{\link[=Transfer]{Transfer()}}
 }
 \concept{consensus methods}

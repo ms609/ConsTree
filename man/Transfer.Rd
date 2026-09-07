@@ -67,4 +67,18 @@ cat("Transfer consensus splits:", NSplits(tc), "\n")
 }
 \seealso{
 \code{\link[=Quartet]{Quartet()}}
+
+Other consensus methods:
+\code{\link[=Adams]{Adams()}},
+\code{\link[=Average]{Average()}},
+\code{\link[=Frequency]{Frequency()}},
+\code{\link[=Greedy]{Greedy()}},
+\code{\link[=Local]{Local()}},
+\code{\link[=Loose]{Loose()}},
+\code{\link[=Majority]{Majority()}},
+\code{\link[=MajorityPlus]{MajorityPlus()}},
+\code{\link[=Quartet]{Quartet()}},
+\code{\link[=RStar]{RStar()}},
+\code{\link[=Strict]{Strict()}}
 }
+\concept{consensus methods}

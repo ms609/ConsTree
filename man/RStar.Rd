@@ -7,31 +7,24 @@
 RStar(trees)
 }
 \arguments{
-\item{trees}{A list of trees, or a \code{multiPhylo} object; all entries must
+\item{trees}{A list of trees, or a \code{multiPhylo} object. All entries must
 share the same leaf labels.}
 }
 \value{
 \code{RStar()} returns the consensus tree, an object of class \code{phylo}.
 It is rooted by construction, but when the resolved triplets leave the deepest
-divergence unresolved the root is a polytomy (in the limit, a star).  Such a
-tree has a root node of degree greater than two, which \code{ape::is.rooted()}
-reports as unrooted; re-root or resolve downstream if a strictly binary root
-is required.  All input trees must share the same set of (unique) tip labels.
+divergence unresolved the root is a polytomy.
 }
 \description{
 \code{RStar()} returns the R* consensus \insertCite{Degnan2009}{ConsTree} of a set
-of \strong{rooted} trees.
+of rooted trees.
 }
 \details{
 The R* consensus is a rooted-triplet method.  For every set of three leaves it
 tallies, across the input trees, the three possible resolved rooted triplets
-(\code{ab|c}, \code{ac|b}, \code{bc|a}) and keeps the one that is \emph{uniquely favoured}: the
-resolution appearing in strictly more input trees than \strong{each} of the other
-two, considered separately.  This is a strict \strong{plurality} rule, not a
-majority rule: a triplet can be uniquely favoured with far fewer than half the
-votes (e.g. a 2--1--1 split among four trees), and any tie leaves those taxa
-unresolved.  The kept triplets form the set of \emph{majority resolved triplets},
-\eqn{R_{maj}}.  The R* tree is then the unique tree whose clades are exactly
+(\code{ab|c}, \code{ac|b}, \code{bc|a}) and keeps whichever appears most frequently.
+A tie leaves those taxa unresolved.
+The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.  The R* tree is then the unique tree whose clades are exactly
 the \strong{strong clusters} of \eqn{R_{maj}}
 \insertCite{Degnan2009,Jansson2016a}{ConsTree}: a leaf set \code{A} is a clade if
 and only if, for \emph{every} pair of leaves in \code{A} and \emph{every} leaf \code{x} outside
@@ -87,7 +80,9 @@ trees <- c(
   ape::read.tree(text = "(((a, c), b), d);"),
   ape::read.tree(text = "(((b, c), a), d);")
 )
-RStar(trees) # (a, b) wins {a,b,c} by plurality (3 vs 1 vs 1)
+
+# (a, b) wins {a,b,c} by plurality (3 vs 1 vs 1)
+ape::write.tree(RStar(trees))
 
 }
 \references{
@@ -107,6 +102,7 @@ Other consensus methods:
 \code{\link[=Majority]{Majority()}},
 \code{\link[=MajorityPlus]{MajorityPlus()}},
 \code{\link[=Quartet]{Quartet()}},
-\code{\link[=Strict]{Strict()}}
+\code{\link[=Strict]{Strict()}},
+\code{\link[=Transfer]{Transfer()}}
 }
 \concept{consensus methods}

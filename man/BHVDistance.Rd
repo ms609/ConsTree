@@ -43,7 +43,8 @@ set.seed(2)
 trees <- lapply(1:4, function(i) 
   TreeTools::RandomTree(8, root = TRUE, lengths = runif)
 )
-t1 <- trees[[1]]; t2 <- trees[[2]]
+t1 <- trees[[1]]
+t2 <- trees[[2]]
 
 BHVDistance(t1, t2)                  # scalar
 BHVDistance(t1, trees)               # named vector
