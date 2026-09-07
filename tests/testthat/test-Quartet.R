@@ -1,6 +1,6 @@
 test_that("Quartet returns input when all trees identical", {
   skip_if_not_installed("Quartet")
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   tr <- as.phylo(42, nTip = 8)
   trees <- c(tr, tr, tr, tr, tr)
   class(trees) <- "multiPhylo"
@@ -14,7 +14,7 @@ test_that("Quartet returns input when all trees identical", {
 })
 
 test_that("Quartet returns star for completely conflicting trees", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   # 4-tip trees: all three possible topologies equally represented
   tr1 <- ape::read.tree(text = "((a,b),(c,d));")
   tr2 <- ape::read.tree(text = "((a,c),(b,d));")
@@ -27,7 +27,7 @@ test_that("Quartet returns star for completely conflicting trees", {
 })
 
 test_that("Quartet handles n=4 tips", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   tr1 <- ape::read.tree(text = "((a,b),(c,d));")
   tr2 <- ape::read.tree(text = "((a,b),(c,d));")
   tr3 <- ape::read.tree(text = "((a,c),(b,d));")
@@ -39,11 +39,11 @@ test_that("Quartet handles n=4 tips", {
 })
 
 test_that("Quartet different init strategies give valid trees", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   set.seed(4721)
   trees <- as.phylo(sample.int(100, 15), nTip = 8)
 
-  qc_empty <- Quartet(trees, init = "empty")
+  qc_empty <- Quartet(trees, init = "star")
   qc_maj <- Quartet(trees, init = "majority")
   qc_ext <- Quartet(trees, init = "extended")
 
@@ -60,7 +60,7 @@ test_that("Quartet different init strategies give valid trees", {
 })
 
 test_that("Quartet greedy=first also works", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   trees <- as.phylo(1:10, nTip = 7)
 
   qc_best <- Quartet(trees, greedy = "best")
@@ -72,7 +72,7 @@ test_that("Quartet greedy=first also works", {
 
 test_that("Quartet minimizes quartet distance", {
   skip_if_not_installed("Quartet")
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   trees <- as.phylo(1:20, nTip = 8)
 
   qc <- Quartet(trees)
@@ -95,7 +95,7 @@ test_that("Quartet minimizes quartet distance", {
 })
 
 test_that("Quartet rejects bad input", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   tr <- as.phylo(1, nTip = 3)
   expect_error(Quartet(list(tr, tr)),
                "multiPhylo")
@@ -107,7 +107,7 @@ test_that("Quartet rejects bad input", {
 })
 
 test_that("Quartet validates tip count and tip-label agreement", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   # >= 2 trees but fewer than 4 tips
   tr3 <- as.phylo(1, nTip = 3)
   expect_error(Quartet(structure(list(tr3, tr3), class = "multiPhylo")),
@@ -124,11 +124,11 @@ test_that("Quartet validates tip count and tip-label agreement", {
 })
 
 test_that("Quartet greedy='first' adds and removes splits", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   set.seed(1)
   trees <- as.phylo(1:12, nTip = 8)
-  # init = "empty" forces the add branch of the first-improvement search;
-  empty <- Quartet(trees, init = "empty", greedy = "first")
+  # init = "star" forces the add branch of the first-improvement search;
+  empty <- Quartet(trees, init = "star", greedy = "first")
   expect_s3_class(empty, "phylo")
   # init = "extended" starts over-resolved (Greedy has more splits than the
   # quartet optimum), forcing the remove branch.
@@ -138,7 +138,7 @@ test_that("Quartet greedy='first' adds and removes splits", {
 })
 
 test_that("Quartet returns a star when no split is pooled", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   star <- StarTree(letters[1:5])
   qc <- Quartet(structure(list(star, star), class = "multiPhylo"))
   expect_s3_class(qc, "phylo")
@@ -154,7 +154,7 @@ test_that("the Quartet C++ core enforces its tip-count guards", {
 })
 
 test_that("Quartet handles non-binary input trees", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   # Create a polytomy by using CollapseNode
   tr_binary <- as.phylo(42, nTip = 8)
   tr_poly <- CollapseNode(tr_binary, 10)
@@ -167,7 +167,7 @@ test_that("Quartet handles non-binary input trees", {
 
 test_that("Quartet is deterministic", {
   skip_if_not_installed("Quartet")
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   trees <- as.phylo(1:10, nTip = 7)
 
   qc1 <- Quartet(trees)
@@ -186,7 +186,7 @@ test_that("Quartet is deterministic", {
 
 test_that("Quartet brute-force verification (n=5)", {
   skip_if_not_installed("Quartet")
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   # For 5 tips, there are 15 unrooted tree topologies (as.phylo(1:15, 5))
   # Pick 5 input trees, then verify that Quartet returns a tree
 
@@ -226,7 +226,7 @@ test_that("Quartet brute-force verification (n=5)", {
 })
 
 test_that("Quartet agrees with brute-force on a known 4-tip case", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   # Two identical 4-tip trees: zero quartet distance, fully resolved output.
   t <- ape::read.tree(text = "((a,b),(c,d));")
   trees <- structure(list(t, t), class = "multiPhylo")
@@ -237,7 +237,7 @@ test_that("Quartet agrees with brute-force on a known 4-tip case", {
 })
 
 test_that("Quartet brute-force oracle gives stable output on fixed input", {
-  library(TreeTools)
+  library("TreeTools", quietly = TRUE)
   set.seed(1L)
   trees <- ape::as.phylo(c(1, 1, 2, 3, 5), 5)
   result <- Quartet(trees, init = "majority", greedy = "best")
