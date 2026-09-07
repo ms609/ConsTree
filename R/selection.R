@@ -108,28 +108,19 @@ Loose <- function(trees) {
 
 #' Greedy (extended majority-rule) consensus tree
 #'
-#' `Greedy()` returns the greedy consensus, also termed the extended
+#' `Greedy()` computes the greedy consensus, also termed the extended
 #' majority-rule consensus \insertCite{Bryant2003}{ConsTree}.  Distinct splits
-#' are considered in decreasing order of their frequency across the input trees;
-#' each is added to the growing consensus if it is compatible with every split
-#' already accepted.  The result is typically more resolved than the
-#' majority-rule consensus ([`Majority()`]), and contains it.
+#' are considered in decreasing order of their frequency across the input trees,
+#' breaking ties arbitrarily; each is added to the growing consensus if it is
+#' compatible with every split already accepted.
 #'
-#' Splits that occur equally often are considered in a fixed, reproducible order,
-#' so the result is deterministic.  Where several mutually incompatible splits
-#' are equally frequent, a different (but equally valid) greedy resolution may be
-#' returned by other software.
-#'
-#' This implementation ports the asymptotically efficient `greedyConsensusFast`
-#' algorithm of \insertCite{JanssonShenSung2016}{ConsTree} from their FACT
-#' toolkit (used with permission): the distinct clusters are extracted in a
-#' single post-order sweep of each tree and added in decreasing order of
-#' frequency whenever compatible with the tree built so far, avoiding the
-#' explicit pairwise compatibility matrix used previously.
+#' The implementation builds upon the `greedyConsensusFast` algorithm of
+#' \insertCite{JanssonShenSung2016}{ConsTree}; please cite that paper when
+#' using this method.
 #'
 #' @inheritParams Strict
 #'
-#' @return `Greedy()` returns the consensus tree, an object of class `phylo`,
+#' @return `Greedy()` returns an object of class `phylo` denoting the consensus,
 #' rooted as in the first entry of `trees`.
 #'
 #' @examples
@@ -190,29 +181,21 @@ MajorityPlus <- function(trees) {
 
 #' Frequency-difference consensus tree
 #'
-#' `Frequency()` returns the frequency-difference consensus: a split is retained
-#' when it occurs strictly more often than every split that conflicts with it.
-#' Equivalently, among each set of mutually incompatible splits, the consensus
-#' keeps a split only if it is strictly more frequent than all its rivals.
+#' `Frequency()` computes the frequency-difference consensus, which retains
+#' each split that occurs more often than every split that conflicts with it.
 #'
 #' The frequency-difference consensus is at least as resolved as the
-#' majority-rule consensus ([`Majority()`]) -- a split in more than half the
-#' trees is necessarily more frequent than any conflicting split -- and is
-#' contained within the greedy consensus ([`Greedy()`]).  The retained splits
-#' are mutually compatible, so they define a valid tree.
+#' majority-rule consensus ([`Majority()`]), and is contained within the greedy
+#' consensus ([`Greedy()`]).
 #'
-#' This implementation ports the near-linear \eqn{O(kn \log n)} algorithm of
-#' \insertCite{Jansson2024;textual}{ConsTree} from their FDCT reference C++ (used
-#' with permission): cluster frequencies are computed by a divide-and-conquer
-#' labelling with radix sort, and conflicting lower-frequency clusters are
-#' filtered out using centroid-path decomposition, lowest-common-ancestor and
-#' range-minimum queries, and tree contraction, avoiding the explicit
-#' \eqn{O(s^2)} pairwise compatibility matrix used previously.
+#' This implementation builds on the FDCT algorithm of
+#' \insertCite{Jansson2024;textual}{ConsTree}; please cite that paper when
+#' using this method.
 #'
 #' @inheritParams Strict
 #'
-#' @return `Frequency()` returns the consensus tree, an object of class `phylo`,
-#' rooted as in the first entry of `trees`.
+#' @return `Frequency()` returns an object of class `phylo` denoting the
+#' frequency consensus, rooted as in the first entry of `trees`.
 #'
 #' @examples
 #' trees <- ape::as.phylo(0:5, 8)

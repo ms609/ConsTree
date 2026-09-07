@@ -25,88 +25,65 @@ distance matrix:
 \item \code{"fastme.bal"} (the default) returns the balanced minimum-evolution tree
 \insertCite{DesperGascuel2002}{ConsTree}: a fast, accurate approximation of
 the least-squares tree;
-\item \code{"ls"} searches for the least-squares tree itself -- the criterion under
-which Lapointe & Cucumel's averaging guarantee holds -- using
-\code{TreeSearch::LeastSquaresTree()}, a compiled non-negative least-squares
+\item \code{"ls"} searches for the least-squares tree using
+\code{TreeSearch::LeastSquaresTree()}, a non-negative least-squares
 \acronym{NNI}/\acronym{SPR} search;
 \item \code{"nj"}, \code{"bionj"} and \code{"fastme.ols"} return the corresponding distance tree
 \insertCite{SaitouNei1987,Gascuel1997}{ConsTree}.
 }}
 
 \item{weights}{Numeric vector specifying the weight of each tree in the
-average (e.g. posterior probabilities), with one entry per tree.  Defaults
-to \code{NULL}, which weights every tree equally -- appropriate for a posterior
-sample, in which a tree's frequency already encodes its probability.}
+average (e.g. posterior probabilities), with one entry per tree. If \code{NULL},
+each tree is weighted equally.}
 
 \item{scale}{Character specifying whether to rescale each tree's distance
-matrix before averaging.  \code{"none"} (the default) leaves matrices unscaled,
-appropriate when the trees are already commensurable (e.g. a single posterior
-sample).  \code{"max"} divides each matrix by its largest entry, the
-standardization recommended by Lapointe & Cucumel when combining trees from
-heterogeneous sources whose absolute distances are not comparable.}
+matrix before averaging.  \code{"none"} leaves matrices unscaled; \code{"max"} divides
+each matrix by its largest entry, recommended when absolute distances are not
+comparable \insertCite{LapointeCucumel1997}{ConsTree}.}
 
-\item{edgeLengths}{Logical specifying whether to use branch lengths when
-computing path-length distances.  The default, \code{NA}, uses branch lengths when
-\emph{every} tree has them and otherwise counts edges; \code{TRUE} requires branch
-lengths; \code{FALSE} always counts edges (a topology-only summary).}
+\item{edgeLengths}{Logical specifying whether to use edge lengths when
+computing path-length distances.  \code{TRUE} requires edge lengths; \code{FALSE}
+does not use edge lengths; \code{NA} uses edge lengths when all trees have them,
+and otherwise counts edges.}
 
 \item{outgroup}{Character vector specifying tip label(s) on which to root
-the result.  Defaults to \code{NULL}, which returns an unrooted tree: path-length
-distances are unaffected by rooting, so the method is intrinsically unrooted.}
+the result. \code{NULL} returns an unrooted tree.}
 
 \item{check.labels}{Logical specifying whether to confirm that every tree
-describes the same leaves.  The default, \code{TRUE}, is safer; \code{FALSE} is faster
-when the trees are known to share an identical leaf set.}
+contains the same leaves.}
 
 \item{lsControl}{Named list of further arguments for the least-squares
-search (\code{method = "ls"}), passed to \code{TreeSearch::LeastSquaresTree()}; for
-example \code{list(spr = FALSE, maxHits = 5L, weight = "fm")} to use
-Fitch-Margoliash weighting.  Defaults to \code{list()}; ignored by other methods.}
+search (\code{method = "ls"}), passed to \code{TreeSearch::LeastSquaresTree()}.}
 }
 \value{
-\code{Average()} returns the average consensus tree, an object of class
-\code{phylo} with fitted branch lengths, unrooted unless \code{outgroup} is given.
+\code{Average()} returns an object of class \code{phylo} with fitted branch
+lengths denoting the average consensus tree.
 }
 \description{
-\code{Average()} returns the \emph{average consensus}
+\code{Average()} returns the average consensus
 \insertCite{LapointeCucumel1997}{ConsTree}: the tree whose path-length
 (patristic) distances most closely match the average of the path-length
-distances of the input trees.  Informally, it places each leaf at its mean
-position across the input trees, making it a natural distance-based summary of
-a posterior sample -- complementing the split-based \code{\link[=Strict]{Strict()}} and
-\code{\link[=Majority]{Majority()}} methods.
+distances of the input trees.
 }
 \details{
-The procedure has two steps \insertCite{LapointeCucumel1997}{ConsTree}:
-\enumerate{
-\item Compute the path-length distance matrix of each input tree (using branch
-lengths where present, otherwise counting edges), optionally rescaling each
-matrix, and average the matrices.
-\item Find the tree whose own path-length distances best fit this average matrix,
-in the least-squares sense.
-}
-
 Because the average of several path-length matrices is usually not itself
-realisable by any tree (it violates the four-point condition), step 2 is a
-fit, not an inversion.  By default \code{Average()} approximates it with the fast
-balanced minimum-evolution tree; \code{method = "ls"} instead performs the exact
-least-squares search, which -- being NP-hard \insertCite{Day1987}{ConsTree}
--- uses tree rearrangements, as did the original \acronym{FITCH}
-implementation.  Branch lengths are fitted by non-negative least squares, so
-that the fitted distances are realisable by a tree, as the criterion requires.
-
-A lone input tree is its own average: it is returned (unrooted unless
-\code{outgroup} is given) without refitting, and \code{method}, \code{scale}, \code{weights} and
-\code{edgeLengths} then have no effect.
+realisable by any tree, \code{Average()} approximates it: by default, with the
+fast balanced minimum-evolution tree; or if \code{method = "ls"}, by NP-hard
+least-squares search \insertCite{Day1987}{ConsTree}.
 }
 \examples{
-trees <- ape::rmtree(5, 8)         # five random eight-leaf trees
-Average(trees)                     # fast (balanced minimum evolution) default
+trees <- ape::rmtree(5, 8)    # five random eight-leaf trees
+Average(trees)                # fast (balanced minimum evolution) default
 \donttest{
 if (requireNamespace("TreeSearch", quietly = TRUE) &&
     exists("LeastSquaresTree", where = asNamespace("TreeSearch"),
            mode = "function")) {
   Average(trees, method = "ls")    # faithful least-squares fit (slower)
+  
+  # use Fitch-Margoliash weighting:
+  Average(trees, method = "ls",
+    lsControl = list(spr = FALSE, maxHits = 5L, weight = "fm")
+  )
 }
 }
 
