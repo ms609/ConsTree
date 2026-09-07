@@ -142,3 +142,9 @@ test_that("Loose drops a split that any input contradicts", {
   expect_true(all(kept %in% lSplits))      # {t1,t2} retained (present in every input)
   expect_false(any(dropped %in% lSplits))  # {t3,t4} dropped (an input contradicts it)
 })
+
+test_that("loose C++ entry point rejects invalid input before merging", {
+  edge <- matrix(c(5L, 1L, 5L, 1L, 5L, 2L, 5L, 3L), ncol = 2L, byrow = TRUE)
+  expect_error(ConsTree:::looseConsensusCpp(list(edge, edge), 4L),
+               "rooted trees")
+})
