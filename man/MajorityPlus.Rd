@@ -11,31 +11,13 @@ MajorityPlus(trees)
 share the same leaf labels.}
 }
 \value{
-\code{MajorityPlus()} returns the consensus tree, an object of class
-\code{phylo}, rooted as in the first entry of \code{trees}.
+\code{MajorityPlus()} returns an object of class \code{phylo} denoting the
+majority-plus consensus tree, rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{MajorityPlus()} returns the majority-rule (+) consensus
-\insertCite{JanssonShenSung2016}{ConsTree}: a clade is retained when it
-occurs in more input trees than contradict it -- i.e. when the number of
-trees displaying the clade exceeds the number of trees incompatible with it.
-A tree that is compatible with a clade without displaying it counts neither
-for nor against.
-}
-\details{
-Every majority-rule split is retained (a split in more than half the trees is
-contradicted by fewer than half), so \code{MajorityPlus()} contains the
-majority-rule consensus (\code{\link[=Majority]{Majority()}}) and may add further splits that are
-supported more often than they are contradicted.  The retained splits are
-necessarily mutually compatible, so they define a valid tree.
-
-This implementation ports the optimal \eqn{O(kn)} algorithm of
-\insertCite{JanssonShenSung2016;textual}{ConsTree} from their FACT toolkit
-(used with permission): each input tree is processed in a single sweep, the
-candidate clusters are accumulated by an incremental merge, and a clade is
-kept when it is displayed by strictly more trees than contradict it -- a
-deterministic count rule (no frequency tie-break), so the result is exact.
-This replaces the previous R pairwise compatibility matrix.
+\code{MajorityPlus()} computes the majority-rule (+) consensus
+\insertCite{JanssonShenSung2016}{ConsTree}, which displays each clade that
+occurs in more input trees than contradict it.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)

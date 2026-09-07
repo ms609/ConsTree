@@ -166,24 +166,10 @@ Greedy <- function(trees) {
 #' \insertCite{JanssonShenSung2016}{ConsTree}, which displays each clade that
 #' occurs in more input trees than contradict it.
 #'
-#' Every majority-rule split is retained (a split in more than half the trees is
-#' contradicted by fewer than half), so `MajorityPlus()` contains the
-#' majority-rule consensus ([`Majority()`]) and may add further splits that are
-#' supported more often than they are contradicted.  The retained splits are
-#' necessarily mutually compatible, so they define a valid tree.
-#'
-#' This implementation ports the optimal \eqn{O(kn)} algorithm of
-#' \insertCite{JanssonShenSung2016;textual}{ConsTree} from their FACT toolkit
-#' (used with permission): each input tree is processed in a single sweep, the
-#' candidate clusters are accumulated by an incremental merge, and a clade is
-#' kept when it is displayed by strictly more trees than contradict it -- a
-#' deterministic count rule (no frequency tie-break), so the result is exact.
-#' This replaces the previous R pairwise compatibility matrix.
-#'
 #' @inheritParams Strict
 #'
-#' @return `MajorityPlus()` returns the consensus tree, an object of class
-#' `phylo`, rooted as in the first entry of `trees`.
+#' @return `MajorityPlus()` returns an object of class `phylo` denoting the
+#' majority-plus consensus tree, rooted as in the first entry of `trees`.
 #'
 #' @examples
 #' trees <- ape::as.phylo(0:5, 8)
