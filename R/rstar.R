@@ -1,17 +1,13 @@
 #' R* consensus tree
 #'
 #' `RStar()` returns the R* consensus \insertCite{Degnan2009}{ConsTree} of a set
-#' of **rooted** trees.
+#' of rooted trees.
 #'
 #' The R* consensus is a rooted-triplet method.  For every set of three leaves it
 #' tallies, across the input trees, the three possible resolved rooted triplets
-#' (`ab|c`, `ac|b`, `bc|a`) and keeps the one that is *uniquely favoured*: the
-#' resolution appearing in strictly more input trees than **each** of the other
-#' two, considered separately.  This is a strict **plurality** rule, not a
-#' majority rule: a triplet can be uniquely favoured with far fewer than half the
-#' votes (e.g. a 2--1--1 split among four trees), and any tie leaves those taxa
-#' unresolved.  The kept triplets form the set of *majority resolved triplets*,
-#' \eqn{R_{maj}}.  The R* tree is then the unique tree whose clades are exactly
+#' (`ab|c`, `ac|b`, `bc|a`) and keeps whichever appears most frequently.
+#' A tie leaves those taxa unresolved.
+#' The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.  The R* tree is then the unique tree whose clades are exactly
 #' the **strong clusters** of \eqn{R_{maj}}
 #' \insertCite{Degnan2009,Jansson2016a}{ConsTree}: a leaf set `A` is a clade if
 #' and only if, for *every* pair of leaves in `A` and *every* leaf `x` outside
@@ -60,10 +56,7 @@
 #'
 #' @return `RStar()` returns the consensus tree, an object of class `phylo`.
 #' It is rooted by construction, but when the resolved triplets leave the deepest
-#' divergence unresolved the root is a polytomy (in the limit, a star).  Such a
-#' tree has a root node of degree greater than two, which `ape::is.rooted()`
-#' reports as unrooted; re-root or resolve downstream if a strictly binary root
-#' is required.  All input trees must share the same set of (unique) tip labels.
+#' divergence unresolved the root is a polytomy.
 #'
 #' @examples
 #' # Five trees whose majority signal recovers the species tree (((a,b),c),d):
@@ -74,7 +67,9 @@
 #'   ape::read.tree(text = "(((a, c), b), d);"),
 #'   ape::read.tree(text = "(((b, c), a), d);")
 #' )
-#' RStar(trees) # (a, b) wins {a,b,c} by plurality (3 vs 1 vs 1)
+#' 
+#' # (a, b) wins {a,b,c} by plurality (3 vs 1 vs 1)
+#' ape::write.tree(RStar(trees))
 #'
 #' @seealso Closely related: [`Strict()`], [`Majority()`], [`Adams()`],
 #' [`Local()`].

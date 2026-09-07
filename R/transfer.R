@@ -48,6 +48,7 @@
 #' \dontshow{par(oPar) # Restore plotting defaults}
 #' @seealso [Quartet()]
 #' @importFrom TreeTools as.Splits TipLabels NSplits Consensus StarTree
+#' @family consensus methods
 #' @export
 Transfer <- function(trees,
                      scale = TRUE,

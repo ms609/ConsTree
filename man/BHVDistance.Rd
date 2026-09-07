@@ -20,15 +20,16 @@ arguments must share the same leaf labels.  \code{tree2} may be omitted when
 \code{tree1} are returned.}
 }
 \value{
+\code{BHVDistance()} returns distances between the input trees:
 \itemize{
-\item Both \code{tree1} and \code{tree2} are single trees: a single non-negative
+\item If both inputs are single trees, the return value is a single non-negative
 number.
-\item One argument is a single tree, the other a collection: a named
+\item When comparing a tree to a collection of trees, the return value is a named
 numeric vector with one entry per tree in the collection.
-\item \code{tree2} is omitted, or \code{tree1} and \code{tree2} are the same collection:
-a \code{\link[stats:dist]{stats::dist}} object of all pairwise distances.
-\item \code{tree1} and \code{tree2} are different collections: a numeric matrix
-with rows corresponding to \code{tree1} and columns to \code{tree2}.
+\item If \code{tree2} is omitted, or is identical to \code{tree1}, the return value is a
+\code{\link[stats:dist]{stats::dist}} object of all pairwise distances.
+\item If \code{tree1} and \code{tree2} are different collections, the return value comprises
+a numeric matrix with rows corresponding to \code{tree1} and columns to \code{tree2}.
 }
 }
 \description{

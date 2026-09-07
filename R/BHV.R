@@ -112,23 +112,27 @@ NULL
 #'   `tree1` are returned.
 #'
 #' @return
-#' \itemize{
-#'   \item Both `tree1` and `tree2` are single trees: a single non-negative
-#'     number.
-#'   \item One argument is a single tree, the other a collection: a named
-#'     numeric vector with one entry per tree in the collection.
-#'   \item `tree2` is omitted, or `tree1` and `tree2` are the same collection:
-#'     a [`stats::dist`] object of all pairwise distances.
-#'   \item `tree1` and `tree2` are different collections: a numeric matrix
-#'     with rows corresponding to `tree1` and columns to `tree2`.
-#' }
+#' `BHVDistance()` returns distances between the input trees:
+#' 
+#' - If both inputs are single trees, the return value is a single non-negative
+#'  number.
+#'  
+#' - When comparing a tree to a collection of trees, the return value is a named
+#'  numeric vector with one entry per tree in the collection.
+#'  
+#' - If `tree2` is omitted, or is identical to `tree1`, the return value is a
+#'  [`stats::dist`] object of all pairwise distances.
+#' 
+#' - If `tree1` and `tree2` are different collections, the return value comprises
+#'   a numeric matrix with rows corresponding to `tree1` and columns to `tree2`.
 #'
 #' @examples
 #' set.seed(2)
 #' trees <- lapply(1:4, function(i) 
 #'   TreeTools::RandomTree(8, root = TRUE, lengths = runif)
 #' )
-#' t1 <- trees[[1]]; t2 <- trees[[2]]
+#' t1 <- trees[[1]]
+#' t2 <- trees[[2]]
 #'
 #' BHVDistance(t1, t2)                  # scalar
 #' BHVDistance(t1, trees)               # named vector

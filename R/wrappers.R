@@ -1,14 +1,12 @@
 #' Strict consensus tree
 #'
 #' `Strict()` returns the strict consensus of a set of trees: the tree that
-#' contains exactly those splits (clades) present in _every_ input tree
+#' contains exactly those splits (clades) present in every input tree
 #' \insertCite{Day1985}{ConsTree}.
 #'
-#' This is a thin wrapper around [`TreeTools::Consensus()`] with `p = 1`,
-#' provided so that every consensus method in this package is reachable through
-#' a common, consistently named interface.
+#' This is an alias of [`TreeTools::Consensus()`] with `p = 1`.
 #'
-#' @param trees A list of trees, or a `multiPhylo` object; all entries must
+#' @param trees A list of trees, or a `multiPhylo` object. All entries must
 #' share the same leaf labels.
 #'
 #' @return `Strict()` returns the consensus tree, an object of class `phylo`,
