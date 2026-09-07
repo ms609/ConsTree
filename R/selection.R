@@ -162,7 +162,7 @@ Greedy <- function(trees) {
 
 #' Majority-rule (+) consensus tree
 #'
-#' `MajorityPlus()` returns the majority-rule (+) consensus
+#' `MajorityPlus()` computes the majority-rule (+) consensus
 #' \insertCite{JanssonShenSung2016}{ConsTree}: a clade is retained when it
 #' occurs in more input trees than contradict it -- i.e. when the number of
 #' trees displaying the clade exceeds the number of trees incompatible with it.
