@@ -190,8 +190,7 @@ Average <- function(trees,
               mode = "function")) {
     # nocov start
     # Defensive guard for installations with a 'TreeSearch' older than the
-    # required (>= 2.0.0) build that provides `LeastSquaresTree()`; unreachable
-    # whenever the declared dependency is satisfied (as in the coverage run).
+    # required (>= 2.0.0) build that provides `LeastSquaresTree()`.
     stop("`method = \"ls\"` requires a version of 'TreeSearch' that provides ",
          "`LeastSquaresTree()`.")
     # nocov end
@@ -200,11 +199,11 @@ Average <- function(trees,
     stop("`lsControl` must be a named list.")
   }
   d <- as.dist(averageDist)
+  LeastSquaresTree <- getExportedValue("TreeSearch", "LeastSquaresTree")
   if (length(lsControl) == 0L) {
-    TreeSearch::LeastSquaresTree(d, method = "nnls")
+    LeastSquaresTree(d, method = "nnls")
   } else {
-    do.call(TreeSearch::LeastSquaresTree,
-            modifyList(list(d, method = "nnls"), lsControl))
+    do.call(LeastSquaresTree, modifyList(list(d, method = "nnls"), lsControl))
   }
 }
 
