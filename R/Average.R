@@ -1,20 +1,10 @@
 #' Average consensus tree
 #'
-#' `Average()` returns the *average consensus*
+#' `Average()` returns the average consensus
 #' \insertCite{LapointeCucumel1997}{ConsTree}: the tree whose path-length
 #' (patristic) distances most closely match the average of the path-length
-#' distances of the input trees.  Informally, it places each leaf at its mean
-#' position across the input trees, making it a natural distance-based summary of
-#' a posterior sample -- complementing the split-based [`Strict()`] and
-#' [`Majority()`] methods.
-#'
-#' The procedure has two steps \insertCite{LapointeCucumel1997}{ConsTree}:
-#'
-#' 1. Compute the path-length distance matrix of each input tree (using branch
-#'    lengths where present, otherwise counting edges), optionally rescaling each
-#'    matrix, and average the matrices.
-#' 2. Find the tree whose own path-length distances best fit this average matrix,
-#'    in the least-squares sense.
+#' distances of the input trees.
+
 #'
 #' Because the average of several path-length matrices is usually not itself
 #' realisable by any tree (it violates the four-point condition), step 2 is a
