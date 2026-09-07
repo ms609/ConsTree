@@ -33,14 +33,13 @@ retains:
 
 ### Distance and branch-length summaries
 
-A second family summarizes the trees through a distance or treespace criterion
-rather than by selecting groupings:
+These methods summarize trees through a distance or tree-space criterion:
 
-| Function | Summary |
+| Function | Objective |
 |----------|---------|
-| `Average()` | the tree best fitting the **mean path-length** (patristic) distances of the inputs |
-| `Quartet()` | an approximate median minimizing the total **quartet distance** to the inputs; often more resolved than majority-rule |
-| `Transfer()` | a greedy consensus minimizing total **transfer distance** to the inputs; often more resolved than majority-rule |
+| `Average()` | The tree best fitting the **mean path-length** (patristic) distances of the inputs |
+| `Quartet()` | An approximate median minimizing the total **quartet distance** to the inputs; often more resolved than majority-rule |
+| `Transfer()` | A greedy consensus minimizing total **transfer distance** to the inputs; often more resolved than majority-rule |
 | `BHVMean()` | the Fréchet **mean tree** in Billera–Holmes–Vogtmann treespace, with branch lengths; `BHVDistance()`, `BHVPairwiseDistances()` and `BHVVariance()` provide the supporting geodesic distances and dispersion |
 
 ## Usage
@@ -60,29 +59,28 @@ Transfer(trees)      # minimizes transfer distance; often more resolved than maj
 
 ## Installation
 
+Install from CRAN (from Sept 2026) with:
+
+```r
+install.packages("ConsTree")
+```
+
 Install the development version from GitHub:
 
 ```r
-if (!require("remotes")) install.packages("remotes")
-remotes::install_github("ms609/ConsTree")
+if (!require("pak")) install.packages("pak")
+pak::pkg_install("ms609/ConsTree")
 ```
-
-'ConsTree' is not yet on CRAN.
 
 ## Relationship to other packages
 
-'ConsTree' is the front-end consensus toolkit for the
-[TreeTools](https://ms609.github.io/TreeTools/) ecosystem, which also includes
-['TreeDist'](https://ms609.github.io/TreeDist/) (tree distances and
-information-theoretic consensus) and
-['TreeSearch'](https://ms609.github.io/TreeSearch/) (phylogenetic search).
-TreeTools itself remains the fast engine for the strict and majority-rule
-consensus, which 'ConsTree' exposes through consistently-named wrappers.
+'ConsTree' builds on [TreeTools](https://ms609.github.io/TreeTools/) (the fast
+engine for strict and majority-rule consensus calculation) and ['TreeDist'](https://ms609.github.io/TreeDist/) (tree distances and
+information-theoretic consensus).
 
-['TreeDist'](https://ms609.github.io/TreeDist/) also offers a complementary
-summary that 'ConsTree' does not duplicate: the tree from a sample that has the
-lowest median clustering-information distance (CID) to the others — a single
-*representative* of the sample rather than a constructed consensus.
+['TreeDist'](https://ms609.github.io/TreeDist/)'s `median.multiPhylo` offers a
+complementary summary: the tree within a sample that has the lowest median
+clustering information distance to the others.
 
 The quartet machinery underlying `Quartet()` builds on the
 ['Quartet'](https://ms609.github.io/Quartet/) package, which counts the
@@ -90,17 +88,16 @@ resolved- and shared-quartet statistics between trees; and the BHV summaries
 relate to ['distory'](https://cran.r-project.org/package=distory), which
 computes geodesic distances in the same treespace.
 
-The ['Rogue'](https://ms609.github.io/Rogue/) package identifies unstable
-('rogue') leaves whose removal can improve the resolution and support of a
-consensus tree; dropping rogues before summarizing with 'ConsTree' often yields
-a better-resolved result.
+['Rogue'](https://ms609.github.io/Rogue/) identifies unstable ('rogue') leaves
+whose removal can improve the resolution and support of a consensus tree;
+dropping rogues before summarizing with 'ConsTree' often yields a
+better-resolved result.
 
 ## Citation and attribution
 
-The algorithms repackaged here originate in the FACT, FACT2 and FDCT prototypes
-of Jesper Jansson and colleagues, incorporated with permission; see
-`inst/REFERENCES.bib` for the source papers, and `DESCRIPTION` for copyright
-attribution. 'ConsTree' is released under GPL (≥ 3).
+The manual page for each function details the literature that underpins each
+method; please cite this literature alongside this package
+(type `citation("ConsTree")`).
 
 Please note that this project is released with a
 [Contributor Code of Conduct](https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html).
