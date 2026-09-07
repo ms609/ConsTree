@@ -66,3 +66,4 @@ dev/**/_*
 # to port algorithms into src/, never committed or shipped.
 dev/reference/
 /.claude/worktrees
+.aider*
