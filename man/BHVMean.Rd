@@ -13,11 +13,10 @@ BHVVariance(trees, mean = NULL, type = c("average", "sum"))
 \item{trees}{A list of trees, or a \code{multiPhylo} object; all entries must
 share the same leaf labels and carry \code{edge.length}.}
 
-\item{tolerance}{Numeric convergence threshold, \emph{relative} to the sample
-standard deviation: iteration stops once \code{cauchyLength} consecutive steps
+\item{tolerance}{Numeric stating convergence threshold relative to the sample
+standard deviation.  Iteration stops once \code{cauchyLength} consecutive steps
 each move the estimate less than \code{tolerance} times the sample standard
-deviation.  Smaller values give a more precise mean at the cost of more
-iterations.}
+deviation.}
 
 \item{maxIter}{Integer specifying the maximum number of iterations.}
 
@@ -25,14 +24,15 @@ iterations.}
 required to declare convergence.}
 
 \item{mean}{Object of class \code{phylo} specifying a pre-computed mean tree;
-computed via \code{\link[=BHVMean]{BHVMean()}} if \code{NULL} (the default).}
+computed via \code{\link[=BHVMean]{BHVMean()}} if \code{NULL}.}
 
 \item{type}{Character specifying whether to return the mean squared distance
-(\code{"average"}, the default) or the total squared distance (\code{"sum"}).}
+(\code{"average"}) or the total squared distance (\code{"sum"}).}
 }
 \value{
-\code{BHVMean()} returns the mean tree, an object of class \code{phylo}, with
-attributes \code{iterations} (number of steps taken) and \code{converged}.  Because the
+\code{BHVMean()} returns an object of class \code{phylo} denoting
+the mean tree, with attributes \code{iterations} (integer; number of steps taken)
+and \code{converged} (logical).  Because the
 step length shrinks as \eqn{1/(k+1)}, \code{converged = TRUE} indicates that
 successive estimates have stopped moving appreciably (the stopping rule was
 met before \code{maxIter}), not a guaranteed bound on the distance to the exact
@@ -43,16 +43,16 @@ mean; tighten \code{tolerance} for greater precision.
 \description{
 \code{BHVMean()} returns the Fréchet (Karcher) mean of a set of trees in BHV
 treespace: the tree that minimizes the sum of squared geodesic distances to
-the sample \insertCite{BrownOwen2020}{ConsTree}.  As there is no known
-closed form, it is approximated by the iterative law-of-large-numbers
-algorithm of \insertCite{Sturm2003;textual}{ConsTree} and
+the sample \insertCite{BrownOwen2020}{ConsTree}.  The mean is approximated by
+the iterative law-of-large-numbers algorithm of
+\insertCite{Sturm2003;textual}{ConsTree} and
 \insertCite{MillerOwenProvan2015;textual}{ConsTree}: starting from a sample
-tree, each step walks a fraction \eqn{1/(k+1)} of the way along the geodesic
-towards a randomly chosen sample tree.
+tree, each step walks \eqn{\frac{1}{k+1}} of the way along the geodesic towards a
+randomly chosen sample tree.
 }
 \details{
 \code{BHVVariance()} returns the Fréchet variance: by default the mean squared
-geodesic distance from the sample to its mean, \eqn{(1/r)\sum_i d(\bar
+geodesic distance from the sample to its mean, \eqn{\frac{1}{r}\sum_i d(\bar
 T, T_i)^2}; with \code{type = "sum"}, the total \eqn{\sum_i d(\bar T, T_i)^2}.
 
 The mean is "sticky": perturbing one sample tree need not move it, and it is

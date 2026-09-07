@@ -27,6 +27,7 @@ reference:
 
 template:
   bootstrap: 5
+  math-rendering: katex
   bslib:
     danger: "#A6081A" # Accessibility suggestion
   params:

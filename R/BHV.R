@@ -262,15 +262,15 @@ BHV <- BHVDistance
 #'
 #' `BHVMean()` returns the Fréchet (Karcher) mean of a set of trees in BHV
 #' treespace: the tree that minimizes the sum of squared geodesic distances to
-#' the sample \insertCite{BrownOwen2020}{ConsTree}.  As there is no known
-#' closed form, it is approximated by the iterative law-of-large-numbers
-#' algorithm of \insertCite{Sturm2003;textual}{ConsTree} and
+#' the sample \insertCite{BrownOwen2020}{ConsTree}.  The mean is approximated by
+#' the iterative law-of-large-numbers algorithm of
+#' \insertCite{Sturm2003;textual}{ConsTree} and
 #' \insertCite{MillerOwenProvan2015;textual}{ConsTree}: starting from a sample
-#' tree, each step walks a fraction \eqn{1/(k+1)} of the way along the geodesic
-#' towards a randomly chosen sample tree.
+#' tree, each step walks \eqn{\frac{1}{k+1}} of the way along the geodesic towards a
+#' randomly chosen sample tree.
 #'
 #' `BHVVariance()` returns the Fréchet variance: by default the mean squared
-#' geodesic distance from the sample to its mean, \eqn{(1/r)\sum_i d(\bar
+#' geodesic distance from the sample to its mean, \eqn{\frac{1}{r}\sum_i d(\bar
 #' T, T_i)^2}; with `type = "sum"`, the total \eqn{\sum_i d(\bar T, T_i)^2}.
 #'
 #' The mean is "sticky": perturbing one sample tree need not move it, and it is
@@ -280,17 +280,17 @@ BHV <- BHVDistance
 #'
 #' @param trees A list of trees, or a `multiPhylo` object; all entries must
 #'   share the same leaf labels and carry `edge.length`.
-#' @param tolerance Numeric convergence threshold, _relative_ to the sample
-#' standard deviation: iteration stops once `cauchyLength` consecutive steps
+#' @param tolerance Numeric stating convergence threshold relative to the sample
+#' standard deviation.  Iteration stops once `cauchyLength` consecutive steps
 #' each move the estimate less than `tolerance` times the sample standard
-#' deviation.  Smaller values give a more precise mean at the cost of more
-#' iterations.
+#' deviation.
 #' @param maxIter Integer specifying the maximum number of iterations.
 #' @param cauchyLength Integer specifying the number of consecutive small steps
 #' required to declare convergence.
 #'
-#' @return `BHVMean()` returns the mean tree, an object of class `phylo`, with
-#' attributes `iterations` (number of steps taken) and `converged`.  Because the
+#' @return `BHVMean()` returns an object of class `phylo` denoting
+#' the mean tree, with attributes `iterations` (integer; number of steps taken)
+#' and `converged` (logical).  Because the
 #' step length shrinks as \eqn{1/(k+1)}, `converged = TRUE` indicates that
 #' successive estimates have stopped moving appreciably (the stopping rule was
 #' met before `maxIter`), not a guaranteed bound on the distance to the exact
@@ -309,7 +309,7 @@ BHV <- BHVDistance
 #' @references \insertAllCited{}
 #' @family BHV summaries
 #' @export
-BHVMean <- function(trees, tolerance = 1e-4, maxIter = 100000L,
+BHVMean <- function(trees, tolerance = 1e-4, maxIter = 1e5L,
                     cauchyLength = 10L) {
   trees <- .BHVTreeList(trees)
   tl <- .BHVTipLabels(trees)
@@ -328,9 +328,9 @@ BHVMean <- function(trees, tolerance = 1e-4, maxIter = 100000L,
 
 #' @rdname BHVMean
 #' @param mean Object of class `phylo` specifying a pre-computed mean tree;
-#' computed via [BHVMean()] if `NULL` (the default).
+#' computed via [BHVMean()] if `NULL`.
 #' @param type Character specifying whether to return the mean squared distance
-#' (`"average"`, the default) or the total squared distance (`"sum"`).
+#' (`"average"`) or the total squared distance (`"sum"`).
 #' @return `BHVVariance()` returns a single non-negative number.
 #' @export
 BHVVariance <- function(trees, mean = NULL, type = c("average", "sum")) {
