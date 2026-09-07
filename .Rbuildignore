@@ -2,6 +2,7 @@
 ^ConsTree\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
+^memcheck$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
