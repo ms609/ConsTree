@@ -17,31 +17,21 @@ MR(trees, p = 0.5)
 share the same leaf labels.}
 
 \item{p}{Numeric between 0.5 and 1: the minimum proportion of trees that must
-contain a split for it to be retained.  \code{p = 0.5} (the default) gives the
-majority-rule consensus; \code{p = 1} gives the strict consensus.}
+contain a split for it to be retained.}
 }
 \value{
-\code{Majority()} returns the consensus tree, an object of class \code{phylo},
-rooted as in the first entry of \code{trees}.
+\code{Majority()} returns an object of class \code{phylo} denoting the
+majority rule consensus, rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{Majority()} returns the majority-rule consensus
-\insertCite{MargushMcMorris1981}{ConsTree}: the tree containing each split
-that occurs in more than half of the input trees.  Raising \code{p} retains only
-splits present in a greater proportion of trees, up to the strict consensus
-at \code{p = 1}.
-}
-\details{
-The majority-rule consensus belongs to the family of consensus methods for
-which Jansson and colleagues developed asymptotically efficient algorithms
-\insertCite{JanssonShenSung2016}{ConsTree} -- the algorithmic backbone of this
-package -- and which their FACT toolkit implements.  This particular method is
-a thin wrapper around \code{\link[TreeTools:Consensus]{TreeTools::Consensus()}}, to which the computation is
-delegated.
+\code{Majority()} is a simple alias of \code{\link[TreeTools:Consensus]{TreeTools::Consensus()}}, which computes
+the majority-rule consensus \insertCite{MargushMcMorris1981}{ConsTree}:
+the tree that contains each split that occurs in more than \code{p} of the input
+trees.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)
-Majority(trees)
+Majority(trees, p = 0.6)
 
 }
 \references{

@@ -27,30 +27,21 @@ Strict <- function(trees) {
 
 #' Majority-rule consensus tree
 #'
-#' `Majority()` returns the majority-rule consensus
-#' \insertCite{MargushMcMorris1981}{ConsTree}: the tree containing each split
-#' that occurs in more than half of the input trees.  Raising `p` retains only
-#' splits present in a greater proportion of trees, up to the strict consensus
-#' at `p = 1`.
-#'
-#' The majority-rule consensus belongs to the family of consensus methods for
-#' which Jansson and colleagues developed asymptotically efficient algorithms
-#' \insertCite{JanssonShenSung2016}{ConsTree} -- the algorithmic backbone of this
-#' package -- and which their FACT toolkit implements.  This particular method is
-#' a thin wrapper around [`TreeTools::Consensus()`], to which the computation is
-#' delegated.
+#' `Majority()` is a simple alias of [TreeTools::Consensus()], which computes
+#' the majority-rule consensus \insertCite{MargushMcMorris1981}{ConsTree}:
+#' the tree that contains each split that occurs in more than `p` of the input
+#' trees.
 #'
 #' @inheritParams Strict
 #' @param p Numeric between 0.5 and 1: the minimum proportion of trees that must
-#' contain a split for it to be retained.  `p = 0.5` (the default) gives the
-#' majority-rule consensus; `p = 1` gives the strict consensus.
+#' contain a split for it to be retained.
 #'
-#' @return `Majority()` returns the consensus tree, an object of class `phylo`,
-#' rooted as in the first entry of `trees`.
+#' @return `Majority()` returns an object of class `phylo` denoting the
+#' majority rule consensus, rooted as in the first entry of `trees`.
 #'
 #' @examples
 #' trees <- ape::as.phylo(0:5, 8)
-#' Majority(trees)
+#' Majority(trees, p = 0.6)
 #'
 #' @family consensus methods
 #' @references \insertAllCited{}
