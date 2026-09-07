@@ -23,12 +23,13 @@ of rooted trees.
 The R* consensus is a rooted-triplet method.  For every set of three leaves it
 tallies, across the input trees, the three possible resolved rooted triplets
 (\code{ab|c}, \code{ac|b}, \code{bc|a}) and keeps whichever appears most frequently.
-A tie leaves those taxa unresolved.
-The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.  The R* tree is then the unique tree whose clades are exactly
-the \strong{strong clusters} of \eqn{R_{maj}}
-\insertCite{Degnan2009,Jansson2016a}{ConsTree}: a leaf set \code{A} is a clade if
-and only if, for \emph{every} pair of leaves in \code{A} and \emph{every} leaf \code{x} outside
-\code{A}, the triplet grouping that pair against \code{x} is uniquely favoured.
+Ties are not kept.
+The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.
+The R* tree is the tree whose clades are exactly the strong clusters of
+\eqn{R_{maj}} \insertCite{Degnan2009,Jansson2016a}{ConsTree}:
+a leaf set \code{A} is a clade if and only if, for every pair of leaves in \code{A}
+and every leaf \code{x} outside \code{A}, the triplet grouping that pair against \code{x}
+has been kept.
 Equivalently, R* is the most resolved tree that displays no resolved triplet
 outside \eqn{R_{maj}}.
 
