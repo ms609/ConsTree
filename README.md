@@ -1,7 +1,7 @@
 # ConsTree
 
 <!-- badges: start -->
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/ms609/ConsTree/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/ms609/ConsTree/actions/workflows/R-CMD-check.yml)
 [![codecov](https://codecov.io/gh/ms609/ConsTree/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ms609/ConsTree)
 <!-- badges: end -->
@@ -9,31 +9,27 @@
 'ConsTree' is an R package providing a comprehensive, efficient suite of
 methods for summarizing a collection of phylogenetic trees — for example a
 bootstrap or Bayesian posterior sample — as a single **consensus tree**.
-
-It builds on the tree and split infrastructure of
-['TreeTools'](https://ms609.github.io/TreeTools/), and repackages a family of
-asymptotically-efficient consensus algorithms developed by Jesper Jansson and
-colleagues, several of which have not previously been available in R.
-
+tr
 ## Consensus methods
 
 ### Split-selection methods
 
-Each method takes a list of trees (or a `multiPhylo`) sharing the same leaves and
-returns a `phylo`. They differ in *which* groupings (splits or clusters) they
-retain:
+These methods take a list of trees (or a `multiPhylo`) that share the same
+leaves, and return a single `phylo` object.
+Methods differ in which groupings (splits or clusters) the consensus tree
+retains:
 
-| Function | Retains a grouping when… |
+| Function | Objective |
 |----------|--------------------------|
-| `Strict()` | it occurs in **every** tree |
-| `Majority()` / `MajorityRule()` | it occurs in **> half** the trees (tunable via `p`) |
-| `Loose()` | **no** tree contradicts it (semi-strict / combinable-component) |
-| `MajorityPlus()` | **more** trees display it than contradict it |
-| `Frequency()` | it is **more frequent than every** grouping that conflicts with it (frequency-difference) |
-| `Greedy()` | added greedily, most frequent first, if compatible with those already kept (extended majority-rule) |
-| `Adams()` | constructed from the finest root-level partition shared by **every** tree (may introduce novel groupings; rooted) |
-| `Local()` | based on rooted triplets shared by **every** tree (minimum rooted/induced local consensus; ≤ 20 leaves) |
-| `RStar()` | each rooted triplet grouping that wins a **plurality** against each alternative separately |
+| `Strict()` | Retains groupings that occur in **every** tree |
+| `Majority()` / `MajorityRule()` | Retains groupings that occur in **most** trees (tunable via `p`) |
+| `Loose()` | Retains groupings that no tree **contradicts** (semi-strict / combinable-component) |
+| `MajorityPlus()` | Retains groupings that more trees display than contradict |
+| `Frequency()` | Retains groupings that are more frequent than every conflicting grouping (frequency-difference) |
+| `Greedy()` | Adds groupings greedily, most frequent first, when compatible with those already kept (extended majority-rule) |
+| `Adams()` | Constructed from the finest root-level partition shared by every tree (may introduce novel groupings; rooted) |
+| `Local()` | Built from rooted triplets shared by every tree (minimum rooted/induced local consensus; ≤ 20 leaves) |
+| `RStar()` | Includes each rooted triplet grouping that wins a **plurality** against each alternative separately |
 
 ### Distance and branch-length summaries
 
