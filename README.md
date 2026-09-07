@@ -8,8 +8,8 @@
 
 'ConsTree' is an R package providing a comprehensive, efficient suite of
 methods for summarizing a collection of phylogenetic trees — for example a
-bootstrap or Bayesian posterior sample — as a single **consensus tree**.
-tr
+bootstrap or Bayesian posterior sample — as a single consensus tree.
+
 ## Consensus methods
 
 ### Split-selection methods
@@ -59,7 +59,7 @@ Transfer(trees)      # minimizes transfer distance; often more resolved than maj
 
 ## Installation
 
-Install from CRAN (from Sept 2026) with:
+Install from CRAN (anticipated Oct 2026) with:
 
 ```r
 install.packages("ConsTree")
@@ -88,10 +88,10 @@ resolved- and shared-quartet statistics between trees; and the BHV summaries
 relate to ['distory'](https://cran.r-project.org/package=distory), which
 computes geodesic distances in the same treespace.
 
-['Rogue'](https://ms609.github.io/Rogue/) identifies unstable ('rogue') leaves
+['Rogue'](https://ms609.github.io/Rogue/) identifies unstable wildcard leaves
 whose removal can improve the resolution and support of a consensus tree;
-dropping rogues before summarizing with 'ConsTree' often yields a
-better-resolved result.
+dropping rogue taxa before summarizing with 'ConsTree' often leads a reduced
+consensus tree with increased resolution.
 
 ## Citation and attribution
 
@@ -99,7 +99,6 @@ The manual page for each function details the literature that underpins each
 method; please cite this literature alongside this package
 (type `citation("ConsTree")`).
 
-Please note that this project is released with a
-[Contributor Code of Conduct](https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html).
+Please note that this project is released with a [Contributor Code of Conduct](
+https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html).
 By contributing, you agree to abide by its terms.
-
