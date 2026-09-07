@@ -4,20 +4,11 @@
 #' \insertCite{LapointeCucumel1997}{ConsTree}: the tree whose path-length
 #' (patristic) distances most closely match the average of the path-length
 #' distances of the input trees.
-
 #'
 #' Because the average of several path-length matrices is usually not itself
-#' realisable by any tree (it violates the four-point condition), step 2 is a
-#' fit, not an inversion.  By default `Average()` approximates it with the fast
-#' balanced minimum-evolution tree; `method = "ls"` instead performs the exact
-#' least-squares search, which -- being NP-hard \insertCite{Day1987}{ConsTree}
-#' -- uses tree rearrangements, as did the original \acronym{FITCH}
-#' implementation.  Branch lengths are fitted by non-negative least squares, so
-#' that the fitted distances are realisable by a tree, as the criterion requires.
-#'
-#' A lone input tree is its own average: it is returned (unrooted unless
-#' `outgroup` is given) without refitting, and `method`, `scale`, `weights` and
-#' `edgeLengths` then have no effect.
+#' realisable by any tree, `Average()` approximates it: by default, with the
+#' fast balanced minimum-evolution tree; or if `method = "ls"`, by NP-hard
+#' least-squares search \insertCite{Day1987}{ConsTree}.
 #'
 #' @inheritParams Strict
 #' @param method Character specifying how to build the tree from the average

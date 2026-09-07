@@ -68,36 +68,16 @@ Fitch-Margoliash weighting.  Defaults to \code{list()}; ignored by other methods
 \code{phylo} with fitted branch lengths, unrooted unless \code{outgroup} is given.
 }
 \description{
-\code{Average()} returns the \emph{average consensus}
+\code{Average()} returns the average consensus
 \insertCite{LapointeCucumel1997}{ConsTree}: the tree whose path-length
 (patristic) distances most closely match the average of the path-length
-distances of the input trees.  Informally, it places each leaf at its mean
-position across the input trees, making it a natural distance-based summary of
-a posterior sample -- complementing the split-based \code{\link[=Strict]{Strict()}} and
-\code{\link[=Majority]{Majority()}} methods.
+distances of the input trees.
 }
 \details{
-The procedure has two steps \insertCite{LapointeCucumel1997}{ConsTree}:
-\enumerate{
-\item Compute the path-length distance matrix of each input tree (using branch
-lengths where present, otherwise counting edges), optionally rescaling each
-matrix, and average the matrices.
-\item Find the tree whose own path-length distances best fit this average matrix,
-in the least-squares sense.
-}
-
 Because the average of several path-length matrices is usually not itself
-realisable by any tree (it violates the four-point condition), step 2 is a
-fit, not an inversion.  By default \code{Average()} approximates it with the fast
-balanced minimum-evolution tree; \code{method = "ls"} instead performs the exact
-least-squares search, which -- being NP-hard \insertCite{Day1987}{ConsTree}
--- uses tree rearrangements, as did the original \acronym{FITCH}
-implementation.  Branch lengths are fitted by non-negative least squares, so
-that the fitted distances are realisable by a tree, as the criterion requires.
-
-A lone input tree is its own average: it is returned (unrooted unless
-\code{outgroup} is given) without refitting, and \code{method}, \code{scale}, \code{weights} and
-\code{edgeLengths} then have no effect.
+realisable by any tree, \code{Average()} approximates it: by default, with the
+fast balanced minimum-evolution tree; or if \code{method = "ls"}, by NP-hard
+least-squares search \insertCite{Day1987}{ConsTree}.
 }
 \examples{
 trees <- ape::rmtree(5, 8)         # five random eight-leaf trees
