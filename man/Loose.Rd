@@ -15,26 +15,20 @@ share the same leaf labels.}
 rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{Loose()} returns the loose consensus, also known as the semi-strict or
-combinable-component consensus \insertCite{Bremer1990}{ConsTree}.  It
-contains every split that is contradicted by none of the input trees;
-equivalently, every split that is compatible with each input tree.
+\code{Loose()} computes the loose consensus, also known as the semi-strict or
+combinable-component consensus \insertCite{Bremer1990}{ConsTree}.
+It contains every split that is not contradicted by any input tree.
 }
 \details{
-The loose consensus is always at least as resolved as the strict consensus
-(\code{\link[=Strict]{Strict()}}) and never includes a grouping that conflicts with any input
-tree.  It is incomparable with the majority-rule consensus (\code{\link[=Majority]{Majority()}}):
-a split present in most trees may still be contradicted by a minority, and so
-excluded from the loose consensus, whereas a split occurring in a single tree
+The loose consensus refines the strict consensus (\code{\link[=Strict]{Strict()}}).
+In contrast to the majority-rule consensus (\code{\link[=Majority]{Majority()}}), a split present
+in most trees may still be contradicted by a minority, and so be excluded
+from the loose consensus; yet a split that occurs in just one tree will be
 is retained if no other tree contradicts it.
 
-This implementation ports the asymptotically efficient \code{looseConsensusFast}
-algorithm of \insertCite{JanssonShenSung2016}{ConsTree} from their FACT
-toolkit (used with permission): the input trees are merged into a one-way
-compatible tree by repeated linear-time consecutive-range queries, the
-clusters that are compatible with every input are then marked, and the rest
-contracted away -- avoiding the explicit pairwise compatibility matrix used
-previously.
+This implementation builds on the \code{looseConsensusFast}
+algorithm of \insertCite{JanssonShenSung2016}{ConsTree}; please cite that
+paper when using this method.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)
