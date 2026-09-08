@@ -50,11 +50,11 @@ library("ConsTree")
 trees <- ape::as.phylo(1:100, 8)   # 100 eight-leaf trees
 
 Strict(trees)        # most conservative
-Majority(trees)      # the familiar 50% majority-rule tree
+Majority(trees)      # 50% majority-rule tree
 Loose(trees)         # everything not actively contradicted
 Frequency(trees)     # frequency-difference: often more resolved than majority
 Greedy(trees)        # most resolved of the split-based summaries
-Transfer(trees)      # minimizes transfer distance; often more resolved than majority-rule
+Transfer(trees)      # minimum transfer distance
 ```
 
 ## Installation
@@ -74,7 +74,7 @@ pak::pkg_install("ms609/ConsTree")
 
 ## Relationship to other packages
 
-'ConsTree' builds on [TreeTools](https://ms609.github.io/TreeTools/) (the fast
+'ConsTree' builds on ['TreeTools'](https://ms609.github.io/TreeTools/) (the fast
 engine for strict and majority-rule consensus calculation) and ['TreeDist'](https://ms609.github.io/TreeDist/) (tree distances and
 information-theoretic consensus).
 
