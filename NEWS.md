@@ -1,4 +1,4 @@
-# ConsTree 1.0.0.9000 (development)
+# ConsTree 1.0.1 (2026-09-16)
 
 - Fix omissions in references and attribution.
 - Optimize `RStar()`, implementing Jansson et al. (2016) and parallelization.
