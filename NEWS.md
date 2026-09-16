@@ -1,9 +1,7 @@
 # ConsTree 1.0.0.9000 (development)
 
 - Fix omissions in references and attribution.
-- `RStar()` is much faster: O(n²) for two trees, after Jansson et al. (2016)
-  (about 200× faster at 2000 leaves), and 2–11× faster for more trees, with
-  optional multithreading via `options(ConsTree.threads)` or `mc.cores`.
+- Optimize `RStar()`, implementing Jansson et al. (2016) and parallelization.
 
 
 # ConsTree 1.0.0 (2026-09-07)
