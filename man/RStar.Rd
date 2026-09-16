@@ -16,19 +16,19 @@ It is rooted by construction, but when the resolved triplets leave the
 deepest divergence unresolved the root is a polytomy.
 }
 \description{
-\code{RStar()} returns the R\* consensus \insertCite{Degnan2009}{ConsTree} of a
+\code{RStar()} returns the R* consensus \insertCite{Degnan2009}{ConsTree} of a
 set of rooted trees.
 }
 \details{
-The R\* consensus is a rooted-triplet method.  For every set of three leaves it
+The R* consensus is a rooted-triplet method.  For every set of three leaves it
 tallies, across the input trees, the three possible resolved rooted triplets
 (\code{ab|c}, \code{ac|b}, \code{bc|a}) and keeps whichever appears most frequently.
 Ties are not kept.
 The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.
-Then R\* is the most resolved tree that displays no resolved triplet
+Then \eqn{R\*} is the most resolved tree that displays no resolved triplet
 outside \eqn{R_{maj}}.
 
-R\* is always a refinement of the majority-rule consensus:
+\eqn{R\*} is always a refinement of the majority-rule consensus:
 every majority clade also appears in \code{RStar()}.
 }
 \examples{

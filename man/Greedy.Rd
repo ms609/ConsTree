@@ -24,7 +24,7 @@ compatible with every split already accepted.
 }
 \details{
 The implementation builds upon the \code{greedyConsensusFast} algorithm of
-\insertCite{Jansson2016}{ConsTree}; please cite that paper when
+\insertCite{Jansson2016acm}{ConsTree}; please cite that paper when
 using this method.
 }
 \examples{

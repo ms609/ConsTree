@@ -76,7 +76,7 @@
 #' is retained if no other tree contradicts it.
 #'
 #' This implementation builds on the `looseConsensusFast`
-#' algorithm of \insertCite{Jansson2016}{ConsTree}; please cite that
+#' algorithm of \insertCite{Jansson2016acm}{ConsTree}; please cite that
 #' paper when using this method.
 #'
 #' @inheritParams Strict
@@ -116,7 +116,7 @@ Loose <- function(trees) {
 #' compatible with every split already accepted.
 #'
 #' The implementation builds upon the `greedyConsensusFast` algorithm of
-#' \insertCite{Jansson2016}{ConsTree}; please cite that paper when
+#' \insertCite{Jansson2016acm}{ConsTree}; please cite that paper when
 #' using this method.
 #'
 #' @inheritParams Strict

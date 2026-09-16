@@ -6,12 +6,16 @@
 \alias{ConsTree-package}
 \title{Fast algorithms for phylogenetic consensus trees}
 \description{
-\code{ConsTree} provides a comprehensive and efficient suite of methods for
-summarizing a set of phylogenetic trees as a single consensus tree.
+\code{ConsTree} provides efficient methods for the construction of phylogenetic
+consensus trees.  Methods include strict, majority-rule, majority-rule (+),
+loose (combinable component / semi-strict), greedy, Adams, frequency
+difference, R*, and local consensus.
+}
+\details{
 It builds on the tree and split infrastructure of
 \href{https://ms609.github.io/TreeTools/}{\pkg{TreeTools}}, and implements
 asymptotically efficient consensus algorithms
-\insertCite{Jansson2016}{ConsTree}.
+\insertCite{Jansson2016acm}{ConsTree}.
 }
 \seealso{
 Useful links:

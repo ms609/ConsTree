@@ -1,17 +1,17 @@
 #' R* consensus tree
 #'
-#' `RStar()` returns the R\* consensus \insertCite{Degnan2009}{ConsTree} of a
+#' `RStar()` returns the R* consensus \insertCite{Degnan2009}{ConsTree} of a
 #' set of rooted trees.
 #'
-#' The R\* consensus is a rooted-triplet method.  For every set of three leaves it
+#' The R* consensus is a rooted-triplet method.  For every set of three leaves it
 #' tallies, across the input trees, the three possible resolved rooted triplets
 #' (`ab|c`, `ac|b`, `bc|a`) and keeps whichever appears most frequently.
 #' Ties are not kept.
 #' The kept triplets form the set of majority resolved triplets, \eqn{R_{maj}}.
-#' Then R\* is the most resolved tree that displays no resolved triplet
+#' Then \eqn{R\*} is the most resolved tree that displays no resolved triplet
 #' outside \eqn{R_{maj}}.
 #'
-#' R\* is always a refinement of the majority-rule consensus:
+#' \eqn{R\*} is always a refinement of the majority-rule consensus:
 #' every majority clade also appears in `RStar()`.
 #'
 #' @inheritParams Strict
