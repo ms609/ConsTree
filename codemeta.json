@@ -7,7 +7,7 @@
   "codeRepository": "https://constree.github.io/",
   "issueTracker": "https://github.com/ms609/ConsTree/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0.9000",
+  "version": "1.0.0.9001",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -230,7 +230,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "580.368KB",
+  "fileSize": "607.095KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -246,7 +246,7 @@
       ],
       "name": "ConsTree: fast algorithms for phylogenetic consensus trees",
       "identifier": "10.32614/CRAN.package.ConsTree",
-      "description": "R package version 1.0.0.9000",
+      "description": "R package version 1.0.0.9001",
       "@id": "https://doi.org/10.32614/CRAN.package.ConsTree",
       "sameAs": "https://doi.org/10.32614/CRAN.package.ConsTree"
     }
