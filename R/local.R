@@ -8,7 +8,7 @@
 #' `type = "induced"`) differ in how the resolution of the result is scored.
 #' 
 #' The implementation builds on the algorithms of
-#' \insertCite{Jansson2018}{ConsTree}, which generalize the "RV-II" type
+#' \insertCite{Jansson2018;textual}{ConsTree}, which generalize the RV-II type
 #' consensus of \insertCite{Kannan1998;textual}{ConsTree}; please cite 
 #' both papers when using this method.
 #'

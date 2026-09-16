@@ -29,7 +29,7 @@ triplets shared by every input tree.  The minimum rooted local consensus
 }
 \details{
 The implementation builds on the algorithms of
-\insertCite{Jansson2018}{ConsTree}, which generalize the "RV-II" type
+\insertCite{Jansson2018;textual}{ConsTree}, which generalize the RV-II type
 consensus of \insertCite{Kannan1998;textual}{ConsTree}; please cite
 both papers when using this method.
 

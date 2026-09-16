@@ -1,7 +1,7 @@
 # ConsTree
 
 <!-- badges: start -->
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/ms609/ConsTree/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/ms609/ConsTree/actions/workflows/R-CMD-check.yml)
 [![codecov](https://codecov.io/gh/ms609/ConsTree/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ms609/ConsTree)
 <!-- badges: end -->
@@ -86,7 +86,7 @@ The quartet machinery underlying `Quartet()` builds on the
 ['Quartet'](https://ms609.github.io/Quartet/) package, which counts the
 resolved- and shared-quartet statistics between trees; and the BHV summaries
 relate to ['distory'](https://cran.r-project.org/package=distory), which
-computes geodesic distances in the same treespace.
+computes geodesic distances in the same tree space.
 
 ['Rogue'](https://ms609.github.io/Rogue/) identifies unstable wildcard leaves
 whose removal can improve the resolution and support of a consensus tree;
