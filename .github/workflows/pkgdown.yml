@@ -17,6 +17,19 @@ on:
 
 name: pkgdown
 
+# Branch layout (deliberate — do not collapse these onto one branch):
+#
+#   site       the canonical built site.  Not served by Pages; it exists purely
+#              so that the mirror below has an uncontaminated source.
+#   gh-pages   what ms609.github.io/ConsTree serves: *only* a redirect stub.
+#
+# These used to be the same branch, which broke the site: pkgdown deploys with
+# `clean: false` and, for a dev version, rebuilds only `dev/`.  The final step
+# below then wiped the branch down to the redirect stub, so the release-level
+# pages were never regenerated — and the mirror pushed that stub to
+# constree.github.io, where `/` redirected to `/` and every missing deep link
+# fell through to a 404.html that redirected to itself.
+
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
@@ -36,6 +49,16 @@ jobs:
           # plus its dev TreeTools dep) is unfindable unless the drat is passed
           # explicitly here (mirrors what R-CMD-check needs).
           extra-repositories: https://ms609.github.io/packages/
+          # The action hardcodes a gh-pages deploy; we need `site` instead.
+          deploy: false
+
+      - name: Deploy built site to `site`
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
+          branch: site
+          # A dev build produces only `dev/`; keep the release root intact.
+          clean: false
 
       - name: Check if release version
         id: version-check
@@ -56,7 +79,7 @@ jobs:
         if: steps.version-check.outputs.is_release == 'true'
         run: |
           TMPDIR=$(mktemp -d)
-          git clone --single-branch --branch gh-pages \
+          git clone --single-branch --branch site \
             "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git" \
             "$TMPDIR"
           cd "$TMPDIR"
@@ -88,7 +111,7 @@ jobs:
 
           git add dev/
           git commit -m "Replace dev/ docs with redirects to release" || true
-          git push origin gh-pages
+          git push origin site
 
           rm -rf "$TMPDIR"
         shell: bash
@@ -96,17 +119,17 @@ jobs:
       - name: Push built site to constree.github.io
         run: |
           TMPDIR=$(mktemp -d)
-          git clone --single-branch --branch gh-pages \
+          git clone --single-branch --branch site \
             "https://x-access-token:${GITHUB_PAT}@github.com/${GITHUB_REPOSITORY}.git" \
             "$TMPDIR"
           cd "$TMPDIR"
           git remote add constree \
             "https://x-access-token:${CONSTREE_TOKEN}@github.com/constree/constree.github.io.git"
-          git push constree gh-pages:gh-pages --force
+          git push constree HEAD:gh-pages --force
           rm -rf "$TMPDIR"
         shell: bash
 
-      - name: Replace ms609 gh-pages with redirect to constree.github.io
+      - name: Keep ms609 gh-pages as a redirect to constree.github.io
         run: |
           TMPDIR=$(mktemp -d)
           git clone --single-branch --branch gh-pages \
@@ -116,7 +139,7 @@ jobs:
 
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git rm -rf .
+          git rm -rf . > /dev/null 2>&1 || true
 
           cat > index.html << 'EOF'
           <!DOCTYPE html>
@@ -134,7 +157,10 @@ jobs:
           </html>
           EOF
 
-          # 404.html catches deep links, strips the /ConsTree prefix and redirects
+          # 404.html catches deep links, strips the /ConsTree prefix and
+          # redirects.  Pages resolves project paths case-insensitively, so the
+          # prefix match must be too, or /constree/x lands on constree.github.io
+          # /constree/x.
           cat > 404.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
@@ -143,7 +169,7 @@ jobs:
             <title>ConsTree – Redirecting</title>
             <link rel="canonical" href="https://constree.github.io/">
             <script>
-              var p = window.location.pathname.replace(/^\/ConsTree/, '') || '/';
+              var p = window.location.pathname.replace(/^\/ConsTree/i, '') || '/';
               window.location.replace('https://constree.github.io' + p + window.location.search + window.location.hash);
             </script>
           </head>
@@ -153,8 +179,15 @@ jobs:
           </html>
           EOF
 
-          git add .
-          git commit -m "Redirect to constree.github.io"
-          git push origin gh-pages
+          # gh-pages now only ever holds these two stubs, so most runs are a
+          # no-op; an unguarded `git commit` would fail the job.
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Redirect stubs unchanged; nothing to push."
+          else
+            git commit -m "Redirect to constree.github.io"
+            git push origin gh-pages
+          fi
+
           rm -rf "$TMPDIR"
         shell: bash
