@@ -76,7 +76,7 @@
 #' retained if no other tree contradicts it.
 #'
 #' This implementation builds on the `looseConsensusFast`
-#' algorithm of \insertCite{Jansson2016acm}{ConsTree}; please cite that
+#' algorithm of \insertCite{Jansson2016acm;textual}{ConsTree}; please cite that
 #' paper when using this method.
 #'
 #' @inheritParams Strict
@@ -148,9 +148,9 @@ Greedy <- function(trees) {
 
 #' Majority-rule (+) consensus tree
 #'
-#' `MajorityPlus()` computes the majority-rule (+) consensus
-#' \insertCite{Dong2010}{ConsTree}, which displays each clade that
-#' occurs in more input trees than contradict it.
+#' `MajorityPlus()` computes the majority-rule (+) consensus, which displays
+#' each clade that occurs in more input trees than contradict it
+#' \insertCite{Dong2010}{ConsTree}.
 #' 
 #' This implementation uses the algorithm of 
 #' \insertCite{Jansson2018itcbab;textual}{ConsTree}; please cite both this and

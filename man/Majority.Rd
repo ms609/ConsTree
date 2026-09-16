@@ -25,9 +25,8 @@ majority rule consensus, rooted as in the first entry of \code{trees}.
 }
 \description{
 \code{Majority()} is a simple alias of \code{\link[TreeTools:Consensus]{TreeTools::Consensus()}}, which computes
-the majority-rule consensus \insertCite{MargushMcMorris1981}{ConsTree}:
-the tree that contains each split that occurs in more than \code{p} of the input
-trees.
+the majority-rule consensus: the tree that contains each split that occurs in
+more than \code{p} of the input trees \insertCite{MargushMcMorris1981}{ConsTree}.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)

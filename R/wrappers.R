@@ -28,9 +28,8 @@ Strict <- function(trees) {
 #' Majority-rule consensus tree
 #'
 #' `Majority()` is a simple alias of [TreeTools::Consensus()], which computes
-#' the majority-rule consensus \insertCite{MargushMcMorris1981}{ConsTree}:
-#' the tree that contains each split that occurs in more than `p` of the input
-#' trees.
+#' the majority-rule consensus: the tree that contains each split that occurs in
+#' more than `p` of the input trees \insertCite{MargushMcMorris1981}{ConsTree}.
 #'
 #' @inheritParams Strict
 #' @param p Numeric between 0.5 and 1: the minimum proportion of trees that must
