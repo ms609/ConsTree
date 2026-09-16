@@ -7,13 +7,19 @@
   "codeRepository": "https://constree.github.io/",
   "issueTracker": "https://github.com/ms609/ConsTree/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.0.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.6.1 (2026-06-24)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -21,6 +27,29 @@
       "familyName": "Smith",
       "email": "martin.smith@durham.ac.uk",
       "@id": "https://orcid.org/0000-0001-5660-1727"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Jesper",
+      "familyName": "Jansson",
+      "@id": "https://orcid.org/0000-0001-6859-8932"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Wing-Kin",
+      "familyName": "Sung",
+      "@id": "https://orcid.org/0000-0001-7806-7086"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Ramesh",
+      "familyName": "Rajaby",
+      "@id": "https://orcid.org/0000-0001-9980-1913"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Chuanqi",
+      "familyName": "Shen"
     }
   ],
   "copyrightHolder": [
@@ -34,17 +63,25 @@
     {
       "@type": "Person",
       "givenName": "Jesper",
-      "familyName": "Jansson"
+      "familyName": "Jansson",
+      "@id": "https://orcid.org/0000-0001-6859-8932"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Wing-Kin",
+      "familyName": "Sung",
+      "@id": "https://orcid.org/0000-0001-7806-7086"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Ramesh",
+      "familyName": "Rajaby",
+      "@id": "https://orcid.org/0000-0001-9980-1913"
     },
     {
       "@type": "Person",
       "givenName": "Chuanqi",
       "familyName": "Shen"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Wing-Kin",
-      "familyName": "Sung"
     }
   ],
   "maintainer": [
@@ -193,7 +230,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "577.55KB",
+  "fileSize": "580.368KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -203,12 +240,13 @@
           "@type": "Person",
           "givenName": ["Martin", "R."],
           "familyName": "Smith",
-          "email": "martin.smith@durham.ac.uk"
+          "email": "martin.smith@durham.ac.uk",
+          "@id": "https://orcid.org/0000-0001-5660-1727"
         }
       ],
       "name": "ConsTree: fast algorithms for phylogenetic consensus trees",
       "identifier": "10.32614/CRAN.package.ConsTree",
-      "description": "R package version 1.0.0",
+      "description": "R package version 1.0.0.9000",
       "@id": "https://doi.org/10.32614/CRAN.package.ConsTree",
       "sameAs": "https://doi.org/10.32614/CRAN.package.ConsTree"
     }
