@@ -40,7 +40,7 @@ For more trees it tallies every triplet directly
 \insertCite{Bryant2003}{ConsTree}, in \eqn{O(kn^3)} time;
 this outpaces the \eqn{O(n^2 \log^{k+2} n)}{O(n^2 log^(k+2) n)} algorithm of
 \insertCite{Jansson2016a;textual}{ConsTree} unless \eqn{k} is very small.
-Set \code{options(ConsTree.threads = )} to count triplets on several threads.
+Set \code{options(mc.cores = )} to count triplets on several threads.
 }
 \examples{
 # Five trees whose majority signal recovers the species tree (((a,b),c),d):

@@ -232,7 +232,7 @@ test_that("RStar() gives the same tree on several threads", {
   }
   trees <- .alignTrees(similar)
   serial <- cladeSet(RStar(trees))
-  oldOpt <- options(ConsTree.threads = 2L)
+  oldOpt <- options(mc.cores = 2L)
   on.exit(options(oldOpt))
   expect_setequal(cladeSet(RStar(trees)), serial)
 })

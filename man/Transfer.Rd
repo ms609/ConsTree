@@ -48,6 +48,7 @@ pairwise transfer distances between them, and greedily adds or removes
 splits to minimize total transfer dissimilarity cost.  The approach
 follows \insertCite{Takazawa2026;textual}{ConsTree}, reimplemented for
 'ConsTree' infrastructure.
+Set \code{options(mc.cores = )} to use several threads.
 }
 \examples{
 library(TreeTools)

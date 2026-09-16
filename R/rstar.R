@@ -23,7 +23,7 @@
 #' \insertCite{Bryant2003}{ConsTree}, in \eqn{O(kn^3)} time;
 #' this outpaces the \eqn{O(n^2 \log^{k+2} n)}{O(n^2 log^(k+2) n)} algorithm of
 #' \insertCite{Jansson2016a;textual}{ConsTree} unless \eqn{k} is very small.
-#' Set `options(ConsTree.threads = )` to count triplets on several threads.
+#' Set `options(mc.cores = )` to count triplets on several threads.
 #'
 #' @inheritParams Strict
 #'
@@ -88,8 +88,7 @@ RStar <- function(trees) {
     tr[["edge"]]
   })
 
-  nThreads <- max(1L, as.integer(getOption("ConsTree.threads",
-                                           getOption("mc.cores", 1L))))
+  nThreads <- max(1L, as.integer(getOption("mc.cores", 1L)))
   nwk <- rStarConsensus(edgeList, n, nThreads = nThreads)
 
   tree <- read.tree(text = paste0(nwk, ";"))
