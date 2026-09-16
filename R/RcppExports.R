@@ -56,8 +56,8 @@ consensus_rcpp_selfcheck <- function() {
     .Call(`_ConsTree_consensus_rcpp_selfcheck`)
 }
 
-rStarConsensus <- function(edgeList, nTip) {
-    .Call(`_ConsTree_rStarConsensus`, edgeList, nTip)
+rStarConsensus <- function(edgeList, nTip, twoTreeFastPath = TRUE, nThreads = 1L) {
+    .Call(`_ConsTree_rStarConsensus`, edgeList, nTip, twoTreeFastPath, nThreads)
 }
 
 #' Transfer consensus (C++ implementation)

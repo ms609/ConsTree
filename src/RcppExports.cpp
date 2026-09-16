@@ -159,14 +159,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // rStarConsensus
-std::string rStarConsensus(Rcpp::List edgeList, int nTip);
-RcppExport SEXP _ConsTree_rStarConsensus(SEXP edgeListSEXP, SEXP nTipSEXP) {
+std::string rStarConsensus(Rcpp::List edgeList, int nTip, bool twoTreeFastPath, int nThreads);
+RcppExport SEXP _ConsTree_rStarConsensus(SEXP edgeListSEXP, SEXP nTipSEXP, SEXP twoTreeFastPathSEXP, SEXP nThreadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type edgeList(edgeListSEXP);
     Rcpp::traits::input_parameter< int >::type nTip(nTipSEXP);
-    rcpp_result_gen = Rcpp::wrap(rStarConsensus(edgeList, nTip));
+    Rcpp::traits::input_parameter< bool >::type twoTreeFastPath(twoTreeFastPathSEXP);
+    Rcpp::traits::input_parameter< int >::type nThreads(nThreadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rStarConsensus(edgeList, nTip, twoTreeFastPath, nThreads));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -216,7 +218,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ConsTree_majorityPlusConsensusCpp", (DL_FUNC) &_ConsTree_majorityPlusConsensusCpp, 2},
     {"_ConsTree_localConsensus", (DL_FUNC) &_ConsTree_localConsensus, 3},
     {"_ConsTree_consensus_rcpp_selfcheck", (DL_FUNC) &_ConsTree_consensus_rcpp_selfcheck, 0},
-    {"_ConsTree_rStarConsensus", (DL_FUNC) &_ConsTree_rStarConsensus, 2},
+    {"_ConsTree_rStarConsensus", (DL_FUNC) &_ConsTree_rStarConsensus, 4},
     {"_ConsTree_cpp_transfer_consensus", (DL_FUNC) &_ConsTree_cpp_transfer_consensus, 6},
     {"_ConsTree_cpp_tc_profile", (DL_FUNC) &_ConsTree_cpp_tc_profile, 7},
     {NULL, NULL, 0}

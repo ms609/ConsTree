@@ -14,6 +14,17 @@
 #' \eqn{R^*} is always a refinement of the majority-rule consensus:
 #' every majority clade also appears in `RStar()`.
 #'
+#' `RStar()` finds the strong clusters of \eqn{R_{maj}} among candidate clusters
+#' built from triplet similarities \insertCite{Jansson2013,Jansson2016a}{ConsTree}.
+#' For two trees it takes \eqn{O(n^2)} time \insertCite{Jansson2016a}{ConsTree},
+#' testing each candidate with the criterion of
+#' \insertCite{Jansson2013;textual}{ConsTree}.
+#' For more trees it tallies every triplet directly
+#' \insertCite{Bryant2003}{ConsTree}, in \eqn{O(kn^3)} time;
+#' this outpaces the \eqn{O(n^2 \log^{k+2} n)}{O(n^2 log^(k+2) n)} algorithm of
+#' \insertCite{Jansson2016a;textual}{ConsTree} unless \eqn{k} is very small.
+#' Set `options(ConsTree.threads = )` to count triplets on several threads.
+#'
 #' @inheritParams Strict
 #'
 #' @return `RStar()` returns the consensus tree, an object of class `phylo`.
@@ -77,7 +88,9 @@ RStar <- function(trees) {
     tr[["edge"]]
   })
 
-  nwk <- rStarConsensus(edgeList, n)
+  nThreads <- max(1L, as.integer(getOption("ConsTree.threads",
+                                           getOption("mc.cores", 1L))))
+  nwk <- rStarConsensus(edgeList, n, nThreads = nThreads)
 
   tree <- read.tree(text = paste0(nwk, ";"))
   tree[["tip.label"]] <- labels[as.integer(tree[["tip.label"]])]

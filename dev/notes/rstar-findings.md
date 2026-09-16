@@ -81,9 +81,14 @@ brute-force strong-cluster oracle + majority-refinement).
 - **OQ3 (assembly / over-resolution):** resolved — the definition mandates strong
   clusters (`r(τ) ⊆ R_maj`); BUILD was simply the wrong construction, now fixed.
 
-## Deferred (performance only, not correctness)
+## Performance
 
-The implementation is correctness-first: O(kn³) tally + O(n⁴) strong-cluster
-assembly, capped at 200 leaves (a memory guard on the dense triplet tensor). The
-sub-cubic (k = 2) and near-quadratic algorithms of `Jansson2013a` / `Jansson2016a`
-(Apresjan-cluster hierarchy) are a future speed optimisation.
+k = 2 uses the O(n²) route of `Jansson2016a` §2 (one inclusion–exclusion
+expression per leaf pair over a cluster-intersection table, plus the O(n)
+strong-cluster test of `Jansson2013` Lemma 13 per candidate). k ≥ 3 uses the O(kn³) direct tally with
+O(kn²) memory (vectorised, multithreaded; strong-cluster tests shortcut by
+majority clades and a per-pair intruder certificate — see
+`dev/profiling/log.md`, round 1). `Jansson2016a` gives O(n² log^{4/3} n) for k = 3
+and O(n² log^{k+2} n) for unbounded k; the latter is exponential in k and beats
+the tally only when k < log n / (log log n)^{1+ε} (their p. 1229). A k = 3
+specialisation (offline 3-D range counting) is not implemented.

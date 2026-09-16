@@ -67,3 +67,12 @@ dev/**/_*
 dev/reference/
 /.claude/worktrees
 .aider*
+
+# /profile skill artefacts (VTune results, symboled libraries)
+dev/profiling/result_*/
+dev/profiling/.vtune-lib-*/
+dev/profiling/.Makevars.symboled
+dev/profiling/.build-symboled.tar.gz
+dev/profiling/.install-symboled.log
+dev/profiling/drivers/*-profvis.html
+dev/profiling/drivers/*-profvis_files/

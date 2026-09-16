@@ -155,6 +155,88 @@ test_that("RStar() handles non-binary (partly resolved) input", {
   }
 })
 
+test_that("RStar() two-tree path matches the strong-cluster oracle", {
+  set.seed(3141)
+  for (trial in seq_len(20)) {
+    n <- sample(4:8, 1)
+    trees <- .alignTrees(lapply(1:2, function(i) {
+      tr <- ape::rtree(n, rooted = TRUE)
+      ape::di2multi(tr, tol = stats::runif(1, 0, 0.45))
+    }))
+    expect_setequal(cladeSet(RStar(trees)), .strongClusters(trees))
+  }
+})
+
+test_that("RStar() two-tree path matches the general path", {
+  nwk <- function(trees, fast) {
+    labels <- TreeTools::TipLabels(trees[[1]])
+    edges <- lapply(trees, function(tr) {
+      TreeTools::Preorder(TreeTools::RenumberTips(tr, labels))[["edge"]]
+    })
+    cladeSet(tt(paste0(
+      ConsTree:::rStarConsensus(edges, length(labels), fast), ";")))
+  }
+  set.seed(2718)
+  for (trial in seq_len(20)) {
+    n <- sample(10:60, 1)
+    base <- ape::rtree(n, rooted = TRUE)
+    other <- if (trial %% 2) ape::rtree(n, rooted = TRUE) else base
+    if (!trial %% 2) {                           # mostly congruent
+      swap <- sample(n, 2)
+      other[["tip.label"]][swap] <- other[["tip.label"]][rev(swap)]
+    }
+    trees <- .alignTrees(lapply(list(base, other), ape::di2multi,
+                                tol = stats::runif(1, 0, 0.3)))
+    expect_identical(nwk(trees, TRUE), nwk(trees, FALSE))
+  }
+})
+
+test_that("RStar() weights duplicated trees", {
+  set.seed(1618)
+  for (trial in seq_len(10)) {
+    n <- sample(5:8, 1)
+    pool <- lapply(1:3, function(i) {
+      tr <- ape::rtree(n, rooted = TRUE)
+      ape::di2multi(tr, tol = stats::runif(1, 0, 0.3))
+    })
+    trees <- .alignTrees(pool[sample(3, sample(3:7, 1), replace = TRUE)])
+    expect_setequal(cladeSet(RStar(trees)), .strongClusters(trees))
+  }
+})
+
+test_that("RStar() gives the same tree on several threads", {
+  edgesOf <- function(trees) {
+    labels <- TreeTools::TipLabels(trees[[1]])
+    lapply(trees, function(tr) {
+      TreeTools::Preorder(TreeTools::RenumberTips(tr, labels))[["edge"]]
+    })
+  }
+  Swap <- function(tr, m) {
+    for (i in seq_len(m)) {
+      ij <- sample(length(tr[["tip.label"]]), 2)
+      tr[["tip.label"]][ij] <- tr[["tip.label"]][rev(ij)]
+    }
+    tr
+  }
+  set.seed(2236)
+  n <- 160
+  base <- ape::rtree(n, rooted = TRUE)
+  similar <- lapply(1:9, function(i) Swap(base, 4))
+  unrelated <- lapply(1:9, function(i) ape::rtree(n, rooted = TRUE))
+  for (trees in list(similar, unrelated, similar[1:2])) {
+    trees <- .alignTrees(trees)
+    e <- edgesOf(trees)
+    one <- ConsTree:::rStarConsensus(e, n, TRUE, 1L)
+    expect_identical(cladeSet(tt(paste0(ConsTree:::rStarConsensus(e, n, TRUE, 3L), ";"))),
+                     cladeSet(tt(paste0(one, ";"))))
+  }
+  trees <- .alignTrees(similar)
+  serial <- cladeSet(RStar(trees))
+  oldOpt <- options(ConsTree.threads = 2L)
+  on.exit(options(oldOpt))
+  expect_setequal(cladeSet(RStar(trees)), serial)
+})
+
 test_that("RStar() refines the majority-rule consensus", {
   # Lemma 1.1: every rooted majority clade is a strong cluster, hence in R*.
   set.seed(99)

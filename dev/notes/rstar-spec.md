@@ -10,7 +10,7 @@
 - Bansal, M.S., Dong, J., Fernández-Baca, D. (2009 preprint). "Comparing and Aggregating Partially Resolved Trees." arXiv:0906.5089. [For formal triplet/fan definitions.]
 - Bryant, D., Berry, V. (2001). "A structured family of clustering and tree construction methods." *Advances in Applied Mathematics* 27:705–732. [The tree-construction algorithm referenced by Degnan et al.; not read directly — see Open Questions.]
 - Bryant, D. (2003). "A classification of consensus methods for phylogenetics." In *Bioconsensus*, DIMACS Series 61:163–184. [Referenced throughout; not publicly accessible — see Open Questions.]
-- Jansson, J., Sung, W.-K., Vu, H., Yiu, S.-M. (2016). "Faster algorithms for computing the R* consensus tree." *Algorithmica* 76:1224–1244. [Not read directly; complexity figures from secondary sources.]
+- Jansson, J., Sung, W.-K., Vu, H., Yiu, S.-M. (2016). "Faster algorithms for computing the R* consensus tree." *Algorithmica* 76:1224–1244. [Read; see `rstar-findings.md`.]
 
 ---
 
@@ -109,7 +109,7 @@ The tree returned by BUILD is consistent with R. When R is a complete and consis
 - Naive BUILD: O(|S|^3) or equivalently O(n^3) for n = |S| taxa (because the Aho graph has O(n^2) edges and the algorithm makes O(n) recursive calls).
 - With faster graph algorithms (Henzinger et al. 1999): O(|R| + n^2) for a single BUILD call.
 - For R* with k input trees: Step 1 requires O(k * C(n,3)) = O(kn^3) time to tally all triplets. Step 2 (BUILD) runs in O(n^3). Total naive: **O(kn^3)**.
-- Faster algorithms (Jansson, Sung, Vu, Yiu 2016): O(n^2 sqrt(log n)) for k=2; O(n^2 log^(4/3) n) for k=3; O(kn^2 log^(k+2) n) for unbounded k.
+- Faster algorithms: O(n^2 sqrt(log n)) for k=2 (Jansson & Sung 2013); O(n^2) for k=2, O(n^2 log^(4/3) n) for k=3 and O(n^2 log^(k+2) n) for unbounded k (Jansson, Sung, Vu & Yiu 2016).
 
 ### 2.2 Consistency Guarantee and Partial Resolution Fallback
 
