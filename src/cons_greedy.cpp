@@ -11,8 +11,8 @@
 // VLA-free.  Distinct clusters are extracted as packed bit-vectors in one
 // post-order sweep per tree, grouped by occurrence count, then added in
 // descending-frequency order whenever compatible with the tree built so far --
-// the asymptotically efficient algorithm of Jansson, Shen & Sung (2016), in
-// place of the previous R O(s^2) compatibility matrix.
+// the asymptotically efficient algorithm of Jansson, Shen & Sung (2016, J. ACM
+// 63:28), avoiding an O(s^2) pairwise compatibility matrix.
 //
 // IMPORTANT (rooting): the algorithm extracts ROOTED clusters, so the unrooted
 // greedy consensus is recovered only if every input tree is rooted consistently

@@ -6,7 +6,8 @@
  * to a set of input trees via a greedy add-and-prune heuristic.
  *
  * The symmetric quartet distance is: 2d + r1 + r2
- * (using the Estabrook et al. categories from QuartetStatus).
+ * (using the categories of Estabrook, McMorris & Meacham 1985, from
+ * QuartetStatus).
  */
 
 #include <Rcpp.h>

@@ -10,10 +10,10 @@
 // contract() (dev/oracle/fact-src/strict.cpp:53), de-globalised, VLA-free and
 // RAII (reusing fact::Tree / buildTreeFromEdge / newick / precompute from
 // fact_tree.h).  Implements the asymptotically efficient algorithm of Jansson,
-// Shen & Sung (2016): build a one-way-compatible tree by repeatedly merging the
-// inputs (looseMerge with op == 1, each an O(n) consecutive-range query rather
-// than an O(s^2) pairwise compatibility matrix), then mark which of its clusters
-// are compatible with EVERY input (op == 0) and contract away the rest.
+// Shen & Sung (2016, J. ACM 63:28): build a one-way-compatible tree by merging
+// the inputs (looseMerge with op == 1, each an O(n) consecutive-range query
+// rather than an O(s^2) pairwise compatibility matrix), then mark which of its
+// clusters are compatible with EVERY input (op == 0) and contract away the rest.
 //
 // This is a purely STRUCTURAL algorithm (Day's relabelling + consecutive-range
 // /DEPTH queries); unlike greedy it does no leaf-set bit-packing, so there is no

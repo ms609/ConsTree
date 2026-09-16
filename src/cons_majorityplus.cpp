@@ -33,7 +33,7 @@
 // tree.  MajorityPlus keeps a cluster iff it is displayed by strictly more input
 // trees than contradict it -- a deterministic count rule with no frequency
 // tie-break, so the result is FACT-exact (the asymptotically efficient O(kn)
-// algorithm of Jansson, Shen & Sung 2016).
+// algorithm of Jansson, Rajaby, Shen & Sung 2018, IEEE/ACM TCBB 15:15-26).
 //
 // IMPORTANT (rooting): the algorithm reasons over ROOTED clusters; the unrooted
 // majority-rule (+) consensus is recovered because every input is rooted

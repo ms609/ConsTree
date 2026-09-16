@@ -6,7 +6,8 @@
 #include <cstdlib>  // abs
 
 // =============================================================================
-// Rcpp port of local_consensus.h from FDCT_new / FACT2 by Jansson et al.
+// Rcpp port of local_consensus.h from FDCT_new / FACT2: the MinRLC / MinILC
+// algorithms of Jansson, Rajaby & Sung (2018, AIMS Med. Sci. 5:181-203).
 // MinRLC (minrs=true)  = minRLC_exact (rooted local consensus)
 // MinILC (minrs=false) = minILC_exact (induced local consensus)
 //

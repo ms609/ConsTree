@@ -10,10 +10,11 @@
 #include <vector>
 
 // Frequency-difference consensus -- near-linear O(kn log n) algorithm of
-// Jansson, Sung, Tabatabaee & Yang (2024, STACS, doi:10.4230/LIPIcs.STACS.2024.43),
-// ported from their reference implementation freqdiff2.h (+ Tree, taxas_ranges,
-// lca_preprocessing, radix_sort, utils) at github.com/tswddd2/FDCT_new (the
-// software cited by that paper; used with permission).
+// Jansson, Sung, Tabatabaee & Yang (2026, J. Comput. Syst. Sci. 161:103831;
+// preliminary version STACS 2024), ported from their reference implementation
+// freqdiff2.h (+ Tree, taxas_ranges, lca_preprocessing, radix_sort, utils) at
+// github.com/tswddd2/FDCT_new (the software cited by that paper; used with
+// permission).
 //
 // Three deliberate departures from the upstream single-shot batch code, each
 // required to run repeatedly and portably from inside an R package (mirrors

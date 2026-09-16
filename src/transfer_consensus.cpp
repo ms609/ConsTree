@@ -1,6 +1,6 @@
 /* transfer_consensus.cpp
  *
- * C++ implementation of the Transfer Consensus algorithm (Takazawa 2025).
+ * C++ implementation of the Transfer Consensus algorithm (Takazawa et al. 2026).
  * Replaces the R-level .PoolSplits, .TransferDistMat, .ComputeTD,
  * .CompatMat, and .GreedyBest/.GreedyFirst helpers.
  *
