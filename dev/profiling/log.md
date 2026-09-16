@@ -23,7 +23,7 @@ path for k = 2).**
   contiguous ranges; majority-clade shortcut; per-pair intruder certificate
   (LCA preorder ranks stored instead of depths identify each pair's clade);
   vectorised range counts only as a fallback; `s < |L \ A|` prefilter first.
-- OpenMP (`ConsTree.threads` / `mc.cores`): tally, k = 2 similarity, and
+- OpenMP (`mc.cores`): tally, k = 2 similarity, and
   large candidates' pair tests.
 
 **Rejected (measured, no gain):** signed int16 rank storage (~3 %, noise);

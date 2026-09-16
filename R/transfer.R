@@ -15,6 +15,7 @@
 #' splits to minimize total transfer dissimilarity cost.  The approach
 #' follows \insertCite{Takazawa2026;textual}{ConsTree}, reimplemented for
 #' 'ConsTree' infrastructure.
+#' Set `options(mc.cores = )` to use several threads.
 #'
 #' @param trees An object of class `multiPhylo`: the input trees.
 #'   All trees must share the same tip labels.
@@ -92,8 +93,7 @@ Transfer <- function(trees,
   }
 
   # Delegate all work to C++
-  nThreads <- max(1L, getOption("ConsTree.threads",
-                                getOption("mc.cores", 1L)))
+  nThreads <- max(1L, as.integer(getOption("mc.cores", 1L)))
   res <- cpp_transfer_consensus(
     splitsList, nTip, scale,
     greedy_best_flag = (greedy == "best"),
