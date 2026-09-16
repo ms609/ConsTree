@@ -7,15 +7,20 @@
 \title{Fast algorithms for phylogenetic consensus trees}
 \description{
 \code{ConsTree} provides efficient methods for the construction of phylogenetic
-consensus trees.  Methods include strict, majority-rule, majority-rule (+),
+consensus trees \insertCite{Byrant2003}{ConsTree}.
+Methods include strict, majority-rule, majority-rule (+),
 loose (combinable component / semi-strict), greedy, Adams, frequency
 difference, R*, and local consensus.
 }
 \details{
+It also incorporates 'median-style' summary trees using BHV, path, quartet
+and transfer distances
+\insertCite{LapointeCucumel1997,Takazawa2026,OwenProvan2011,BrownOwen2020}{ConsTree}
+
 It builds on the tree and split infrastructure of
 \href{https://ms609.github.io/TreeTools/}{\pkg{TreeTools}}, and implements
 asymptotically efficient consensus algorithms
-\insertCite{Jansson2016acm}{ConsTree}.
+\insertCite{Jansson2016acm,Jansson2017,Jansson2018,Jansson2018itcbab,Jansson2026}{ConsTree}.
 }
 \seealso{
 Useful links:

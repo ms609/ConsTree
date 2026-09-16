@@ -4,7 +4,8 @@
 #' to a set of input trees, using a greedy add-and-prune heuristic.
 #'
 #' Unlike the majority-rule consensus, which minimizes Robinson-Foulds
-#' distance and can be highly unresolved when phylogenetic signal is low,
+#' distance \insertCite{Barthelemy1986}{ConsTree} and can be highly unresolved
+#' when phylogenetic signal is low,
 #' `Transfer()` uses the finer-grained transfer distance
 #' \insertCite{Lemoine2018}{ConsTree} to construct a more resolved consensus
 #' tree.

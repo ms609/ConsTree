@@ -3,9 +3,9 @@
 #' `Adams()` computes the \insertCite{Adams1972;textual}{ConsTree} consensus
 #' tree.
 #'
-#' The Adams consensus places each species in the the smallest group to which
+#' The Adams consensus places each species in the smallest group to which
 #' it belongs on all input trees. Consequently, it may contain groupings that do
-#' not appear in any input tree#'
+#' not appear in any input tree.
 #' This implementation builds on the algorithm of
 #' \insertCite{Jansson2017}{ConsTree}; please cite this paper where you
 #' use this method.

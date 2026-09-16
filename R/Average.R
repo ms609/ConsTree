@@ -43,6 +43,7 @@
 #' lengths denoting the average consensus tree.
 #'
 #' @examples
+#' set.seed(5)
 #' trees <- ape::rmtree(5, 8)    # five random eight-leaf trees
 #' Average(trees)                # fast (balanced minimum evolution) default
 #' \donttest{

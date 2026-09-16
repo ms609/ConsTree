@@ -23,8 +23,8 @@ It contains every split that is not contradicted by any input tree.
 The loose consensus refines the strict consensus (\code{\link[=Strict]{Strict()}}).
 In contrast to the majority-rule consensus (\code{\link[=Majority]{Majority()}}), a split present
 in most trees may still be contradicted by a minority, and so be excluded
-from the loose consensus; yet a split that occurs in just one tree will be
-is retained if no other tree contradicts it.
+from the loose consensus; yet a split that occurs in just one tree is
+retained if no other tree contradicts it.
 
 This implementation builds on the \code{looseConsensusFast}
 algorithm of \insertCite{Jansson2016acm}{ConsTree}; please cite that

@@ -72,6 +72,7 @@ fast balanced minimum-evolution tree; or if \code{method = "ls"}, by NP-hard
 least-squares search \insertCite{Day1987}{ConsTree}.
 }
 \examples{
+set.seed(5)
 trees <- ape::rmtree(5, 8)    # five random eight-leaf trees
 Average(trees)                # fast (balanced minimum evolution) default
 \donttest{

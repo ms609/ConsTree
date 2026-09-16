@@ -39,8 +39,9 @@ heuristic.
 }
 \details{
 Where the majority-rule consensus minimizes the sum of Robinson-Foulds
-distances to the input trees, \code{Quartet()} finds an approximate median tree
-under the symmetric quartet distance \insertCite{Takazawa2026}{ConsTree},
+distances to the input trees \insertCite{Barthelemy1986}{ConsTree},
+\code{Quartet()} finds an approximate median tree under the symmetric quartet
+distance \insertCite{Estabrook1985,Takazawa2026}{ConsTree},
 which counts both false-positive and false-negative resolved quartets
 equally.
 

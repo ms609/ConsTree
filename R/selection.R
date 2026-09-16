@@ -72,8 +72,8 @@
 #' The loose consensus refines the strict consensus ([`Strict()`]).
 #' In contrast to the majority-rule consensus ([`Majority()`]), a split present
 #' in most trees may still be contradicted by a minority, and so be excluded
-#' from the loose consensus; yet a split that occurs in just one tree will be
-#' is retained if no other tree contradicts it.
+#' from the loose consensus; yet a split that occurs in just one tree is
+#' retained if no other tree contradicts it.
 #'
 #' This implementation builds on the `looseConsensusFast`
 #' algorithm of \insertCite{Jansson2016acm}{ConsTree}; please cite that

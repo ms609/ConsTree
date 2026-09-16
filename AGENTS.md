@@ -80,12 +80,6 @@ pattern — only the C++ selection logic differs:
 - **`Local()` hard runtime guard**: none yet (only interruptible) — decide
   whether to add one.
 
-## Resolved
-- **`Local()` citation**: now `\insertCite{JanssonRajabySung2018}` (Jansson,
-  Rajaby & Sung 2018, *AIMS Medical Science* 5(2):181–203,
-  doi:10.3934/medsci.2018.2.181), the paper that defines the MinRLC/MinILC
-  variants `Local()` implements.
-
 ## The consensus lattice (invariants the tests enforce)
 
 ```
