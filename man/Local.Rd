@@ -21,7 +21,7 @@ separate any pair of trees), a star tree is returned.
 }
 \description{
 \code{Local()} returns the local consensus
-\insertCite{JanssonRajabySung2018}{ConsTree} of a set of rooted trees.
+\insertCite{Kannan1998}{ConsTree} of a set of rooted trees.
 The local consensus is the most conservative tree consistent with the rooted
 triplets shared by every input tree.  The minimum rooted local consensus
 (MinRLC, \code{type = "rooted"}) and the minimum induced local consensus (MinILC,
@@ -29,8 +29,9 @@ triplets shared by every input tree.  The minimum rooted local consensus
 }
 \details{
 The implementation builds on the algorithms of
-\insertCite{JanssonRajabySung2018}{ConsTree}; please cite that paper when
-using this method.
+\insertCite{Jansson2018}{ConsTree}, which generalize the "RV-II" type
+consensus of \insertCite{Kannan1998;textual}{ConsTree}; please cite
+both papers when using this method.
 
 Because the algorithm is exponential, \code{Local()} is limited to \code{n <= 20}
 leaves.  Running time is faster when input trees are more congruent.

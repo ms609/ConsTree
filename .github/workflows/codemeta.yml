@@ -12,7 +12,7 @@ name: codemeta
 
 jobs:
   codemeta:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       contents: write
     env:

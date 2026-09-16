@@ -1,16 +1,21 @@
 Package: ConsTree
 Title: Fast Algorithms for Phylogenetic Consensus Trees
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: c(
   person("Martin R.", "Smith", role = c("aut", "cre", "cph"),
          email = "martin.smith@durham.ac.uk",
          comment = c(ORCID = "0000-0001-5660-1727")),
-  person("Jesper", "Jansson", role = "cph",
-         comment = "Consensus algorithms (FACT, FACT2, FDCT)"),
-  person("Chuanqi", "Shen", role = "cph",
-         comment = "Consensus algorithms (FACT)"),
-  person("Wing-Kin", "Sung", role = "cph",
-         comment = "Consensus algorithms (FACT, FACT2, FDCT)")
+  person("Jesper", "Jansson", role = c("aut", "cph"),
+         comment = c(ORCID = "0000-0001-6859-8932",
+                     "Consensus algorithms (FACT, FACT2, FDCT)")),
+  person("Wing-Kin", "Sung", role = c("aut", "cph"),
+         comment = c(ORCID = "0000-0001-7806-7086",
+                     "Consensus algorithms (FACT, FACT2, FDCT)")),
+  person("Ramesh", "Rajaby", role = c("aut", "cph"),
+         comment = c(ORCID = "0000-0001-9980-1913",
+                     "Consensus algorithms (FACT2, FDCT)")),
+  person("Chuanqi", "Shen", role = c("aut", "cph"),
+         comment = "Consensus algorithms (FACT)")
   )
 License: GPL (>= 3)
 Copyright: Incorporates C++ code from 'FACT' (GPL-3, doi:10.1145/2925985),
@@ -41,7 +46,7 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Config/Needs/memcheck: pkgdown, testthat
 RdMacros: Rdpack
 Encoding: UTF-8

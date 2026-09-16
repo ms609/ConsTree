@@ -21,27 +21,31 @@ export(Strict)
 export(Transfer)
 importFrom(Rcpp,sourceCpp)
 importFrom(Rdpack,reprompt)
-importFrom(TreeTools,Consensus)
-importFrom(TreeTools,DescendantEdges)
-importFrom(TreeTools,NSplits)
-importFrom(TreeTools,NTip)
-importFrom(TreeTools,Preorder)
-importFrom(TreeTools,RenumberTips)
-importFrom(TreeTools,RootTree)
-importFrom(TreeTools,StarTree)
-importFrom(TreeTools,TipLabels)
-importFrom(TreeTools,as.Splits)
-importFrom(ape,as.phylo)
-importFrom(ape,bionj)
-importFrom(ape,collapse.singles)
-importFrom(ape,cophenetic.phylo)
-importFrom(ape,fastme.bal)
-importFrom(ape,fastme.ols)
-importFrom(ape,is.rooted)
-importFrom(ape,nj)
-importFrom(ape,read.tree)
-importFrom(ape,root)
-importFrom(ape,unroot)
+importFrom(TreeTools,
+  Consensus,
+  DescendantEdges,
+  NSplits,
+  NTip,
+  Preorder,
+  RenumberTips,
+  RootTree,
+  StarTree,
+  TipLabels,
+  as.Splits
+)
+importFrom(ape,
+  as.phylo,
+  bionj,
+  collapse.singles,
+  cophenetic.phylo,
+  fastme.bal,
+  fastme.ols,
+  is.rooted,
+  nj,
+  read.tree,
+  root,
+  unroot
+)
 importFrom(stats,as.dist)
 importFrom(utils,modifyList)
 useDynLib(ConsTree, .registration = TRUE)

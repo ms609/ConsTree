@@ -76,7 +76,7 @@
 #' is retained if no other tree contradicts it.
 #'
 #' This implementation builds on the `looseConsensusFast`
-#' algorithm of \insertCite{JanssonShenSung2016}{ConsTree}; please cite that
+#' algorithm of \insertCite{Jansson2016}{ConsTree}; please cite that
 #' paper when using this method.
 #'
 #' @inheritParams Strict
@@ -108,14 +108,15 @@ Loose <- function(trees) {
 
 #' Greedy (extended majority-rule) consensus tree
 #'
-#' `Greedy()` computes the greedy consensus, also termed the extended
+#' `Greedy()` computes the greedy consensus
+#' \insertCite{Felsenstein1993}{ConsTree}, also termed the extended
 #' majority-rule consensus \insertCite{Bryant2003}{ConsTree}.  Distinct splits
 #' are considered in decreasing order of their frequency across the input trees,
 #' breaking ties arbitrarily; each is added to the growing consensus if it is
 #' compatible with every split already accepted.
 #'
 #' The implementation builds upon the `greedyConsensusFast` algorithm of
-#' \insertCite{JanssonShenSung2016}{ConsTree}; please cite that paper when
+#' \insertCite{Jansson2016}{ConsTree}; please cite that paper when
 #' using this method.
 #'
 #' @inheritParams Strict
@@ -148,9 +149,13 @@ Greedy <- function(trees) {
 #' Majority-rule (+) consensus tree
 #'
 #' `MajorityPlus()` computes the majority-rule (+) consensus
-#' \insertCite{JanssonShenSung2016}{ConsTree}, which displays each clade that
+#' \insertCite{Dong2010}{ConsTree}, which displays each clade that
 #' occurs in more input trees than contradict it.
-#'
+#' 
+#' This implementation uses the algorithm of 
+#' \insertCite{Jansson2018itcbab;textual}{ConsTree}; please cite both this and
+#' \insertCite{Dong2010;textual}{ConsTree} when using this method.
+#' 
 #' @inheritParams Strict
 #'
 #' @return `MajorityPlus()` returns an object of class `phylo` denoting the
@@ -182,14 +187,15 @@ MajorityPlus <- function(trees) {
 #' Frequency-difference consensus tree
 #'
 #' `Frequency()` computes the frequency-difference consensus, which retains
-#' each split that occurs more often than every split that conflicts with it.
+#' each split that occurs more often than every split that conflicts with it
+#' \insertCite{Goloboff2003}{ConsTree}.
 #'
 #' The frequency-difference consensus is at least as resolved as the
 #' majority-rule consensus ([`Majority()`]), and is contained within the greedy
 #' consensus ([`Greedy()`]).
 #'
 #' This implementation builds on the FDCT algorithm of
-#' \insertCite{Jansson2024;textual}{ConsTree}; please cite that paper when
+#' \insertCite{Jansson2026;textual}{ConsTree}; please cite that paper when
 #' using this method.
 #'
 #' @inheritParams Strict

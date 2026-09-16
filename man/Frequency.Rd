@@ -16,7 +16,8 @@ frequency consensus, rooted as in the first entry of \code{trees}.
 }
 \description{
 \code{Frequency()} computes the frequency-difference consensus, which retains
-each split that occurs more often than every split that conflicts with it.
+each split that occurs more often than every split that conflicts with it
+\insertCite{Goloboff2003}{ConsTree}.
 }
 \details{
 The frequency-difference consensus is at least as resolved as the
@@ -24,7 +25,7 @@ majority-rule consensus (\code{\link[=Majority]{Majority()}}), and is contained 
 consensus (\code{\link[=Greedy]{Greedy()}}).
 
 This implementation builds on the FDCT algorithm of
-\insertCite{Jansson2024;textual}{ConsTree}; please cite that paper when
+\insertCite{Jansson2026;textual}{ConsTree}; please cite that paper when
 using this method.
 }
 \examples{

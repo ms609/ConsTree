@@ -1,3 +1,8 @@
+# ConsTree 1.0.0.9000 (development)
+
+- Fix omissions in references and attribution.
+
+
 # ConsTree 1.0.0 (2026-09-07)
 
 First public release.

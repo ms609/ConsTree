@@ -5,7 +5,7 @@
 #' It builds on the tree and split infrastructure of
 #' [\pkg{TreeTools}](https://ms609.github.io/TreeTools/), and implements
 #' asymptotically efficient consensus algorithms
-#' \insertCite{JanssonShenSung2016}{ConsTree}.
+#' \insertCite{Jansson2016}{ConsTree}.
 #'
 #' @keywords internal
 #' @useDynLib ConsTree, .registration = TRUE

@@ -11,7 +11,7 @@ summarizing a set of phylogenetic trees as a single consensus tree.
 It builds on the tree and split infrastructure of
 \href{https://ms609.github.io/TreeTools/}{\pkg{TreeTools}}, and implements
 asymptotically efficient consensus algorithms
-\insertCite{JanssonShenSung2016}{ConsTree}.
+\insertCite{Jansson2016}{ConsTree}.
 }
 \seealso{
 Useful links:
@@ -27,13 +27,10 @@ Useful links:
 Authors:
 \itemize{
   \item Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
-}
-
-Other contributors:
-\itemize{
-  \item Jesper Jansson (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
+  \item Jesper Jansson (\href{https://orcid.org/0000-0001-6859-8932}{ORCID}) (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
+  \item Wing-Kin Sung (\href{https://orcid.org/0000-0001-7806-7086}{ORCID}) (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
+  \item Ramesh Rajaby (\href{https://orcid.org/0000-0001-9980-1913}{ORCID}) (Consensus algorithms (FACT2, FDCT)) [copyright holder]
   \item Chuanqi Shen (Consensus algorithms (FACT)) [copyright holder]
-  \item Wing-Kin Sung (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
 }
 
 }

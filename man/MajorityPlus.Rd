@@ -16,8 +16,13 @@ majority-plus consensus tree, rooted as in the first entry of \code{trees}.
 }
 \description{
 \code{MajorityPlus()} computes the majority-rule (+) consensus
-\insertCite{JanssonShenSung2016}{ConsTree}, which displays each clade that
+\insertCite{Dong2010}{ConsTree}, which displays each clade that
 occurs in more input trees than contradict it.
+}
+\details{
+This implementation uses the algorithm of
+\insertCite{Jansson2018itcbab;textual}{ConsTree}; please cite both this and
+\insertCite{Dong2010;textual}{ConsTree} when using this method.
 }
 \examples{
 trees <- ape::as.phylo(0:5, 8)

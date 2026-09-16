@@ -7,7 +7,7 @@
 #' it belongs on all input trees. Consequently, it may contain groupings that do
 #' not appear in any input tree#'
 #' This implementation builds on the algorithm of
-#' \insertCite{JanssonLiSung2017}{ConsTree}; please cite this paper where you
+#' \insertCite{Jansson2017}{ConsTree}; please cite this paper where you
 #' use this method.
 #'
 #' @inheritParams Strict

@@ -15,7 +15,8 @@ share the same leaf labels.}
 rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{Greedy()} computes the greedy consensus, also termed the extended
+\code{Greedy()} computes the greedy consensus
+\insertCite{Felsenstein1993}{ConsTree}, also termed the extended
 majority-rule consensus \insertCite{Bryant2003}{ConsTree}.  Distinct splits
 are considered in decreasing order of their frequency across the input trees,
 breaking ties arbitrarily; each is added to the growing consensus if it is
@@ -23,7 +24,7 @@ compatible with every split already accepted.
 }
 \details{
 The implementation builds upon the \code{greedyConsensusFast} algorithm of
-\insertCite{JanssonShenSung2016}{ConsTree}; please cite that paper when
+\insertCite{Jansson2016}{ConsTree}; please cite that paper when
 using this method.
 }
 \examples{

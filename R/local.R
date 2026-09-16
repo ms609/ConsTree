@@ -1,15 +1,16 @@
 #' Local consensus tree
 #'
 #' `Local()` returns the local consensus
-#' \insertCite{JanssonRajabySung2018}{ConsTree} of a set of rooted trees.
+#' \insertCite{Kannan1998}{ConsTree} of a set of rooted trees.
 #' The local consensus is the most conservative tree consistent with the rooted
 #' triplets shared by every input tree.  The minimum rooted local consensus
 #' (MinRLC, `type = "rooted"`) and the minimum induced local consensus (MinILC,
 #' `type = "induced"`) differ in how the resolution of the result is scored.
 #' 
 #' The implementation builds on the algorithms of
-#' \insertCite{JanssonRajabySung2018}{ConsTree}; please cite that paper when
-#' using this method.
+#' \insertCite{Jansson2018}{ConsTree}, which generalize the "RV-II" type
+#' consensus of \insertCite{Kannan1998;textual}{ConsTree}; please cite 
+#' both papers when using this method.
 #'
 #' Because the algorithm is exponential, `Local()` is limited to `n <= 20`
 #' leaves.  Running time is faster when input trees are more congruent.
