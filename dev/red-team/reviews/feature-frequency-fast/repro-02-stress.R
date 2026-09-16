@@ -1,4 +1,4 @@
-.libPaths(c('C:/Users/pjjg18/GitHub/Consensus/.agent-cons', .libPaths()))
+.libPaths(c('.agent-cons', .libPaths()))
 suppressMessages({library(ConsTree); library(TreeTools); library(ape)})
 
 runcase <- function(label, trees) {

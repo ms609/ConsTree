@@ -10,7 +10,7 @@
 # returns NULL when the leaf set is a single inseparable Aho component).
 
 LOCAL_EXE <- normalizePath(
-  "C:/Users/pjjg18/GitHub/Consensus/dev/oracle/local/local.exe",
+  "./dev/oracle/local/local.exe",
   mustWork = TRUE
 )
 
@@ -34,7 +34,7 @@ LocalOracle <- function(trees, type = c("rooted", "induced", "aho")) {
   type <- match.arg(type)
   labels <- TreeTools::TipLabels(trees[[1]])
 
-  scratch <- file.path("C:/Users/pjjg18/GitHub/Consensus/dev/oracle/local",
+  scratch <- file.path("./dev/oracle/local",
                        paste0(".scratch_", Sys.getpid()))
   dir.create(scratch, showWarnings = FALSE)
   on.exit(unlink(scratch, recursive = TRUE), add = TRUE)

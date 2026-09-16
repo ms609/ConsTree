@@ -4,7 +4,7 @@
 # Env: MEM_NS = comma-separated leaf counts (default "10,12,14,16");
 #      MEM_GCTORTURE = "1" to run under gctorture (surfaces PROTECT bugs);
 #      MEM_REPS = inner repetitions (default 3).
-.libPaths(c("C:/Users/pjjg18/GitHub/Consensus/.agent-cons", .libPaths()))
+.libPaths(c(".agent-cons", .libPaths()))
 suppressMessages({library(ConsTree); library(TreeTools)})
 
 useGc <- identical(Sys.getenv("MEM_GCTORTURE"), "1")

@@ -14,7 +14,7 @@
 # Run from the package root:
 #   Rscript.exe dev/oracle/rstar/explore-rstar.R
 
-.libPaths(c("C:/Users/pjjg18/GitHub/Consensus/.agent-cons", .libPaths()))
+.libPaths(c(".agent-cons", .libPaths()))
 suppressMessages(library(ConsTree))
 suppressMessages(library(TreeTools))
 suppressMessages(library(ape))

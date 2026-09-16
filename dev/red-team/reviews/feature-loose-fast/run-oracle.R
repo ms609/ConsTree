@@ -3,7 +3,7 @@
 .libPaths(c("C:/Users/pjjg18/GitHub/worktrees/Consensus/loose-fast/.rt-lib", .libPaths()))
 suppressMessages(library(ConsTree))
 suppressMessages(library(TreeTools))
-source("C:/Users/pjjg18/GitHub/Consensus/dev/oracle/oracle.R")
+source("./dev/oracle/oracle.R")
 
 # Build-identity check: confirm looseConsensusCpp is the real ported body,
 # not a stub. A stub would return "" or a star; a real port resolves splits.

@@ -11,7 +11,7 @@
 #  * Output: the consensus printed by printNex() as an integer-labelled Newick
 #    on its own line.
 
-FACT_EXE <- normalizePath("C:/Users/pjjg18/GitHub/Consensus/dev/oracle/fact.exe",
+FACT_EXE <- normalizePath("dev/oracle/fact.exe",
                           mustWork = TRUE)
 
 # Algorithm bitmasks: bit i selects getConsensus(i) (main.cpp switch).

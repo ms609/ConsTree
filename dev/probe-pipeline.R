@@ -1,6 +1,6 @@
 # Probe v3: validate the all-R selection pipeline by reproducing Majority/Strict
 # from scratch and comparing to TreeTools::Consensus; sanity-check Loose/Greedy.
-.libPaths(c("C:/Users/pjjg18/GitHub/Consensus/.agent-cons", .libPaths()))
+.libPaths(c(".agent-cons", .libPaths()))
 suppressMessages(library(TreeTools))
 
 RF <- TreeDist::RobinsonFoulds

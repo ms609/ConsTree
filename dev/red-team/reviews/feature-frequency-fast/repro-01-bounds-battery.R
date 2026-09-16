@@ -1,7 +1,7 @@
 # Adversarial battery for FreqDiff scratch-bounds (3n/2n) and radix (5n/k) caps.
 # Run against an _GLIBCXX_ASSERTIONS build: an OOB vector[] aborts the process;
 # a radix cap hit throws "radix sort n/k overflow" via Rcpp::stop.
-.libPaths(c('C:/Users/pjjg18/GitHub/Consensus/.agent-cons', .libPaths()))
+.libPaths(c('.agent-cons', .libPaths()))
 suppressMessages({library(ConsTree); library(TreeTools); library(ape)})
 
 set.seed(1)

@@ -19,7 +19,7 @@
 # then restores the caller's cwd.
 
 FREQDIFF_EXE <- normalizePath(
-  "C:/Users/pjjg18/GitHub/Consensus/dev/oracle/freqdiff/freqdiff.exe",
+  "./dev/oracle/freqdiff/freqdiff.exe",
   mustWork = TRUE
 )
 
@@ -52,7 +52,7 @@ FreqDiffOracle <- function(trees) {
 
   # Use a per-call temp dir so concurrent calls don't stomp on inp/oup.txt
   scratch <- file.path(
-    "C:/Users/pjjg18/GitHub/Consensus/dev/oracle/freqdiff",
+    "./dev/oracle/freqdiff",
     paste0(".scratch_", Sys.getpid())
   )
   dir.create(scratch, showWarnings = FALSE)

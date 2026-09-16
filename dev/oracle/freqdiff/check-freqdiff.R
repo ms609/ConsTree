@@ -16,10 +16,10 @@
 
 setTimeLimit(elapsed = 55, transient = FALSE)
 
-.libPaths(c("C:/Users/pjjg18/GitHub/Consensus/.agent-cons", .libPaths()))
+.libPaths(c(".agent-cons", .libPaths()))
 suppressMessages(library(ConsTree))
 suppressMessages(library(TreeTools))
-source("C:/Users/pjjg18/GitHub/Consensus/dev/oracle/freqdiff/oracle_fd.R")
+source("./dev/oracle/freqdiff/oracle_fd.R")
 
 # ----- helper: split occurrence counts from a pool ----------------------------
 

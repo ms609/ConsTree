@@ -7,7 +7,7 @@
 #
 # Run from the package root:  Rscript.exe dev/oracle/rstar/check-vs-legacy.R
 
-.libPaths(c(Sys.getenv("CONSTREE_LIB", "C:/Users/pjjg18/GitHub/Consensus/.agent-cons"), .libPaths()))
+.libPaths(c(Sys.getenv("CONSTREE_LIB", ".agent-cons"), .libPaths()))
 suppressMessages({ library(ConsTree); library(TreeTools); library(ape) })
 source("dev/oracle/oracle.R")             # CladeSet()
 source("dev/oracle/rstar/legacy-grid.R")  # legacyTrials()

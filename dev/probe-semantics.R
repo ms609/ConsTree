@@ -1,6 +1,6 @@
 # Probe: resolve rooted-clade vs unrooted-split semantics and test the public
 # building blocks for an all-R / hybrid implementation of the selection methods.
-.libPaths(c("C:/Users/pjjg18/GitHub/Consensus/.agent-cons", .libPaths()))
+.libPaths(c(".agent-cons", .libPaths()))
 suppressMessages(library(TreeTools))
 
 trees <- ape::as.phylo(0:5, 8)
