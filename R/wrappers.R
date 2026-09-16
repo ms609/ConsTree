@@ -2,7 +2,7 @@
 #'
 #' `Strict()` returns the strict consensus of a set of trees: the tree that
 #' contains exactly those splits (clades) present in every input tree
-#' \insertCite{Day1985, Sokal1981}{ConsTree}.
+#' \insertCite{Day1985,Sokal1981}{ConsTree}.
 #'
 #' This is an alias of [`TreeTools::Consensus()`] with `p = 1`.
 #'
