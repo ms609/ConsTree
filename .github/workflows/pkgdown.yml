@@ -17,18 +17,11 @@ on:
 
 name: pkgdown
 
-# Branch layout (deliberate — do not collapse these onto one branch):
+# Branch layout:
 #
 #   site       the canonical built site.  Not served by Pages; it exists purely
 #              so that the mirror below has an uncontaminated source.
 #   gh-pages   what ms609.github.io/ConsTree serves: *only* a redirect stub.
-#
-# These used to be the same branch, which broke the site: pkgdown deploys with
-# `clean: false` and, for a dev version, rebuilds only `dev/`.  The final step
-# below then wiped the branch down to the redirect stub, so the release-level
-# pages were never regenerated — and the mirror pushed that stub to
-# constree.github.io, where `/` redirected to `/` and every missing deep link
-# fell through to a 404.html that redirected to itself.
 
 jobs:
   pkgdown:
