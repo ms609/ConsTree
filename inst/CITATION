@@ -19,9 +19,10 @@ bibentry(
   organization = "Comprehensive R Archive Network",
   address = "Vienna",
   textVersion = paste0(
-    "Smith et al. (2026). ConsTree: fast algorithms for phylogenetic ",
+    "Smith, MR et al. (2026). ConsTree: fast algorithms for phylogenetic ",
     " consensus trees. Comprehensive R Archive Network, Vienna. ",
     "doi: 10.32614/CRAN.package.ConsTree"
   ),
-  mfooter = "Citations for individual methods are provided on their manual pages, which can be viewed by typing help(\"FunctionName\").",
+  mfooter = paste("Citations for individual methods are provided on their",
+   "manual pages, which can be viewed by typing help(\"FunctionName\")."),
 )
