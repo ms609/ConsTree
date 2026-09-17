@@ -5,16 +5,13 @@ bibentry(
   key = "Smith2026",
   title = "ConsTree: fast algorithms for phylogenetic consensus trees",
   author = c(
-    person(c("Martin", "R."), "Smith", email = "martin.smith@durham.ac.uk",
-           comment = c(ORCID = "0000-0001-5660-1727")),
-    person("Jesper", "Jansson", role = "cph",
-           comment = c(ORCID = "0000-0001-6859-8932")),
-    person("Wing-Kin", "Sung", role = "cph",
-           comment = c(ORCID = "0000-0001-7806-7086")),
-    person("Ramesh", "Rajaby", role = "cph",
-           comment = c(ORCID = "0000-0001-9980-1913")),
-    person("Chuanqi", "Shen", role = "cph",
-           comment = "Consensus algorithms (FACT)")
+    person("Martin R.", "Smith", comment = c(ORCID = "0000-0001-5660-1727")),
+    person("Jesper", "Jansson", comment = c(ORCID = "0000-0001-6859-8932")),
+    person("Zhaoxian", "Li"),
+    person("Ramesh", "Rajaby", comment = c(ORCID = "0000-0001-9980-1913")),
+    person("Chuanqi", "Shen"),
+    person("Wing-Kin", "Sung", comment = c(ORCID = "0000-0001-7806-7086")),
+    person("Yutong", "Yang")
   ),
   note = vers,
   year = 2026,
