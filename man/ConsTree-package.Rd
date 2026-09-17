@@ -37,9 +37,11 @@ Authors:
 \itemize{
   \item Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
   \item Jesper Jansson (\href{https://orcid.org/0000-0001-6859-8932}{ORCID}) (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
-  \item Wing-Kin Sung (\href{https://orcid.org/0000-0001-7806-7086}{ORCID}) (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
+  \item Zhaoxian Li (Consensus algorithms (FACT)) [copyright holder]
   \item Ramesh Rajaby (\href{https://orcid.org/0000-0001-9980-1913}{ORCID}) (Consensus algorithms (FACT2, FDCT)) [copyright holder]
   \item Chuanqi Shen (Consensus algorithms (FACT)) [copyright holder]
+  \item Wing-Kin Sung (\href{https://orcid.org/0000-0001-7806-7086}{ORCID}) (Consensus algorithms (FACT, FACT2, FDCT)) [copyright holder]
+  \item Yutong Yang (Consensus algorithms (FDCT)) [copyright holder]
 }
 
 }

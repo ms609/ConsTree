@@ -15,9 +15,9 @@ share the same leaf labels.}
 majority-plus consensus tree, rooted as in the first entry of \code{trees}.
 }
 \description{
-\code{MajorityPlus()} computes the majority-rule (+) consensus
-\insertCite{Dong2010}{ConsTree}, which displays each clade that
-occurs in more input trees than contradict it.
+\code{MajorityPlus()} computes the majority-rule (+) consensus, which displays
+each clade that occurs in more input trees than contradict it
+\insertCite{Dong2010}{ConsTree}.
 }
 \details{
 This implementation uses the algorithm of

@@ -8,14 +8,18 @@ Authors@R: c(
   person("Jesper", "Jansson", role = c("aut", "cph"),
          comment = c(ORCID = "0000-0001-6859-8932",
                      "Consensus algorithms (FACT, FACT2, FDCT)")),
-  person("Wing-Kin", "Sung", role = c("aut", "cph"),
-         comment = c(ORCID = "0000-0001-7806-7086",
-                     "Consensus algorithms (FACT, FACT2, FDCT)")),
+  person("Zhaoxian", "Li", role = c("aut", "cph"),
+         comment = "Consensus algorithms (FACT)"),
   person("Ramesh", "Rajaby", role = c("aut", "cph"),
          comment = c(ORCID = "0000-0001-9980-1913",
                      "Consensus algorithms (FACT2, FDCT)")),
   person("Chuanqi", "Shen", role = c("aut", "cph"),
-         comment = "Consensus algorithms (FACT)")
+         comment = "Consensus algorithms (FACT)"),
+  person("Wing-Kin", "Sung", role = c("aut", "cph"),
+         comment = c(ORCID = "0000-0001-7806-7086",
+                     "Consensus algorithms (FACT, FACT2, FDCT)")),
+  person("Yutong", "Yang", role = c("aut", "cph"),
+         comment = c("Consensus algorithms (FDCT)"))
   )
 License: GPL (>= 3)
 Copyright: Incorporates C++ code from 'FACT' (GPL-3, doi:10.1145/2925985),
