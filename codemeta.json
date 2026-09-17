@@ -36,9 +36,8 @@
     },
     {
       "@type": "Person",
-      "givenName": "Wing-Kin",
-      "familyName": "Sung",
-      "@id": "https://orcid.org/0000-0001-7806-7086"
+      "givenName": "Zhaoxian",
+      "familyName": "Li"
     },
     {
       "@type": "Person",
@@ -50,6 +49,17 @@
       "@type": "Person",
       "givenName": "Chuanqi",
       "familyName": "Shen"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Wing-Kin",
+      "familyName": "Sung",
+      "@id": "https://orcid.org/0000-0001-7806-7086"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Yutong",
+      "familyName": "Yang"
     }
   ],
   "copyrightHolder": [
@@ -68,9 +78,8 @@
     },
     {
       "@type": "Person",
-      "givenName": "Wing-Kin",
-      "familyName": "Sung",
-      "@id": "https://orcid.org/0000-0001-7806-7086"
+      "givenName": "Zhaoxian",
+      "familyName": "Li"
     },
     {
       "@type": "Person",
@@ -82,6 +91,17 @@
       "@type": "Person",
       "givenName": "Chuanqi",
       "familyName": "Shen"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Wing-Kin",
+      "familyName": "Sung",
+      "@id": "https://orcid.org/0000-0001-7806-7086"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Yutong",
+      "familyName": "Yang"
     }
   ],
   "maintainer": [
@@ -230,7 +250,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "606.921KB",
+  "fileSize": "607.266KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
