@@ -59,7 +59,7 @@ Transfer(trees)      # minimum transfer distance
 
 ## Installation
 
-Install from CRAN (anticipated Oct 2026) with:
+Install from CRAN with:
 
 ```r
 install.packages("ConsTree")
