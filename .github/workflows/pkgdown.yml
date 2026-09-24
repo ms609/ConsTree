@@ -25,7 +25,9 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-slim
+    # Not ubuntu-slim: dev TreeSearch/TreeTools come from the drat as source,
+    # and compiling them on one core overran slim's 15-minute cap.
+    runs-on: ubuntu-latest
 
     permissions:
       contents: write
