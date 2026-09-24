@@ -13,7 +13,6 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.6.1 (2026-06-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -189,14 +188,14 @@
       "sameAs": "https://CRAN.R-project.org/package=TreeSearch"
     }
   ],
-  "softwareRequirements": {
-    "1": {
+  "softwareRequirements": [
+    {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 4.1.0"
     },
-    "2": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "ape",
       "name": "ape",
@@ -209,7 +208,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ape"
     },
-    "3": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "Rcpp",
       "name": "Rcpp",
@@ -222,7 +221,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rcpp"
     },
-    "4": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
@@ -235,7 +234,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
     },
-    "5": {
+    {
       "@type": "SoftwareApplication",
       "identifier": "TreeTools",
       "name": "TreeTools",
@@ -248,9 +247,8 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=TreeTools"
     },
-    "SystemRequirements": "C++17"
-  },
-  "fileSize": "607.266KB",
+    "C++17"
+  ],
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -258,10 +256,42 @@
       "author": [
         {
           "@type": "Person",
-          "givenName": ["Martin", "R."],
+          "givenName": "Martin R.",
           "familyName": "Smith",
-          "email": "martin.smith@durham.ac.uk",
           "@id": "https://orcid.org/0000-0001-5660-1727"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Jesper",
+          "familyName": "Jansson",
+          "@id": "https://orcid.org/0000-0001-6859-8932"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Zhaoxian",
+          "familyName": "Li"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Ramesh",
+          "familyName": "Rajaby",
+          "@id": "https://orcid.org/0000-0001-9980-1913"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Chuanqi",
+          "familyName": "Shen"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Wing-Kin",
+          "familyName": "Sung",
+          "@id": "https://orcid.org/0000-0001-7806-7086"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Yutong",
+          "familyName": "Yang"
         }
       ],
       "name": "ConsTree: fast algorithms for phylogenetic consensus trees",
