@@ -42,6 +42,8 @@ Distance- and branch-length-based summaries:
 
 - [`Average()`](https://constree.github.io/reference/Average.md):
   distance-based average consensus.
+- [`Transfer()`](https://constree.github.io/reference/Transfer.md): tree
+  minimizing the summed transfer distances to the inputs.
 - [`Quartet()`](https://constree.github.io/reference/Quartet.md): tree
   minimizing the summed symmetric quartet distance to the inputs
   (Takazawa et al. 2026).
