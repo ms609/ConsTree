@@ -70,11 +70,10 @@ bootstrap in the era of big data.” *Nature*, **556**(7702), 452–456.
 [doi:10.1038/s41586-018-0043-0](https://doi.org/10.1038/s41586-018-0043-0)
 .  
   
-Takazawa Y, Takeda A, Hayamizu M, Gascuel O (2026). “Outperforming the
-majority-rule consensus tree using fine-grained dissimilarity measures.”
-*bioRxiv*.
-[doi:10.64898/2026.03.16.712085](https://doi.org/10.64898/2026.03.16.712085)
-.
+Takazawa Y, Takeda A, Hayamizu M, Gascuel O (2026). “Improving the
+Resolution and Informativity of the Majority-Rule Consensus Tree Using
+Fine-Grained Dissimilarity Measures.” *Systematic Biology*, syag078.
+[doi:10.1093/sysbio/syag078](https://doi.org/10.1093/sysbio/syag078) .
 
 ## See also
 

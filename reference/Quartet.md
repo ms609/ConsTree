@@ -72,11 +72,10 @@ phylogenetic trees based on subtrees of four evolutionary units.”
 *Systematic Zoology*, **34**(2), 193–200.
 [doi:10.2307/2413326](https://doi.org/10.2307/2413326) .  
   
-Takazawa Y, Takeda A, Hayamizu M, Gascuel O (2026). “Outperforming the
-majority-rule consensus tree using fine-grained dissimilarity measures.”
-*bioRxiv*.
-[doi:10.64898/2026.03.16.712085](https://doi.org/10.64898/2026.03.16.712085)
-.
+Takazawa Y, Takeda A, Hayamizu M, Gascuel O (2026). “Improving the
+Resolution and Informativity of the Majority-Rule Consensus Tree Using
+Fine-Grained Dissimilarity Measures.” *Systematic Biology*, syag078.
+[doi:10.1093/sysbio/syag078](https://doi.org/10.1093/sysbio/syag078) .
 
 ## See also
 

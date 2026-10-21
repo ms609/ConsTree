@@ -274,7 +274,7 @@ Smith, M. R. (2022). Using information theory to detect rogue taxa and
 improve consensus trees. *Systematic Biology*, *71*(5), 1088–1094.
 <https://doi.org/10.1093/sysbio/syab099>
 
-Takazawa, Y., Takeda, A., Hayamizu, M., & Gascuel, O. (2026).
-Outperforming the majority-rule consensus tree using fine-grained
-dissimilarity measures. *bioRxiv*.
-<https://doi.org/10.64898/2026.03.16.712085>
+Takazawa, Y., Takeda, A., Hayamizu, M., & Gascuel, O. (2026). Improving
+the resolution and informativity of the majority-rule consensus tree
+using fine-grained dissimilarity measures. *Systematic Biology*,
+syag078. <https://doi.org/10.1093/sysbio/syag078>
